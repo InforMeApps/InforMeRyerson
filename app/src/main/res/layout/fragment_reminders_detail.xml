@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textview_reminder_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Title"
+            android:textSize="50sp"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#454545"
+            android:ellipsize="marquee"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/textview_reminder_detail_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#e91e63"
+            android:text="12 August at 2:30PM"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/textview_reminder_detail_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/Description"
+            android:textColor="#666666"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-light" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageview_newreminder_delete"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_delete_notification"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

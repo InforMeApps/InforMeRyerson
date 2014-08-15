@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="slide_up_duration">350</integer>
+    <integer name="ExpandAnimationDuration">200</integer>
+    <integer name="SmoothScroolDuration">150</integer>
+</resources>

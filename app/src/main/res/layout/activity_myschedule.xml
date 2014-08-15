@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="100">
+
+    <ListView
+        android:id="@+id/listview_myschedule_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="78"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/drawer_shadow_opposite" />
+
+    <FrameLayout
+        android:id="@+id/content_frame_myschedule"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="22" />
+
+</LinearLayout>

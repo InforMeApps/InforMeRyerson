@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout_directory_list_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textview_directory_list_name_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="HE, Dr. Siyuan"
+            android:textColor="#454545"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_title_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="MECHANICAL ENG. · ASSOC PROF"
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_location_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Location: EPH-312-B"
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_extension_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Extension: 6425"
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_email_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: s2he@ryerson.ca"
+            android:textColor="#888888" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_directory_list_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textview_directory_list_name_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="HE, Dr. Siyuan"
+            android:textColor="#454545"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_location_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Location: EPH-312-B"
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_extension_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Extension: 6425"
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_email_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: s2he@ryerson.ca"
+            android:textColor="#888888" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_directory_list_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textview_directory_list_name_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="HE, Dr. Siyuan"
+            android:textColor="#454545"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_extension_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="Extension: 6425"
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_email_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: s2he@ryerson.ca"
+            android:textColor="#888888" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_directory_list_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textview_directory_list_name_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="HE, Dr. Siyuan"
+            android:textColor="#454545"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textview_directory_list_email_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: s2he@ryerson.ca"
+            android:textColor="#888888" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "ca.informeapps.informeryerson"
+        minSdkVersion 15
+        targetSdkVersion 20
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:20.+'
+    compile 'com.squareup.picasso:picasso:2.3.3'
+    compile 'org.jsoup:jsoup:1.7.3'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
+    compile('com.doomonafireball.betterpickers:library:1.5.2') {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+}

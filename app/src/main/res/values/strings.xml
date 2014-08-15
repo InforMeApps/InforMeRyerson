@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">InforMeRyerson</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="drawer_open">Ryerson App</string>
+    <string name="drawer_close">App</string>
+    <string name="settings">Settings</string>
+    <string name="aboutus">About Us</string>
+    <string name="campus_map">Campus Map</string>
+    <string name="Explore">Explore</string>
+    <string name="Favourites">Favourites</string>
+    <string name="nothing_here">Nothing Here :(</string>
+    <string name="team">Team</string>
+    <string name="contributions_caps">CONTRIBUTIONS</string>
+    <string name="iconography">Iconography</string>
+    <string name="prefs_about_category">ABOUT</string>
+    <string name="images">Images</string>
+    <string name="prefs_about_appVersion">App Version</string>
+    <string name="prefs_about_appVersion_value">0.1 Pre-Alpha</string>
+    <string name="Search">Search</string>
+    <string name="Bookstore">Bookstore</string>
+    <string name="Description">Description</string>
+    <string name="Title">Title</string>
+    <string name="select_date">[Select Date]</string>
+    <string name="select_time">[Select Time]</string>
+    <string name="Preferences">Preferences</string>
+    <string name="Reminders">Reminders</string>
+    <string name="Directory">Directory</string>
+    <string name="CampusMap">Campus Map</string>
+    <string name="my_schedule">My Schedule</string>
+    <string name="robotoLight">sans-serif-light</string>
+    <string name="robotoThin">sans-serif-thin</string>
+    <string name="Contributions">Contributions</string>
+    <string name="aboutus_writeup">Started by Ryerson students for Ryerson students, we wanted to create a platform that would allow all us students to stay connected to their surroundings and the things that matter most to them. As students, we felt that the outflow of information at our school could be presented in a better way. We aim to do just that.\n\nHowever, since we are new to this, getting up and doing something about it thing, feel free to give us some feedback on what you think so far. Stay Tuned.\n\nMission: To keep every Ryerson student connected to their surroundings and the things that matter to them.</string>
+    <string name="About">About</string>
+
+</resources>

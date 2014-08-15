@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Iconography">
+        <item>SimpleIcon</item>
+        <item>Situ Herrera</item>
+        <item>Scott de Jonge</item>
+        <item>Designmodo</item>
+        <item>Amit Jakhu</item>
+        <item>Freepik</item>
+        <item>Icomoon</item>
+        <item>Icons8</item>
+    </string-array>
+
+    <string-array name="Images">
+        <item>Farhan Riaz</item>
+    </string-array>
+
+    <string-array name="Libraries">
+        <item>Picasso - Square</item>
+        <item>Jsoup - Jonathan Hedley</item>
+        <item>Apache-Commons Lang</item>
+        <item>ViewPagerIndicator - JakeWharton</item>
+        <item>BetterPickers - derekbrameyer</item>
+        <item>CircleImageView - hdodenhof</item>
+        <item>EnhancedListView - timroes</item>
+    </string-array>
+</resources>
