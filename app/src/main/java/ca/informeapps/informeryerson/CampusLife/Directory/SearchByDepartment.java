@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+ */
+
 package ca.informeapps.informeryerson.CampusLife.Directory;
 
 import android.app.Activity;
@@ -5,8 +9,6 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import ca.informeapps.informeryerson.R;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.jsoup.Jsoup;
@@ -17,6 +19,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import ca.informeapps.informeryerson.R;
 
 public class SearchByDepartment extends AsyncTask<Void, Void, Void> {
 

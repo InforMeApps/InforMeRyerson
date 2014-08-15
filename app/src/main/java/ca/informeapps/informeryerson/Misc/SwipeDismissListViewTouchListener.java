@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+ */
+
 package ca.informeapps.informeryerson.Misc;
 
 import android.animation.Animator;
@@ -38,14 +42,6 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
     private int mDownPosition;
     private View mDownView;
     private boolean mPaused;
-
-    public interface DismissCallbacks {
-
-        boolean canDismiss(int position);
-
-
-        void onDismiss(ListView listView, int[] reverseSortedPositions);
-    }
 
     public SwipeDismissListViewTouchListener(ListView listView, DismissCallbacks callbacks) {
 
@@ -221,21 +217,6 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
         return false;
     }
 
-    class PendingDismissData implements Comparable<PendingDismissData> {
-        public int position;
-        public View view;
-
-        public PendingDismissData(int position, View view) {
-            this.position = position;
-            this.view = view;
-        }
-
-        @Override
-        public int compareTo(PendingDismissData other) {
-            return other.position - position;
-        }
-    }
-
     private void performDismiss(final View dismissView, final int dismissPosition) {
 
         final ViewGroup.LayoutParams lp = dismissView.getLayoutParams();
@@ -290,5 +271,28 @@ public class SwipeDismissListViewTouchListener implements View.OnTouchListener {
 
         mPendingDismisses.add(new PendingDismissData(dismissPosition, dismissView));
         animator.start();
+    }
+
+    public interface DismissCallbacks {
+
+        boolean canDismiss(int position);
+
+
+        void onDismiss(ListView listView, int[] reverseSortedPositions);
+    }
+
+    class PendingDismissData implements Comparable<PendingDismissData> {
+        public int position;
+        public View view;
+
+        public PendingDismissData(int position, View view) {
+            this.position = position;
+            this.view = view;
+        }
+
+        @Override
+        public int compareTo(PendingDismissData other) {
+            return other.position - position;
+        }
     }
 }

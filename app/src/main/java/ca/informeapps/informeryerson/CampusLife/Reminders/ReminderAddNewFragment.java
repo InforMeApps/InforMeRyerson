@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+ */
+
 package ca.informeapps.informeryerson.CampusLife.Reminders;
 
 import android.app.AlarmManager;
@@ -21,12 +25,13 @@ import android.widget.Toast;
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
-import ca.informeapps.informeryerson.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import ca.informeapps.informeryerson.R;
 
 public class ReminderAddNewFragment extends Fragment implements View.OnClickListener {
 

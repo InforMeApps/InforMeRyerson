@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+ */
+
 package ca.informeapps.informeryerson.CampusLife.CampusMap;
 
 import android.app.Activity;
@@ -10,7 +14,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.informeapps.informeryerson.R;

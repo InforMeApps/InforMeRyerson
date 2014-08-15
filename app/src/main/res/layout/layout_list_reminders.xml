@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="16dp">
 
         <LinearLayout
             android:id="@+id/reference_layout_reminder_1"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textview_reminder_list_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
                 android:gravity="right"
                 android:text="12"
-                android:fontFamily="sans-serif-light"
-                android:textSize="50sp"
-                android:textColor="#e91e63" />
+                android:textColor="#e91e63"
+                android:textSize="50sp" />
 
             <TextView
                 android:id="@+id/textview_reminder_list_month"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MAR"
+                android:layout_marginBottom="5dp"
                 android:gravity="right"
-                android:textSize="20sp"
+                android:text="MAR"
                 android:textColor="#e91e63"
-                android:layout_marginBottom="5dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textview_reminder_list_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="12:30 AM"
                 android:gravity="right"
+                android:text="12:30 AM"
                 android:textColor="#e91e63"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -52,39 +56,39 @@
 
         <View
             android:id="@+id/reference_layout_reminder_2"
-            android:layout_toRightOf="@id/reference_layout_reminder_1"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#e91e63"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/reference_layout_reminder_1"
+            android:background="#e91e63" />
 
         <LinearLayout
-            android:layout_toRightOf="@id/reference_layout_reminder_2"
             android:layout_width="match_parent"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/reference_layout_reminder_2"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textview_reminder_list_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title"
+                android:fontFamily="sans-serif-light"
                 android:paddingTop="3dp"
                 android:singleLine="true"
-                android:textSize="30sp"
+                android:text="Title"
                 android:textColor="#454545"
-                android:fontFamily="sans-serif-light" />
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/textview_reminder_list_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
                 android:text="Description"
-                android:textSize="20sp"
                 android:textColor="#666666"
-                android:fontFamily="sans-serif-light" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
