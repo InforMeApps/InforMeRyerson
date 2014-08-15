@@ -15,9 +15,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="horizontal"
-            android:weightSum="10"
-            android:descendantFocusability="blocksDescendants">
+            android:weightSum="10">
 
             <ImageView
                 android:id="@+id/imageview_bookstore_list_image"
@@ -31,8 +31,8 @@
                 android:id="@+id/imagebutton_bookstore_list_map"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
                 android:layout_weight="4"
+                android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/map_placeholder" />
         </LinearLayout>
@@ -40,20 +40,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:weightSum="100"
-            android:gravity="center_vertical">
+            android:weightSum="100">
 
             <TextView
                 android:id="@+id/campuslife_BookstoreName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:layout_weight="20"
                 android:fontFamily="sans-serif-light"
                 android:text="Some Bookstore"
                 android:textColor="#454545"
-                android:textSize="25sp"
-                android:layout_weight="20" />
+                android:textSize="25sp" />
 
             <ImageView
                 android:id="@+id/imageview_bookstore_downicon"
@@ -67,33 +67,33 @@
         <LinearLayout
             android:id="@+id/BookStoreExpandedInfo"
             android:layout_width="fill_parent"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="-50dp"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:paddingBottom="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="16dp">
+            android:visibility="gone">
             <!--Change LinearLayout Height depending on how many items to show-->
 
             <TextView
                 android:id="@+id/textview_bookstore_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#454545"
-                android:text="Address Line 1\nCity/Province\nPostal Code\nPhone Number" />
+                android:text="Address Line 1\nCity/Province\nPostal Code\nPhone Number"
+                android:textColor="#454545" />
 
             <TextView
                 android:id="@+id/textview_bookstore_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/image_button_grey_selector"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_chevron_right"
+                android:gravity="center_vertical"
                 android:text="Hours Today: 10:00am - 6:00pm"
                 android:textColor="@android:color/holo_blue_dark"
-                android:background="@drawable/image_button_grey_selector"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:drawableRight="@drawable/ic_chevron_right" />
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -15,12 +15,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import ca.informeapps.informeryerson.Misc.ExpandAnimation;
+import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.UnderlinePageIndicator;
+
+import ca.informeapps.informeryerson.Misc.ExpandAnimation;
 
 public class AboutUsActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
 
@@ -135,6 +138,9 @@ public class AboutUsActivity extends FragmentActivity implements AdapterView.OnI
 
             TextView textView = (TextView) view.findViewById(R.id.textView_aboutus_team_name);
             textView.setText(teamNames[i]);
+
+            ImageView imageView = (ImageView) view.findViewById(R.id.imageview_aboutus_list_team);
+            Picasso.with(AboutUsActivity.this).load(R.drawable.campuslife_header).into(imageView);
 
             View expandedView = view.findViewById(R.id.layout_list_aboutus_team_expanded);
             ((LinearLayout.LayoutParams) expandedView.getLayoutParams()).bottomMargin = -700;
