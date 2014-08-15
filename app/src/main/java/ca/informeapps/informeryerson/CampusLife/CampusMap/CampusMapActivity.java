@@ -22,15 +22,14 @@ public class CampusMapActivity extends Activity {
 
     private String mapsUrl = "https://m.ryerson.ca/core_apps/map/beta/";
     private WebView webView;
-    private ProgressBar progressBar;
+    private Menu optionsMenu;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campusmap);
 
+
         webView = (WebView) findViewById(R.id.webview_campusmap);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar_campusmap);
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
@@ -40,9 +39,9 @@ public class CampusMapActivity extends Activity {
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress != 100) {
-                    progressBar.setProgress(progress);
+                    setRefreshActionButtonState(true);
                 } else {
-                    progressBar.setVisibility(View.GONE);
+                    setRefreshActionButtonState(false);
                 }
             }
         });
@@ -67,9 +66,10 @@ public class CampusMapActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.optionsMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.campusmap_menu, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -77,11 +77,25 @@ public class CampusMapActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_campusmap_refresh:
                 webView.reload();
-                progressBar.setVisibility(View.VISIBLE);
-                progressBar.setProgress(0);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void setRefreshActionButtonState(final boolean refreshing) {
+        if (optionsMenu != null) {
+            final MenuItem refreshItem = optionsMenu
+                    .findItem(R.id.action_campusmap_refresh);
+            if (refreshItem != null) {
+                if (refreshing) {
+                    refreshItem.setActionView(R.layout.refresh_header_layout);
+                } else {
+                    refreshItem.setActionView(null);
+                }
+            }
+        }
+    }
+
+
 }
