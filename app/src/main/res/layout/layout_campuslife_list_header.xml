@@ -1,18 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#eeeeee"
+    android:orientation="vertical"
     android:padding="8dp">
 
     <RelativeLayout
-        android:padding="8dp"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:background="@drawable/card_round"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/imageview_campuslife_list_header"
@@ -23,7 +25,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/imagebutton_selector"/>
+            android:background="@drawable/imagebutton_selector" />
 
         <RelativeLayout
             android:layout_width="200dp"
@@ -49,18 +51,18 @@
                 android:textSize="25sp" />
 
             <View
+                android:id="@+id/campuslife_ref2"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/reference_textView_campuslife_map"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:id="@+id/campuslife_ref2"
+                android:layout_marginTop="10dp"
                 android:background="#ffffff" />
 
             <LinearLayout
-                android:layout_below="@id/campuslife_ref2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/campuslife_ref2"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:weightSum="4">
@@ -95,4 +97,5 @@
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
-s</LinearLayout>
+    s
+</LinearLayout>

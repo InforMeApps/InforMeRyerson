@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <scale
+        android:duration="1000"
+        android:fillAfter="true"
         android:fromXScale="100%"
         android:fromYScale="100%"
-        android:toXScale="5000%"
-        android:toYScale="5000%"
-        android:duration="1000"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:fillAfter="true"/>
+        android:toXScale="5000%"
+        android:toYScale="5000%" />
 </set>

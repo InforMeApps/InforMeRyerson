@@ -1,43 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
         android:paddingLeft="26dp"
         android:paddingRight="16dp">
 
         <ImageView
+            android:id="@+id/imageview_campuslife_list"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/imageview_campuslife_list"
             android:layout_gravity="center_vertical"
             android:scaleType="centerInside" />
 
         <TextView
+            android:id="@+id/textview_campuslife_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Placeholder"
-            android:fontFamily="sans-serif-light"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
-            android:id="@+id/textview_campuslife_list"
             android:layout_gravity="center_vertical"
+            android:layout_marginBottom="40dp"
             android:layout_marginLeft="25dp"
-            android:textSize="25sp"
-            android:textColor="#454545" />
+            android:layout_marginTop="40dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Placeholder"
+            android:textColor="#454545"
+            android:textSize="25sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="?android:listDivider"
-        android:layout_marginLeft="100dp"/>
+        android:layout_marginLeft="100dp"
+        android:background="?android:listDivider" />
 </LinearLayout>

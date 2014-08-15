@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+ */
+
 package ca.informeapps.informeryerson.Misc;
 
 import android.view.View;
@@ -30,7 +34,6 @@ public class ExpandAnimation extends Animation {
         layoutPrams = (LayoutParams) view.getLayoutParams();
 
 
-
         blnVisible = (view.getVisibility() == View.VISIBLE); //checks visibility of current view
 
         //gets the positions of the layouts
@@ -48,8 +51,7 @@ public class ExpandAnimation extends Animation {
         if (interpolatedTime < 1.0f) {
             layoutPrams.bottomMargin = intStartPos + (int) ((intEndPos - intStartPos) * interpolatedTime);//calculating the height
             AnimationView.requestLayout();
-        }
-        else if (!blnAnimationDone) {
+        } else if (!blnAnimationDone) {
             layoutPrams.bottomMargin = intEndPos;
             AnimationView.requestLayout();
 

@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    android:paddingTop="5dp">
 
     <ImageView
         android:id="@+id/imageView_drawer_list_secondary"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:layout_centerVertical="true"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp" />
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/textView_drawer_list_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:textAllCaps="true"
-        android:layout_toRightOf="@id/imageView_drawer_list_secondary"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
+        android:layout_toRightOf="@id/imageView_drawer_list_secondary"
+        android:textAllCaps="true"
         android:textColor="#bb454545"
         android:textSize="13sp" />
 

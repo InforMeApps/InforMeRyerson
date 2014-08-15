@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@drawable/card_noround_pressed" />
+    <item android:drawable="@drawable/card_noround_pressed" android:state_pressed="true" />
     <item android:drawable="@drawable/card_noround" />
 </selector>

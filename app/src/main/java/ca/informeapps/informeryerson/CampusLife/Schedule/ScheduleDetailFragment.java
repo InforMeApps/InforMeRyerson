@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+ */
+
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
 import android.app.Fragment;
@@ -63,7 +67,7 @@ public class ScheduleDetailFragment extends Fragment {
         for (int i = 0; i < CalNames.length; i++) {
 
             CalIds[i] = mCursor.getInt(0);
-            CalNames[i] = "" + mCursor.getString(1) + "\n" + mCursor.getString(2) + "\n" + mCursor.getString(3)+"\n" + mCursor.getString(4)+"\n" + mCursor.getString(5);
+            CalNames[i] = "" + mCursor.getString(1) + "\n" + mCursor.getString(2) + "\n" + mCursor.getString(3) + "\n" + mCursor.getString(4) + "\n" + mCursor.getString(5);
             sDate[i] = new Date(mCursor.getLong(3));
             slong[i] = sDate[i].getTime();
             eDate[i] = new Date(mCursor.getLong(4));
