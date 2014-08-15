@@ -1,3 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="" />
+  <settings default="InforMeRyerson">
+    <module2copyright>
+      <element module="All" copyright="InforMeRyerson" />
+    </module2copyright>
+  </settings>
 </component>
