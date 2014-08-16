@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,6 +53,7 @@ public class ScheduleActivity extends FragmentActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onItemSelection(i);
                 Log.d("CLICK", "CLICK");
+                Toast.makeText(getApplicationContext(),""+i,Toast.LENGTH_SHORT).show();
             }
         });
 

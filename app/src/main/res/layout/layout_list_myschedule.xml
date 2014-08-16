@@ -8,7 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusable="false">
 
     <LinearLayout
         android:layout_width="70dp"
@@ -17,7 +18,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/circle"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusable="false">
 
         <TextView
             android:id="@+id/TextView_MonthName_MMM"
@@ -27,7 +29,8 @@
             android:fontFamily="@string/robotoLight"
             android:text="M"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:focusable="false"/>
 
         <TextView
             android:id="@+id/TextView_DateNumber"
@@ -36,6 +39,7 @@
             android:fontFamily="@string/robotoLight"
             android:text="21"
             android:textColor="@android:color/white"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:focusable="false"/>
     </LinearLayout>
 </LinearLayout>

@@ -18,7 +18,8 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:focusable="true"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:clickable="true"/>
 
     <View
         android:layout_width="1dp"
