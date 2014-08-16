@@ -5,10 +5,13 @@
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
 import android.app.Fragment;
-import android.content.Context;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,23 +27,23 @@ import ca.informeapps.informeryerson.R;
  */
 public class ScheduleDetailFragment extends Fragment {
 
-    Context con;
     private Calendar[] allDate;
     private int clickPosition;
     private Cursor mCursor = null;
-
-    public ScheduleDetailFragment(Calendar[] date, Context con) {
-        allDate = date;
-        this.con = con;
-    }
+    private long timeMillsStart;
+    private long timeMillsEnd;
+    private String[] calendarID;
+    private String textOutput = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        clickPosition = args.getInt("pos");
+        Log.d("DETAIL FRAGMENT", "ONCREATE");
 
+        Bundle args = getArguments();
+        timeMillsStart = args.getLong("timeMillsStart") + 1;
+        timeMillsEnd = args.getLong("timeMillsEnd") - 1;
     }
 
 
@@ -48,56 +51,47 @@ public class ScheduleDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_myschedule_detail, container, false);
 
+        Log.d("DETAIL FRAGMENT", "ONCREATEVIEW");
 
-        mCursor = con.getContentResolver().query(CalendarContract.Events.CONTENT_URI, new String[]{"_id", "title", "description", "dtstart", "dtend", "eventLocation"},
+        ContentResolver contentResolver = getActivity().getContentResolver();
+
+        final Cursor calendarNamesCursor = contentResolver.query(CalendarContract.Calendars.CONTENT_URI,
+                (new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME}),
                 null, null, null);
 
-        mCursor.moveToFirst();
+        while (calendarNamesCursor.moveToNext()) {
+            final String _id = calendarNamesCursor.getString(0);
+            final String displayName = calendarNamesCursor.getString(1);
 
-        String[] CalNames = new String[mCursor.getCount()];
-        int[] CalIds = new int[mCursor.getCount()];
-        Date[] sDate = new Date[mCursor.getCount()];
-        Date[] eDate = new Date[mCursor.getCount()];
-        long[] slong = new long[mCursor.getCount()];
-        long[] elong = new long[mCursor.getCount()];
-        int index1 = 0;
-        int index2 = 0;
-        String s = "";
+            int stringLength = displayName.length();
+            String output = displayName.substring(stringLength - 10);
 
-        for (int i = 0; i < CalNames.length; i++) {
-
-            CalIds[i] = mCursor.getInt(0);
-            CalNames[i] = "" + mCursor.getString(1) + "\n" + mCursor.getString(2) + "\n" + mCursor.getString(3) + "\n" + mCursor.getString(4) + "\n" + mCursor.getString(5);
-            sDate[i] = new Date(mCursor.getLong(3));
-            slong[i] = sDate[i].getTime();
-            eDate[i] = new Date(mCursor.getLong(4));
-            elong[i] = eDate[i].getTime();
-            mCursor.moveToNext();
-
-            Date startTime = new Date();
-            startTime = allDate[clickPosition].getTime();
-            long lngStartTime = startTime.getTime();
-            Calendar c = Calendar.getInstance();
-            c.set(allDate[clickPosition].get(Calendar.YEAR), allDate[clickPosition].get(Calendar.MONTH), allDate[clickPosition].get(Calendar.DAY_OF_MONTH), 23, 59);
-            Date endTime = c.getTime();
-            long lngEndTime = endTime.getTime();
-
-            if (slong[i] <= lngStartTime) {
-                index1 = i + 1;
-
+            if (output.equals("ryerson.ca")) {
+                calendarID = new String[]{_id};
             }
-            if (elong[i] >= lngEndTime) {
-                index2 = i;
-            }
-
-        }
-        mCursor.close();
-        for (int y = index1; y < index2; y++) {
-            s = s + CalNames[y];
         }
 
-        TextView t = (TextView) rootView.findViewById(R.id.textView);
-        t.setText(s + "");
+        Uri.Builder builder = CalendarContract.Instances.CONTENT_URI.buildUpon();
+
+        ContentUris.appendId(builder, timeMillsStart);
+        ContentUris.appendId(builder, timeMillsEnd);
+
+        Cursor eventsCursor = contentResolver.query(builder.build(), new String[]{CalendarContract.Instances.TITLE,
+                        CalendarContract.Instances.BEGIN, CalendarContract.Instances.END, CalendarContract.Instances.DESCRIPTION},
+                CalendarContract.Instances.CALENDAR_ID + " = ?", calendarID, null);
+
+        while (eventsCursor.moveToNext()) {
+            final String title = eventsCursor.getString(0);
+            final Date begin = new Date(eventsCursor.getLong(1));
+            final Date end = new Date(eventsCursor.getLong(2));
+            final String description = eventsCursor.getString(3);
+
+            textOutput = textOutput + "Title: " + title + "\nDescription: " + description + "\nBegin: " + begin + "\nEnd: " + end + "\n";
+            Log.d("OUTPUT", "Title: " + title + "\nDescription: " + description + "\nBegin: " + begin + "\nEnd: " + end + "\n");
+        }
+
+        TextView t = (TextView) rootView.findViewById(R.id.hello);
+        t.setText(textOutput);
 
 
         return rootView;
