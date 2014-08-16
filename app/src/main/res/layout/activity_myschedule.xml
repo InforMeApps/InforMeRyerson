@@ -10,24 +10,25 @@
     android:orientation="horizontal"
     android:weightSum="100">
 
-    <ListView
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/listview_myschedule_date"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="78"
+        android:layout_weight="72"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
+        android:focusable="true"
         android:scrollbars="none" />
 
     <View
-        android:layout_width="3dp"
+        android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="@drawable/drawer_shadow_opposite" />
+        android:background="?android:listDivider" />
 
     <FrameLayout
         android:id="@+id/content_frame_myschedule"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="22" />
+        android:layout_weight="28" />
 
 </LinearLayout>
