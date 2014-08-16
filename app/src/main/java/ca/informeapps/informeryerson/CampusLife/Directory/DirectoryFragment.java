@@ -4,6 +4,7 @@
 
 package ca.informeapps.informeryerson.CampusLife.Directory;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -17,25 +18,28 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import ca.informeapps.informeryerson.R;
 
-public class DirectoryFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class DirectoryFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private View rootView;
-    private Spinner spinner;
     private EditText searchText;
     private Button buttonText;
     private SearchByKeyword searchByKeyword;
     private SearchByDepartment searchByDepartment;
     private DirectorySpinnerItems directorySpinnerItems;
     private String[] spinnerItems, spinnerItemValues;
+    private ListView departmentList;
+    private DepartmentListAdapter adapter;
 
     @Nullable
     @Override
@@ -58,9 +62,8 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, spinnerItems);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        adapter = new DepartmentListAdapter();
+        departmentList.setAdapter(adapter);
 
         return rootView;
     }
@@ -73,7 +76,6 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onResume() {
         super.onResume();
-        spinner.setSelection(0);
         searchText.setText("");
     }
 
@@ -82,12 +84,11 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
         spinnerItems = directorySpinnerItems.getSpinnerItems();
         spinnerItemValues = directorySpinnerItems.getSpinnerItemValues();
 
-        spinner = (Spinner) rootView.findViewById(R.id.spinner_directory);
         searchText = (EditText) rootView.findViewById(R.id.edittext_directory_search);
         buttonText = (Button) rootView.findViewById(R.id.button_directory_searchtext);
+        departmentList = (ListView) rootView.findViewById(R.id.listview_directory_departmentlist);
+        departmentList.setOnItemClickListener(this);
         buttonText.setOnClickListener(this);
-        spinner.setOnItemSelectedListener(this);
-
     }
 
     @Override
@@ -100,6 +101,9 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
             } else {
                 Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
             }
+
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         } else {
             Toast.makeText(getActivity(), "Search must contain at least 3 characters", Toast.LENGTH_SHORT).show();
         }
@@ -112,19 +116,42 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (i != 0) {
-            if (isNetworkAvailable()) {
-                searchByDepartment = new SearchByDepartment(spinnerItemValues[i], getActivity());
-                searchByDepartment.execute();
-            } else {
-                Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
-            }
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (isNetworkAvailable()) {
+            searchByDepartment = new SearchByDepartment(spinnerItemValues[i], getActivity());
+            searchByDepartment.execute();
+        } else {
+            Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+    public class DepartmentListAdapter extends BaseAdapter {
 
+        @Override
+        public int getCount() {
+            return spinnerItems.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+
+            view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_directory_departmentlist, null);
+
+            TextView textView = (TextView) view.findViewById(R.id.textview_directory_list_department_name);
+            String s = spinnerItems[i];
+            textView.setText(WordUtils.capitalizeFully(s));
+
+            return view;
+        }
     }
 }

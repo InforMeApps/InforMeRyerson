@@ -20,9 +20,9 @@
             android:id="@+id/edittext_newreminder_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="16dp"
             android:background="@android:color/transparent"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="@string/robotoThin"
             android:hint="@string/Title"
             android:textColor="#454545"
             android:textSize="30sp"
@@ -31,27 +31,29 @@
         <EditText
             android:id="@+id/edittext_newreminder_description"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:fontFamily="@string/robotoLight"
             android:gravity="top"
             android:hint="@string/Description"
+            android:minHeight="100dp"
             android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:listDivider" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/reference_layout_addreminder_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/reference_layout_addreminder_2"
-        android:gravity="center_vertical"
+        android:layout_below="@+id/reference_layout_addreminder_1"
+        android:gravity="center_horizontal"
         android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="16dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_add_alarm" />
 
         <Button
             android:id="@+id/button_newreminder_date"
@@ -60,53 +62,58 @@
             android:layout_marginRight="8dp"
             android:background="@drawable/image_button_grey_selector"
             android:clickable="true"
-            android:fontFamily="sans-serif-light"
-            android:padding="8dp"
+            android:drawableRight="@drawable/ic_arrow_drop_down"
+            android:fontFamily="@string/robotoLight"
             android:text="@string/select_date"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/button_newreminder_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:background="@drawable/image_button_grey_selector"
             android:clickable="true"
-            android:fontFamily="sans-serif-light"
-            android:padding="8dp"
+            android:drawableRight="@drawable/ic_arrow_drop_down"
+            android:fontFamily="@string/robotoLight"
             android:text="@string/select_time"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/reference_layout_addreminder_2"
-        android:layout_width="wrap_content"
+        android:id="@+id/reference_layout_addreminder_3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/reference_layout_addreminder_2"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_newreminder_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/image_button_grey_selector"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/card_noround_selector"
+            android:focusable="false"
             android:padding="16dp"
             android:text="Cancel"
             android:textAllCaps="true"
-            android:textSize="20sp"
+            android:textColor="#454545"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/button_newreminder_add"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/image_button_grey_selector"
+            android:background="@drawable/card_noround_green_selector"
+            android:focusable="false"
             android:padding="16dp"
             android:text="Add"
             android:textAllCaps="true"
-            android:textColor="#259b24"
-            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -115,6 +122,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_done" />
+        android:src="@drawable/ic_done"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -4,22 +4,15 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import ca.informeapps.informeryerson.R;
 
@@ -34,22 +27,29 @@ public class ScheduleActivity extends FragmentActivity {
     public String[] MonthDays;
     private ListView listView;
     private String[] calendarID;
+    private long[] timeMills;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myschedule);
 
+
         Day = new Calendar[180];
         Days = new String[180];
         MonthDays = new String[180];
+        timeMills = new long[180];
+
 
         for (int z = 0; z < 180; z++) {
             Day[z] = shiftedCalender(Calendar.getInstance(), z);
             Days[z] = shiftDate(Calendar.getInstance(), z);
             MonthDays[z] = whatMonth(Day[z]);
+            timeMills[z] = shiftedCalender(Calendar.getInstance(), z).getTimeInMillis();
         }
 
+
+        /*
         //
         // GETTING STUFF FROM CALENDAR START
         //
@@ -101,10 +101,12 @@ public class ScheduleActivity extends FragmentActivity {
         //
         // GETTING STUFF FROM CALENDAR END
         //
+        */
 
 
         final ScheduleListDateAdapter adapter = new ScheduleListDateAdapter(this, Days, MonthDays);
         listView = (ListView) findViewById(R.id.listview_myschedule_date);
+
 
         listView.setAdapter(adapter);
 
@@ -112,12 +114,11 @@ public class ScheduleActivity extends FragmentActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Toast.makeText(getApplicationContext(), "Clicked this " + i, Toast.LENGTH_SHORT).show();
                 onItemSelection(i);
             }
 
         });
+
         onItemSelection(0);
 
     }
@@ -146,8 +147,11 @@ public class ScheduleActivity extends FragmentActivity {
 
     public void onItemSelection(int Pos) {
         Bundle bundle = new Bundle();
-        bundle.putInt("pos", Pos);
-        ScheduleDetailFragment fragInfo = new ScheduleDetailFragment(Day, this);
+        bundle.putLong("timeMillsStart", timeMills[Pos] + 1);
+        bundle.putLong("timeMillsEnd", timeMills[Pos + 1] - 1);
+
+        Log.d("Stuff", timeMills[Pos] + " " + timeMills[Pos + 1]);
+        ScheduleDetailFragment fragInfo = new ScheduleDetailFragment();
         fragInfo.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.content_frame_myschedule, fragInfo).commit();
 

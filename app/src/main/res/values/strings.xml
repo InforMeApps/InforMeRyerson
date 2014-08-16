@@ -26,8 +26,8 @@
     <string name="Bookstore">Bookstore</string>
     <string name="Description">Description</string>
     <string name="Title">Title</string>
-    <string name="select_date">[Select Date]</string>
-    <string name="select_time">[Select Time]</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
     <string name="Preferences">Preferences</string>
     <string name="Reminders">Reminders</string>
     <string name="Directory">Directory</string>

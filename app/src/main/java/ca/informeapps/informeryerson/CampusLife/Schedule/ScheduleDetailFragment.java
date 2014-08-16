@@ -86,8 +86,7 @@ public class ScheduleDetailFragment extends Fragment {
             final Date end = new Date(eventsCursor.getLong(2));
             final String description = eventsCursor.getString(3);
 
-            textOutput = textOutput + "Title: " + title + "\nDescription: " + description + "\nBegin: " + begin + "\nEnd: " + end + "\n";
-            Log.d("OUTPUT", "Title: " + title + "\nDescription: " + description + "\nBegin: " + begin + "\nEnd: " + end + "\n");
+            textOutput = textOutput + "Title: " + title + "\nDescription: " + description + "\nBegin: " + begin + "\nEnd: " + end + "\n\n";
         }
 
         TextView t = (TextView) rootView.findViewById(R.id.hello);

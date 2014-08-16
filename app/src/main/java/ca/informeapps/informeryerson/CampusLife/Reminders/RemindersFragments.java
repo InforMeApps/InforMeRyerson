@@ -99,8 +99,7 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                //vibrator.vibrate((long) 5);
+                floatingActionButton.setClickable(false);
                 Animation slideDown = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down_exit);
                 slideDown.setInterpolator(getActivity(), android.R.anim.anticipate_interpolator);
                 floatingActionButton.setAnimation(slideDown);

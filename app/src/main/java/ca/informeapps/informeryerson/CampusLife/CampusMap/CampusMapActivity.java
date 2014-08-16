@@ -10,10 +10,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import ca.informeapps.informeryerson.R;
@@ -24,6 +24,7 @@ public class CampusMapActivity extends Activity {
     private WebView webView;
     private Menu optionsMenu;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campusmap);
@@ -32,11 +33,22 @@ public class CampusMapActivity extends Activity {
         webView = (WebView) findViewById(R.id.webview_campusmap);
 
         webView.getSettings().setJavaScriptEnabled(true);
+
+        webView.getSettings().setGeolocationEnabled(true);//gets current location
+
+
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         final Activity activity = this;
+        webView.getSettings().setGeolocationDatabasePath(activity.getFilesDir().getPath());
 
         webView.setWebChromeClient(new WebChromeClient() {
+
+            @Override//passes current location to webview
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+                callback.invoke(origin, true, false);
+            }
+
             public void onProgressChanged(WebView view, int progress) {
                 if (progress != 100) {
                     setRefreshActionButtonState(true);
