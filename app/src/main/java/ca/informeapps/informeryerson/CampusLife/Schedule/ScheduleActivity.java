@@ -91,7 +91,8 @@ public class ScheduleActivity extends FragmentActivity {
             inflater = LayoutInflater.from(context);
             Dates = new String[180];
             monthHeader = new String[180];
-            for (int x = 0; x < Dates.length; x++) {
+
+            for (int x = 0; x < 180; x++) {
                 Dates[x] = Day(shiftedCalender(Calendar.getInstance(), x))[1] + ", " + Day(shiftedCalender(Calendar.getInstance(), x))[2];
                 monthHeader[x] = (shiftedCalender(Calendar.getInstance(), x));
             }
@@ -116,29 +117,22 @@ public class ScheduleActivity extends FragmentActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             ViewHolder dayTextHolder;
-            ViewHolder dateTextHolder;
 
             if (convertView == null) {
                 dayTextHolder = new ViewHolder();
-                dateTextHolder = new ViewHolder();
 
                 convertView = inflater.inflate(R.layout.layout_list_myschedule, parent, false);
 
-                dayTextHolder.text = (TextView) convertView.findViewById(R.id.TextView_MonthName_MMM);
-                dateTextHolder.text = (TextView) convertView.findViewById(R.id.TextView_DateNumber);
+                dayTextHolder.text = (TextView) convertView.findViewById(R.id.TextView_Day_EEE);
 
                 convertView.setTag(dayTextHolder);
-                convertView.setTag(dateTextHolder);
             } else {
                 dayTextHolder = (ViewHolder) convertView.getTag();
-                dateTextHolder = (ViewHolder) convertView.getTag();
             }
 
-            String dayText = Dates[position].substring(0, 3).toUpperCase();
+            String dayText = Dates[position].substring(0,3)+"\n"+Dates[position].substring(Dates[position].length()-2);
             dayTextHolder.text.setText(dayText);
 
-            String dateText = Dates[position].substring(Dates[position].length() - 2);
-            dateTextHolder.text.setText(dateText);
 
             return convertView;
         }
@@ -170,7 +164,7 @@ public class ScheduleActivity extends FragmentActivity {
             Calendar calendar = c;
             calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-            calendar.add(Calendar.DAY_OF_YEAR, Shift);
+            calendar.add(Calendar.DAY_OF_MONTH, Shift);
             return (new SimpleDateFormat("MMMM EEEE dd").format(calendar.getTime()));
         }
 
