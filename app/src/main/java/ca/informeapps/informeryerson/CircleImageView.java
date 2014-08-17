@@ -17,9 +17,6 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-/**
- * Created by Shahar on 2014-08-17.
- */
 public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context) {
