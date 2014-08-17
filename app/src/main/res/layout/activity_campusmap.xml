@@ -13,4 +13,27 @@
         android:id="@+id/webview_campusmap"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/layout_campus_map_NoConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/error_cat" />
+
+        <TextView
+            android:id="@+id/textview_directory_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Oh Noes Something Went Wrong x_x Check Connecting"
+            android:gravity="center"
+            android:textSize="22sp" />
+    </LinearLayout>
 </RelativeLayout>

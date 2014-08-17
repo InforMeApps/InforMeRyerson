@@ -62,40 +62,22 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        MainActivity mainActivity = (MainActivity) getActivity();
-        Fragment fragment = null;
-        boolean isFragment = true;
-
         switch (i) {
             case 0:
-                isFragment = false;
                 startActivity(new Intent(getActivity(), CampusMapActivity.class));
                 break;
             case 1:
-                isFragment = false;
                 startActivity(new Intent(getActivity(), ScheduleActivity.class));
                 break;
             case 2:
-                isFragment = false;
                 startActivity(new Intent(getActivity(), RemindersActivity.class));
                 break;
             case 3:
-                isFragment = false;
                 startActivity(new Intent(getActivity(), DirectoryActivity.class));
                 break;
             case 4:
-                isFragment = false;
                 startActivity(new Intent(getActivity(), BookstoreActivity.class));
                 break;
-        }
-
-        if (isFragment && fragment != null) {
-            mainActivity.mDrawerToggle.setDrawerIndicatorEnabled(false);
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_right_enter, R.anim.slide_right_exit, R.anim.slide_left_exit, R.anim.slide_left_enter)
-                    .replace(R.id.content_frame_main, fragment)
-                    .addToBackStack(null)
-                    .commit();
         }
     }
 

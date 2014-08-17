@@ -76,7 +76,7 @@ public class FloatingActionButton extends View {
         return super.onTouchEvent(event);
     }
 
-    public void hideFloatingActionButton() {
+    public void hideFloatingActionButtonhideFloatingActionButton() {
         if (!mHidden) {
             ObjectAnimator scaleX = ObjectAnimator.ofFloat(this, "scaleX", 1, 0);
             ObjectAnimator scaleY = ObjectAnimator.ofFloat(this, "scaleY", 1, 0);

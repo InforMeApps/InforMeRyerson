@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,6 +84,18 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        //new Handler().postDelayed(openDrawerRunnable(), 0); //When items are added to drawer
+
+    }
+
+    private Runnable openDrawerRunnable() {
+        return new Runnable() {
+
+            @Override
+            public void run() {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        };
     }
 
     @Override

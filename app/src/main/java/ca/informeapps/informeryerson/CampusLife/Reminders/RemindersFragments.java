@@ -120,8 +120,9 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
 
         Animation slideDown = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down_exit);
         slideDown.setInterpolator(getActivity(), android.R.anim.anticipate_interpolator);
-        floatingActionButton.setAnimation(slideDown);
+        floatingActionButton.startAnimation(slideDown);
         floatingActionButton.setVisibility(View.GONE);
+
 
         Fragment fragment = new RemindersDetailFragment(reminders, databaseHandler);
         Bundle args = new Bundle();

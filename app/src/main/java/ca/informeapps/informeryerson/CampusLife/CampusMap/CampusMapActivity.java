@@ -14,6 +14,7 @@ import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import ca.informeapps.informeryerson.R;
@@ -23,11 +24,15 @@ public class CampusMapActivity extends Activity {
     private String mapsUrl = "https://m.ryerson.ca/core_apps/map/beta/";
     private WebView webView;
     private Menu optionsMenu;
+    LinearLayout linearLayout;
+    boolean noConnection=false;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campusmap);
+
+        linearLayout = (LinearLayout) findViewById(R.id.layout_campus_map_NoConnection);
 
 
         webView = (WebView) findViewById(R.id.webview_campusmap);
@@ -70,10 +75,17 @@ public class CampusMapActivity extends Activity {
 
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 Toast.makeText(activity, "Oh no! Please Check Internet Connection", Toast.LENGTH_SHORT).show();
+                linearLayout.setVisibility(View.VISIBLE);
+                webView.setVisibility(View.INVISIBLE);
+                noConnection=true;
             }
         });
 
         webView.loadUrl(mapsUrl);
+
+
+            linearLayout.setVisibility(View.INVISIBLE);
+            webView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -89,6 +101,8 @@ public class CampusMapActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_campusmap_refresh:
                 webView.reload();
+                linearLayout.setVisibility(View.INVISIBLE);
+                webView.setVisibility(View.VISIBLE);
                 return true;
         }
 

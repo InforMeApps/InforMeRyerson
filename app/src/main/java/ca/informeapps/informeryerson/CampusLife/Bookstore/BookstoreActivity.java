@@ -76,7 +76,6 @@ public class BookstoreActivity extends Activity {
             rotateAnimation.setFillEnabled(true);
             icon.startAnimation(rotateAnimation);
             isRotated = true;
-            return;
         } else {
             RotateAnimation rotateAnimation = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setDuration(250);
@@ -84,7 +83,6 @@ public class BookstoreActivity extends Activity {
             rotateAnimation.setFillEnabled(true);
             icon.startAnimation(rotateAnimation);
             isRotated = false;
-            return;
         }
     }
 
@@ -119,12 +117,11 @@ public class BookstoreActivity extends Activity {
             ImageButton BookStoreMap = (ImageButton) convertView.findViewById(R.id.imagebutton_bookstore_list_map);
             TextView BookstoreHours = (TextView) convertView.findViewById(R.id.textview_bookstore_hours);
             TextView bookstoreAddress = (TextView) convertView.findViewById(R.id.textview_bookstore_address);
-            Calendar Day = Calendar.getInstance();
 
-            final String[][] HourDay = {{"Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm", "Saturday   Closed", "Sunday   Closed"},
-                    {"Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm", "Saturday   10:00 am – 4:00 pm", "Sunday   Closed"},
-                    {"Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm", "Saturday   10:00 am – 4:00 pm", "Sunday   Closed"},
-                    {"Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm", "Saturday   Closed", "Sunday   Closed"}};
+            final String[][] HourDay = {{"Saturday   Closed", "Sunday   Closed","Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm"},
+                    {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed","Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
+                    {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed","Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
+                    {"Saturday   Closed", "Sunday   Closed","Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm"}};
 
             final String[] mapsUri =
                     {"https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
@@ -132,23 +129,15 @@ public class BookstoreActivity extends Activity {
                             "https://www.google.ca/maps/place/Canadian+Campus+Bookstore/@43.6550156,-79.378763,18z/data=!4m2!3m1!1s0x89d4cb34d91b90db:0x5c40e77c86b0e682?hl=en",
                             "https://www.google.ca/maps/place/Ryerson+Students'+Union/@43.6579802,-79.3784305,19z/data=!4m2!3m1!1s0x89d4cb35645cd477:0x75bedc0285369c1d?hl=en"};
 
+            final String[] Address={"17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116",
+                    "215 Victoria St\n" + "Toronto, ON M5B\n",
+                    "215 Victoria St #101\n" + "Toronto, ON M5B 1T8\n" + "Phone: (416) 369 1488"
+                    ,"55 Gould St.\n" + "Toronto, ON M5B 1E9" + "Phone: (416) 979 5263"};
+
             BookStoreName.setText(getItem(position));
             Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
-
-            if (getItem(position).equals("Ryerson Campus Store")) {
-                BookstoreHours.setText(HourDay[0][Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2]);
-                bookstoreAddress.setText("17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116");
-            } else if (getItem(position).equals("Discount Textbooks")) {
-                BookstoreHours.setText(HourDay[1][Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2]);
-                bookstoreAddress.setText("215 Victoria St\n" + "Toronto, ON M5B\n");
-            } else if (getItem(position).equals("Canadian Campus Bookstore")) {
-                BookstoreHours.setText(HourDay[2][Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2]);
-                bookstoreAddress.setText("215 Victoria St #101\n" + "Toronto, ON M5B 1T8\n" + "Phone: (416) 369 1488");
-            } else if (getItem(position).equals("Ryerson Students Union")) {
-                BookstoreHours.setText(HourDay[3][Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2]);
-                bookstoreAddress.setText("55 Gould St.\n" + "Toronto, ON M5B 1E9" + "Phone: (416) 979 5263");
-            }
-
+            BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK)]);
+            bookstoreAddress.setText(Address[position]);
 
             BookStoreMap.setOnClickListener(new View.OnClickListener() {
                 @Override

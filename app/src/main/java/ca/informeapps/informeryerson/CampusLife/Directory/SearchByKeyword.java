@@ -76,7 +76,6 @@ public class SearchByKeyword extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         Elements results = doc.select("div[class=staffMember]");
-        int x = results.size();
         for (int i = 0; i < results.size(); i++) {
             Element oneResult = results.get(i);
             int j = oneResult.children().size();

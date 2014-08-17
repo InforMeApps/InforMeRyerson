@@ -90,9 +90,7 @@ public class RemindersDetailFragment extends Fragment {
             case R.id.action_reminders_delete:
                 deleteReminderPressed();
                 break;
-           /* case R.id.action_reminders_edit:
-                editReminderPressed();
-                break;*/
+
         }
         return super.onOptionsItemSelected(item);
     }

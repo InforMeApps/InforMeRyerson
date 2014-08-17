@@ -4,14 +4,14 @@
 
 <resources>
     <string-array name="Iconography">
-        <item>SimpleIcon</item>
-        <item>Situ Herrera</item>
-        <item>Scott de Jonge</item>
-        <item>Designmodo</item>
         <item>Amit Jakhu</item>
+        <item>Designmodo</item>
         <item>Freepik</item>
         <item>Icomoon</item>
         <item>Icons8</item>
+        <item>SimpleIcon</item>
+        <item>Situ Herrera</item>
+        <item>Scott de Jonge</item>
     </string-array>
 
     <string-array name="Images">
@@ -19,12 +19,12 @@
     </string-array>
 
     <string-array name="Libraries">
-        <item>Picasso - Square</item>
+        <item>Apache- Commons Lang</item>
+        <item>BetterPickers - Derekbrameyer</item>
         <item>Jsoup - Jonathan Hedley</item>
-        <item>Apache-Commons Lang</item>
+        <item>Picasso - Square</item>
         <item>ViewPagerIndicator - JakeWharton</item>
-        <item>BetterPickers - derekbrameyer</item>
-        <item>CircleImageView - hdodenhof</item>
-        <item>EnhancedListView - timroes</item>
+        <item>StickyListHeaders - Emilsjolander</item>
+
     </string-array>
 </resources>
