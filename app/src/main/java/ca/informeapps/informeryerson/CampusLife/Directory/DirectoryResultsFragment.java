@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import ca.informeapps.informeryerson.R;
 
 public class DirectoryResultsFragment extends Fragment {
@@ -24,12 +26,14 @@ public class DirectoryResultsFragment extends Fragment {
     private LinearLayout errorView;
     private DirectoryResultsListAdapter adapter;
     private String[] names, titles, locations, extensions, emails;
+    private String searchText;
     private int[] nums;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
+        searchText = WordUtils.capitalizeFully(args.getString("SEARCH_REQUEST"));
         names = args.getStringArray("ARRAY_NAME");
         titles = args.getStringArray("ARRAY_TITLE");
         locations = args.getStringArray("ARRAY_LOCATION");
@@ -41,7 +45,7 @@ public class DirectoryResultsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getActivity().getActionBar().setTitle("Search");
+        getActivity().getActionBar().setTitle("Search: " + searchText);
         rootView = inflater.inflate(R.layout.fragment_directory_results, container, false);
         errorView = (LinearLayout) rootView.findViewById(R.id.layout_directory_results_error);
         listView = (ListView) rootView.findViewById(R.id.listview_directory_results);

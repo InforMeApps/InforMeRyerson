@@ -118,10 +118,10 @@ public class BookstoreActivity extends Activity {
             TextView BookstoreHours = (TextView) convertView.findViewById(R.id.textview_bookstore_hours);
             TextView bookstoreAddress = (TextView) convertView.findViewById(R.id.textview_bookstore_address);
 
-            final String[][] HourDay = {{"Saturday   Closed", "Sunday   Closed","Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm"},
-                    {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed","Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
-                    {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed","Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
-                    {"Saturday   Closed", "Sunday   Closed","Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm"}};
+            final String[][] HourDay = {{"Saturday   Closed", "Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm"},
+                    {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
+                    {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
+                    {"Saturday   Closed", "Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm"}};
 
             final String[] mapsUri =
                     {"https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
@@ -129,10 +129,10 @@ public class BookstoreActivity extends Activity {
                             "https://www.google.ca/maps/place/Canadian+Campus+Bookstore/@43.6550156,-79.378763,18z/data=!4m2!3m1!1s0x89d4cb34d91b90db:0x5c40e77c86b0e682?hl=en",
                             "https://www.google.ca/maps/place/Ryerson+Students'+Union/@43.6579802,-79.3784305,19z/data=!4m2!3m1!1s0x89d4cb35645cd477:0x75bedc0285369c1d?hl=en"};
 
-            final String[] Address={"17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116",
+            final String[] Address = {"17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116",
                     "215 Victoria St\n" + "Toronto, ON M5B\n",
                     "215 Victoria St #101\n" + "Toronto, ON M5B 1T8\n" + "Phone: (416) 369 1488"
-                    ,"55 Gould St.\n" + "Toronto, ON M5B 1E9" + "Phone: (416) 979 5263"};
+                    , "Basement of Student Center\n55 Gould St.\n" + "Toronto, ON M5B 1E9" + "\nPhone: (416) 979 5263"};
 
             BookStoreName.setText(getItem(position));
             Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
