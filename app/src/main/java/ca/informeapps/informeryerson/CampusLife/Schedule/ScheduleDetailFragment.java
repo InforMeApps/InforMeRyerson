@@ -11,14 +11,17 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import ca.informeapps.informeryerson.R;
 
@@ -27,19 +30,16 @@ import ca.informeapps.informeryerson.R;
  */
 public class ScheduleDetailFragment extends Fragment {
 
-    private Calendar[] allDate;
-    private int clickPosition;
-    private Cursor mCursor = null;
+    private ListView listView;
+    private ScheduleDetailListAdapter adapter;
     private long timeMillsStart;
     private long timeMillsEnd;
     private String[] calendarID;
-    private String textOutput = "";
+    private List<Event> eventList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.d("DETAIL FRAGMENT", "ONCREATE");
 
         Bundle args = getArguments();
         timeMillsStart = args.getLong("timeMillsStart") + 1;
@@ -51,14 +51,25 @@ public class ScheduleDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_myschedule_detail, container, false);
 
-        Log.d("DETAIL FRAGMENT", "ONCREATEVIEW");
+        buildCalendarCursor();
+
+        listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
+        adapter = new ScheduleDetailListAdapter();
+        listView.setAdapter(adapter);
+
+        return rootView;
+    }
+
+    private void buildCalendarCursor() {
 
         ContentResolver contentResolver = getActivity().getContentResolver();
 
+        //Getting the ids and names of all the calendars available on the device
         final Cursor calendarNamesCursor = contentResolver.query(CalendarContract.Calendars.CONTENT_URI,
                 (new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME}),
                 null, null, null);
 
+        //finding ryerson.ca calendar
         while (calendarNamesCursor.moveToNext()) {
             final String _id = calendarNamesCursor.getString(0);
             final String displayName = calendarNamesCursor.getString(1);
@@ -76,25 +87,94 @@ public class ScheduleDetailFragment extends Fragment {
         ContentUris.appendId(builder, timeMillsStart);
         ContentUris.appendId(builder, timeMillsEnd);
 
-        Cursor eventsCursor = contentResolver.query(builder.build(), new String[]{CalendarContract.Instances.TITLE,
-                        CalendarContract.Instances.BEGIN, CalendarContract.Instances.END, CalendarContract.Instances.DESCRIPTION},
+
+        //getting the begin time and the description of the calendars for the specific date
+        Cursor eventsCursor = contentResolver.query(builder.build(), new String[]{CalendarContract.Instances.BEGIN,
+                        CalendarContract.Instances.DESCRIPTION},
                 CalendarContract.Instances.CALENDAR_ID + " = ?", calendarID, null);
 
-        while (eventsCursor.moveToNext()) {
-            final String title = eventsCursor.getString(0);
-            final Date begin = new Date(eventsCursor.getLong(1));
-            final Date end = new Date(eventsCursor.getLong(2));
-            final String description = eventsCursor.getString(3);
+        eventList = new ArrayList<Event>();
 
-            textOutput = textOutput + "Title: " + title + "\nDescription: " + description + "\nBegin: " + begin + "\nEnd: " + end + "\n\n";
+
+        //adding the receive data to the list for storage
+        while (eventsCursor.moveToNext()) {
+
+            Event event = new Event();
+
+            String[] description = eventsCursor.getString(1).split(System.getProperty("line.separator"));
+
+            event.setTime(description[3]);
+            event.setCourse(description[0]);
+            event.setCourseName(description[1]);
+            event.setLocation(description[4]);
+            if (description.length == 7) {
+                event.setInstructor(description[6]);
+            } else {
+                event.setInstructor(description[5]);
+            }
+            event.setLecture(description[2]);
+            event.setBegin(eventsCursor.getLong(0));
+
+            eventList.add(event);
+
         }
 
-        TextView t = (TextView) rootView.findViewById(R.id.hello);
-        t.setText(textOutput);
+        //sort the list
+        sortEventList();
 
-
-        return rootView;
     }
 
+    private void sortEventList() {
+
+        Collections.sort(eventList, new Comparator<Event>() {
+            @Override
+            public int compare(Event event, Event event2) {
+                return (int) (event.getBegin() - event2.getBegin());
+            }
+        });
+
+    }
+
+    public class ScheduleDetailListAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return eventList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+
+            view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_schedule_detail, null);
+
+            Event event = eventList.get(i);
+
+            TextView time = (TextView) view.findViewById(R.id.textview_schedule_list_detail_time);
+            TextView course = (TextView) view.findViewById(R.id.textview_schedule_list_detail_course);
+            TextView courseName = (TextView) view.findViewById(R.id.textview_schedule_list_detail_coursename);
+            TextView location = (TextView) view.findViewById(R.id.textview_schedule_list_detail_location);
+            TextView instructor = (TextView) view.findViewById(R.id.textview_schedule_list_detail_instructor);
+            TextView lecture = (TextView) view.findViewById(R.id.textview_schedule_list_detail_lecture);
+
+            time.setText(event.getTime());
+            course.setText(event.getCourse());
+            courseName.setText(event.getCourseName());
+            location.setText(event.getLocation());
+            instructor.setText("Instructor: " + event.getInstructor());
+            lecture.setText(event.getLecture());
+
+            return view;
+        }
+    }
 
 }

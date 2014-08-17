@@ -5,6 +5,8 @@
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -14,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,7 +31,9 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 public class ScheduleActivity extends FragmentActivity {
 
     private StickyListHeadersListView listView;
+    private ScheduleDateListAdapter adapter;
     private long[] timeMills;
+    private int clickPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +48,15 @@ public class ScheduleActivity extends FragmentActivity {
         }
 
 
-        ScheduleDateListAdapter adapter = new ScheduleDateListAdapter(this);
+        adapter = new ScheduleDateListAdapter(this);
         listView = (StickyListHeadersListView) findViewById(R.id.listview_myschedule_date);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onItemSelection(i);
-                Log.d("CLICK", "CLICK");
-                Toast.makeText(getApplicationContext(),""+i,Toast.LENGTH_SHORT).show();
+                clickPosition = i;
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -130,8 +133,15 @@ public class ScheduleActivity extends FragmentActivity {
                 dayTextHolder = (ViewHolder) convertView.getTag();
             }
 
-            String dayText = Dates[position].substring(0,3)+"\n"+Dates[position].substring(Dates[position].length()-2);
-            dayTextHolder.text.setText(dayText);
+            String dayText = Dates[position].substring(0, 3).toUpperCase();
+            String dateText = Dates[position].substring(Dates[position].length() - 2);
+            if (position == clickPosition) {
+                dayTextHolder.text.setTypeface(null, Typeface.BOLD);
+                if (Build.VERSION.SDK_INT >= 16) {
+                    dayTextHolder.text.setHasTransientState(true);
+                }
+            }
+            dayTextHolder.text.setText(dayText + "\n" + dateText);
 
 
             return convertView;

@@ -7,31 +7,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:focusable="false">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/circle"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:focusable="false">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/TextView_Day_EEE"
-            android:inputType="textNoSuggestions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:capitalize="characters"
             android:fontFamily="@string/robotoLight"
-            android:text="M"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:focusable="false"/>
+            android:inputType="textNoSuggestions"
+            android:text="MON"
+            android:textColor="#454545"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="?android:listDivider" />
 
 
     </LinearLayout>

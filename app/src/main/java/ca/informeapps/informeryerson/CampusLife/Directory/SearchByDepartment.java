@@ -124,6 +124,7 @@ public class SearchByDepartment extends AsyncTask<Void, Void, Void> {
 
         Fragment resultFragment = new DirectoryResultsFragment();
         Bundle args = new Bundle();
+        args.putString("SEARCH_REQUEST", text);
         args.putStringArray("ARRAY_NAME", namesArray);
         args.putStringArray("ARRAY_TITLE", titlesArray);
         args.putStringArray("ARRAY_LOCATION", locationsArray);
