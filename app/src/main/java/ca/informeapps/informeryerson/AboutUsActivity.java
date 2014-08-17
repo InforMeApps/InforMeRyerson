@@ -138,22 +138,59 @@ public class AboutUsActivity extends FragmentActivity implements AdapterView.OnI
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.layout_list_aboutus, null);
 
-            TextView textView = (TextView) view.findViewById(R.id.textView_aboutus_team_name);
-            textView.setText(teamNames[i]);
+            View row = view;
+            ViewHolder holder= null;
 
-            CircleImageView imageView = new CircleImageView(getApplicationContext());
+            if(row==null)
+            {
+                row = getLayoutInflater().inflate(R.layout.layout_list_aboutus, null);
+                holder= new ViewHolder(row);
+                row.setTag(holder);
+            }
+            else
+            {
+               holder= (ViewHolder)row.getTag();
+            }
 
-            imageView = (CircleImageView) view.findViewById(R.id.imageview_aboutus_list_team);
-            Picasso.with(AboutUsActivity.this).load(R.drawable.campuslife_header).into(imageView);
+            holder.textView.setText(teamNames[i]);
+            holder.imageView.setImageResource(R.drawable.campuslife_header);
 
-            View expandedView = view.findViewById(R.id.layout_list_aboutus_team_expanded);
-            ((LinearLayout.LayoutParams) expandedView.getLayoutParams()).bottomMargin = -700;
-            expandedView.setVisibility(View.GONE);
 
-            return view;
+            ((LinearLayout.LayoutParams) holder.expandedView.getLayoutParams()).bottomMargin = -700;
+            holder.expandedView.setVisibility(View.GONE);
+
+            return row;
         }
+
+
+        @Override
+        public int getViewTypeCount() {
+
+            return getCount();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+
+            return position;
+        }
+    }
+
+    class ViewHolder
+    {
+
+        CircleImageView imageView;
+        TextView textView;
+        View expandedView;
+
+        ViewHolder(View v)
+        {
+            imageView= (CircleImageView) v.findViewById(R.id.imageview_aboutus_list_team);
+            textView= (TextView) v.findViewById(R.id.textView_aboutus_team_name);
+            expandedView = v.findViewById(R.id.layout_list_aboutus_team_expanded);
+        }
+
     }
 
     private class AboutUsSlideAdapter extends FragmentStatePagerAdapter {
