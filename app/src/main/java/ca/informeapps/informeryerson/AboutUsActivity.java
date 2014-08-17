@@ -143,7 +143,9 @@ public class AboutUsActivity extends FragmentActivity implements AdapterView.OnI
             TextView textView = (TextView) view.findViewById(R.id.textView_aboutus_team_name);
             textView.setText(teamNames[i]);
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageview_aboutus_list_team);
+            CircleImageView imageView = new CircleImageView(getApplicationContext());
+
+            imageView = (CircleImageView) view.findViewById(R.id.imageview_aboutus_list_team);
             Picasso.with(AboutUsActivity.this).load(R.drawable.campuslife_header).into(imageView);
 
             View expandedView = view.findViewById(R.id.layout_list_aboutus_team_expanded);
