@@ -65,6 +65,7 @@
             android:parentActivityName=".MainActivity" />
 
         <receiver android:name=".CampusLife.Reminders.RemindersReceiver" />
+        <receiver android:name=".CampusLife.Reminders.DeleteReminders"/>
 
     </application>
 
