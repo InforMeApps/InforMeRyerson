@@ -9,9 +9,14 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import ca.informeapps.informeryerson.R;
 
 public class RemindersActivity extends FragmentActivity {
+
+    private List<Reminder> list;
+    private ReminderDatabaseHandler databaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

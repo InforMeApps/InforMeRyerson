@@ -4,8 +4,22 @@
 
 package ca.informeapps.informeryerson.CampusLife.Reminders;
 
-public class Reminder {
+import android.os.Parcel;
+import android.os.Parcelable;
 
+public class Reminder implements Parcelable {
+
+    public static final Creator CREATOR = new Creator() {
+        @Override
+        public Reminder createFromParcel(Parcel parcel) {
+            return new Reminder(parcel);
+        }
+
+        @Override
+        public Reminder[] newArray(int i) {
+            return new Reminder[i];
+        }
+    };
     int _id;
     String _title;
     String _description;
@@ -16,6 +30,22 @@ public class Reminder {
     int _minute;
 
     public Reminder() {
+    }
+
+    public Reminder(Parcel in) {
+        String[] data = new String[2];
+        in.readStringArray(data);
+        this._title = data[0];
+        this._description = data[1];
+
+        int[] moreData = new int[6];
+        in.readIntArray(moreData);
+        this._id = moreData[0];
+        this._year = moreData[1];
+        this._month = moreData[2];
+        this._day = moreData[3];
+        this._hour = moreData[4];
+        this._minute = moreData[5];
     }
 
     public Reminder(String title, String description, int day, int month, int year, int hour, int minute) {
@@ -101,5 +131,16 @@ public class Reminder {
 
     public void set_minute(int _minute) {
         this._minute = _minute;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeStringArray(new String[]{this._title, this._description});
+        parcel.writeIntArray(new int[]{this._id, this._year, this._month, this._day, this._hour, this._minute});
     }
 }

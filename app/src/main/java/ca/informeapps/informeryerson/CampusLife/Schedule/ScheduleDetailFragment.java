@@ -4,9 +4,12 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,6 +39,7 @@ public class ScheduleDetailFragment extends Fragment {
     private long timeMillsEnd;
     private String[] calendarID;
     private List<Event> eventList;
+    private boolean calendarFound = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,9 +57,15 @@ public class ScheduleDetailFragment extends Fragment {
 
         buildCalendarCursor();
 
-        listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
-        adapter = new ScheduleDetailListAdapter();
-        listView.setAdapter(adapter);
+        if (calendarFound) {
+            listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
+            adapter = new ScheduleDetailListAdapter();
+            listView.setAdapter(adapter);
+        } else {
+            TextView textView = (TextView) rootView.findViewById(R.id.textview_schedule_error);
+            listView.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+        }
 
         return rootView;
     }
@@ -79,48 +89,68 @@ public class ScheduleDetailFragment extends Fragment {
 
             if (output.equals("ryerson.ca")) {
                 calendarID = new String[]{_id};
+                calendarFound = true;
             }
         }
 
-        Uri.Builder builder = CalendarContract.Instances.CONTENT_URI.buildUpon();
+        if (calendarFound) {
+            Uri.Builder builder = CalendarContract.Instances.CONTENT_URI.buildUpon();
 
-        ContentUris.appendId(builder, timeMillsStart);
-        ContentUris.appendId(builder, timeMillsEnd);
-
-
-        //getting the begin time and the description of the calendars for the specific date
-        Cursor eventsCursor = contentResolver.query(builder.build(), new String[]{CalendarContract.Instances.BEGIN,
-                        CalendarContract.Instances.DESCRIPTION},
-                CalendarContract.Instances.CALENDAR_ID + " = ?", calendarID, null);
-
-        eventList = new ArrayList<Event>();
+            ContentUris.appendId(builder, timeMillsStart);
+            ContentUris.appendId(builder, timeMillsEnd);
 
 
-        //adding the receive data to the list for storage
-        while (eventsCursor.moveToNext()) {
+            //getting the begin time and the description of the calendars for the specific date
+            Cursor eventsCursor = contentResolver.query(builder.build(), new String[]{CalendarContract.Instances.BEGIN,
+                            CalendarContract.Instances.DESCRIPTION},
+                    CalendarContract.Instances.CALENDAR_ID + " = ?", calendarID, null);
 
-            Event event = new Event();
+            eventList = new ArrayList<Event>();
 
-            String[] description = eventsCursor.getString(1).split(System.getProperty("line.separator"));
 
-            event.setTime(description[3]);
-            event.setCourse(description[0]);
-            event.setCourseName(description[1]);
-            event.setLocation(description[4]);
-            if (description.length == 7) {
-                event.setInstructor(description[6]);
-            } else {
-                event.setInstructor(description[5]);
+            //adding the receive data to the list for storage
+            while (eventsCursor.moveToNext()) {
+
+                Event event = new Event();
+
+                String[] description = eventsCursor.getString(1).split(System.getProperty("line.separator"));
+
+                event.setTime(description[3]);
+                event.setCourse(description[0]);
+                event.setCourseName(description[1]);
+                event.setLocation(description[4]);
+                if (description.length == 7) {
+                    event.setInstructor(description[6]);
+                } else {
+                    event.setInstructor(description[5]);
+                }
+                event.setLecture(description[2]);
+                event.setBegin(eventsCursor.getLong(0));
+
+                eventList.add(event);
+
             }
-            event.setLecture(description[2]);
-            event.setBegin(eventsCursor.getLong(0));
 
-            eventList.add(event);
+            //sort the list
+            sortEventList();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Ryerson Calendar not found");
+            builder.setMessage("Please click the Instructions button to set up the Ryerson calendar on your phone");
+            builder.setPositiveButton("Instructions", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String url = "http://www.ryerson.ca/google/usingapps/viamobile/android/androidnativeappsnew.html";
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                    browserIntent.setData(Uri.parse(url));
+                    startActivity(browserIntent);
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
         }
-
-        //sort the list
-        sortEventList();
 
     }
 

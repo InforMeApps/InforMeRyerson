@@ -4,6 +4,7 @@
 
 package ca.informeapps.informeryerson.CampusLife.Reminders;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -35,9 +36,9 @@ public class RemindersDetailFragment extends Fragment {
     private ReminderDatabaseHandler databaseHandler;
     private ImageView delete;
 
-    public RemindersDetailFragment(List<Reminder> inputList, ReminderDatabaseHandler reminderDatabaseHandler) {
-        reminders = inputList;
-        databaseHandler = reminderDatabaseHandler;
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
     }
 
     @Override
@@ -50,6 +51,10 @@ public class RemindersDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_reminders_detail, container, false);
+
+        databaseHandler = new ReminderDatabaseHandler(getActivity());
+        reminders = databaseHandler.getAllReminders();
+
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
         getActivity().getActionBar().setHomeButtonEnabled(true);
         setHasOptionsMenu(true);
@@ -110,8 +115,4 @@ public class RemindersDetailFragment extends Fragment {
             }
         }, 700);
     }
-
-  /*  private void editReminderPressed(){
-
-    }*/
 }

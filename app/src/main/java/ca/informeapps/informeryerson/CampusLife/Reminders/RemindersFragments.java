@@ -4,11 +4,11 @@
 
 package ca.informeapps.informeryerson.CampusLife.Reminders;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +20,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import ca.informeapps.informeryerson.Misc.FloatingActionButton;
@@ -37,8 +40,12 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
     private List<Reminder> reminders;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_reminders, container, false);//setting layout
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);//for going back
@@ -124,75 +131,15 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
         floatingActionButton.setVisibility(View.GONE);
 
 
-        Fragment fragment = new RemindersDetailFragment(reminders, databaseHandler);
+        Fragment fragment = new RemindersDetailFragment();
         Bundle args = new Bundle();
         args.putInt("KEY_CLICK_POSITION", i);
         fragment.setArguments(args);
-
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_up_enter, R.anim.alpha_out, R.anim.alpha_in, R.anim.slide_down_exit)
                 .replace(R.id.content_frame_reminders, fragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public String getTime(int mHour, int mMinutes) {
-        String hour = null, minutes = null;
-        if (mHour <= 12) {
-            hour = mHour + "";
-            minutes = mMinutes + "";
-            if (mHour == 0) {
-                mHour = 12;
-                hour = mHour + "";
-            }
-            if (mMinutes < 10) {
-                minutes = "0" + mMinutes;
-            }
-
-            return hour + ":" + minutes + "AM";
-        } else {
-            hour = mHour + "";
-            minutes = mMinutes + "";
-            mHour = mHour - 12;
-            if (mHour < 10) {
-                hour = "0" + mHour;
-            }
-            if (mMinutes < 10) {
-                minutes = "0" + mMinutes;
-            }
-
-            return hour + ":" + minutes + "PM";
-        }
-    }
-
-    public String getMonth(int inputMonth) {
-        String month = null;
-        if (inputMonth == 0)
-            month = "JAN";
-        else if (inputMonth == 1)
-            month = "FEB";
-        else if (inputMonth == 2)
-            month = "MAR";
-        else if (inputMonth == 3)
-            month = "APR";
-        else if (inputMonth == 4)
-            month = "MAY";
-        else if (inputMonth == 5)
-            month = "JUN";
-        else if (inputMonth == 6)
-            month = "JUL";
-        else if (inputMonth == 7)
-            month = "AUG";
-        else if (inputMonth == 8)
-            month = "SEP";
-        else if (inputMonth == 9)
-            month = "OCT";
-        else if (inputMonth == 10)
-            month = "NOV";
-        else if (inputMonth == 11)
-            month = "DEC";
-
-        return month;
     }
 
     private class ReminderListAdapter extends BaseAdapter {
@@ -205,7 +152,6 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
 
         @Override
         public int getCount() {
-            Log.d("GETCOUNT", "" + databaseHandler.getRemindersCount());
             return databaseHandler.getRemindersCount();
         }
 
@@ -232,20 +178,17 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
 
             Reminder reminder = reminders.get(i);
 
-            int mDay = reminder.get_day();
-            int mMonth = reminder.get_month();
-            int mHour = reminder.get_hour();
-            int mMinutes = reminder.get_minute();
             String mTitle = reminder.get_title();
             String mDescription = reminder.get_description();
-            String mTime = getTime(mHour, mMinutes);
-            String monthText = getMonth(mMonth);
 
-            Log.d("TIME", mHour + "");
+            Date date = new Date(reminder.get_year(), reminder.get_month(), reminder.get_day(), reminder.get_hour(), reminder.get_minute());
+            DateFormat timeFormat = new SimpleDateFormat("hh:mm aa");
+            DateFormat monthFormat = new SimpleDateFormat("MMM");
+            DateFormat dayFormat = new SimpleDateFormat("dd");
 
-            day.setText(mDay + "");
-            month.setText(monthText);
-            time.setText(mTime);
+            day.setText(dayFormat.format(date));
+            month.setText(monthFormat.format(date));
+            time.setText(timeFormat.format(date));
             title.setText(mTitle);
             description.setText(mDescription);
 
