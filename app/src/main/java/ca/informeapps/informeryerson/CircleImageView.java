@@ -17,9 +17,6 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-/**
- * Created by Shahar on 2014-08-17.
- */
 public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context) {
@@ -69,7 +66,7 @@ public class CircleImageView extends ImageView {
         }
 
 
-        Bitmap finalBitmap = Bitmap.createBitmap(vectorBitmap.getWidth(),vectorBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap finalBitmap = Bitmap.createBitmap(vectorBitmap.getWidth(),vectorBitmap.getHeight(), Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(finalBitmap);
 
         final Paint paint = new Paint();
@@ -84,7 +81,7 @@ public class CircleImageView extends ImageView {
         canvas.drawCircle(vectorBitmap.getWidth() / 2, vectorBitmap.getHeight() / 2, vectorBitmap.getWidth() / 2, paint);
 
 
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(vectorBitmap, rect, rect, paint);
 
 
