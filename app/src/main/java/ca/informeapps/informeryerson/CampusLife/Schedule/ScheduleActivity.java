@@ -4,67 +4,88 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
-import android.content.Context;
-import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ca.informeapps.informeryerson.R;
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
-import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
-
 
 /**
- * Created by Tanmay on 2014-08-07.
+ * Created by Tanmay on 2014-08-18.
  */
 public class ScheduleActivity extends FragmentActivity {
 
-    private StickyListHeadersListView listView;
-    private ScheduleDateListAdapter adapter;
+    private ViewPager viewPager;
+    private String[] Months;
+    private String[][] Dates;
     private long[] timeMills;
-    private int clickPosition = 0;
+    private int offset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myschedule);
 
-        timeMills = new long[180];
+        fillDatesArray();
 
-        for (int z = 0; z < 180; z++) {
-
-            timeMills[z] = shiftedCalender(Calendar.getInstance(), z).getTimeInMillis();
+        timeMills = new long[140];
+        for (int x = 0; x < 140; x++) {
+            timeMills[x] = shiftCalender(Calendar.getInstance(), offset).getTimeInMillis();
+            offset++;
         }
 
-
-        adapter = new ScheduleDateListAdapter(this);
-        listView = (StickyListHeadersListView) findViewById(R.id.listview_myschedule_date);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onItemSelection(i);
-                clickPosition = i;
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        onItemSelection(0);
-
+        viewPager = (ViewPager) findViewById(R.id.pager_schedule_dates);
+        viewPager.setAdapter(new ScheduleSlideAdapter(getSupportFragmentManager()));
     }
 
-    public Calendar shiftedCalender(Calendar c, int Shift) {
+    private void changeMonthText(int i) {
+        TextView monthText = (TextView) findViewById(R.id.textview_schedule_month);
+        monthText.setText(Months[i]);
+    }
+
+    private void fillDatesArray() {
+        Dates = new String[7][20];
+        Months = new String[20];
+
+        boolean foundSunday = false;
+        Calendar sunday = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        sunday.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        sunday.set(Calendar.HOUR_OF_DAY, 0);
+        sunday.set(Calendar.MINUTE, 0);
+        sunday.set(Calendar.SECOND, 0);
+
+        final long DAY_IN_MILLS = 1000 * 60 * 60 * 24;
+
+        int i = (int) -((today.getTimeInMillis() - sunday.getTimeInMillis()) / DAY_IN_MILLS);
+
+        offset = i;
+
+        for (int j = 0; j < 20; j++) {
+
+            Months[j] = shiftedCalender(Calendar.getInstance(), i).split(" ")[0];
+
+            for (int z = 0; z < 7; z++) {
+                Dates[z][j] = shiftedCalender(Calendar.getInstance(), i).split(" ")[1];
+                i++;
+            }
+        }
+    }
+
+    public Calendar shiftCalender(Calendar c, int Shift) {
         Calendar calendar = c;
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
 
@@ -72,125 +93,162 @@ public class ScheduleActivity extends FragmentActivity {
         return calendar;
     }
 
-    public void onItemSelection(int Pos) {
-        Bundle bundle = new Bundle();
-        bundle.putLong("timeMillsStart", timeMills[Pos] + 1);
-        bundle.putLong("timeMillsEnd", timeMills[Pos + 1] - 1);
+    public String shiftedCalender(Calendar c, int Shift) {
+        Calendar calendar = c;
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-        Log.d("Stuff", timeMills[Pos] + " " + timeMills[Pos + 1]);
-        ScheduleDetailFragment fragInfo = new ScheduleDetailFragment();
-        fragInfo.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.content_frame_myschedule, fragInfo).commit();
-
+        calendar.add(Calendar.DAY_OF_MONTH, Shift);
+        return (new SimpleDateFormat("MMMM dd").format(calendar.getTime()));
     }
 
-    class ScheduleDateListAdapter extends BaseAdapter implements StickyListHeadersAdapter {
+    public String[] Day(String s) {
+        String p[];
+        p = s.split(" ");
+        return p;
+    }
 
-        private String[] Dates;
-        private String[] monthHeader;
-        private LayoutInflater inflater;
+    public static class ScheduleWeekViewFragment extends Fragment implements View.OnClickListener {
 
-        public ScheduleDateListAdapter(Context context) {
-            inflater = LayoutInflater.from(context);
-            Dates = new String[180];
-            monthHeader = new String[180];
+        private int pagerPosition;
+        private long[] timeMills;
+        private String[][] dates;
+        private TextView sundayTextV, mondayTextV, tuesdayTextV, wednesdayTextV, thursdayTextV, fridayTextV, saturdayTextV;
 
-            for (int x = 0; x < 180; x++) {
-                Dates[x] = Day(shiftedCalender(Calendar.getInstance(), x))[1] + ", " + Day(shiftedCalender(Calendar.getInstance(), x))[2];
-                monthHeader[x] = (shiftedCalender(Calendar.getInstance(), x));
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Bundle b = getArguments();
+            timeMills = b.getLongArray("KEY_MILLSARRAY");
+            pagerPosition = b.getInt("KEY_POSITION");
+            dates = (String[][]) b.getSerializable("KEY_ARRAY");
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_schedule_viewpager, container, false);
+
+            initialize(rootView);
+            setTextDates();
+
+            return rootView;
+        }
+
+        public void initialize(View rootView) {
+
+            sundayTextV = (TextView) rootView.findViewById(R.id.textview_schedule_viewpager_sunday);
+            mondayTextV = (TextView) rootView.findViewById(R.id.textview_schedule_viewpager_monday);
+            tuesdayTextV = (TextView) rootView.findViewById(R.id.textview_schedule_viewpager_tuesday);
+            wednesdayTextV = (TextView) rootView.findViewById(R.id.textview_schedule_viewpager_wednesday);
+            thursdayTextV = (TextView) rootView.findViewById(R.id.textview_schedule_viewpager_thursday);
+            fridayTextV = (TextView) rootView.findViewById(R.id.textview_schedule_viewpager_friday);
+            saturdayTextV = (TextView) rootView.findViewById(R.id.textview_schedule_viewpager_saturday);
+
+            sundayTextV.setOnClickListener(this);
+            mondayTextV.setOnClickListener(this);
+            tuesdayTextV.setOnClickListener(this);
+            wednesdayTextV.setOnClickListener(this);
+            thursdayTextV.setOnClickListener(this);
+            fridayTextV.setOnClickListener(this);
+            saturdayTextV.setOnClickListener(this);
+
+        }
+
+        private void setTextDates() {
+            for (int i = 0; i < 7; i++) {
+                String text = dates[i][pagerPosition];
+                switch (i) {
+                    case 0:
+                        sundayTextV.setText(text);
+                        break;
+                    case 1:
+                        mondayTextV.setText(text);
+                        break;
+                    case 2:
+                        tuesdayTextV.setText(text);
+                        break;
+                    case 3:
+                        wednesdayTextV.setText(text);
+                        break;
+                    case 4:
+                        thursdayTextV.setText(text);
+                        break;
+                    case 5:
+                        fridayTextV.setText(text);
+                        break;
+                    case 6:
+                        saturdayTextV.setText(text);
+                        break;
+                }
             }
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            Log.d("CLICk", "CLICK");
+            int clickPos = 0;
+
+            switch (view.getId()) {
+                case R.id.textview_schedule_viewpager_sunday:
+                    clickPos = 0;
+                    break;
+                case R.id.textview_schedule_viewpager_monday:
+                    clickPos = 1;
+                    break;
+                case R.id.textview_schedule_viewpager_tuesday:
+                    clickPos = 2;
+                    break;
+                case R.id.textview_schedule_viewpager_wednesday:
+                    clickPos = 3;
+                    break;
+                case R.id.textview_schedule_viewpager_thursday:
+                    clickPos = 4;
+                    break;
+                case R.id.textview_schedule_viewpager_friday:
+                    clickPos = 5;
+                    break;
+                case R.id.textview_schedule_viewpager_saturday:
+                    clickPos = 6;
+                    break;
+            }
+
+            int arrayPosition = (pagerPosition * 7) + clickPos;
+            Bundle b = new Bundle();
+            b.putLong("timeMillsStart", timeMills[arrayPosition]);
+            b.putLong("timeMillsEnd", timeMills[arrayPosition + 1]);
+
+
+            Log.d("CLICk", "CLICK2" + arrayPosition);
+            ScheduleDetailFragment fragment = new ScheduleDetailFragment();
+            fragment.setArguments(b);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_frame_myschedule, fragment).commit();
+        }
+    }
+
+    private class ScheduleSlideAdapter extends FragmentStatePagerAdapter {
+
+        public ScheduleSlideAdapter(FragmentManager supportFragmentManager) {
+            super(supportFragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+
+            changeMonthText(i);
+
+            Fragment fragment = new ScheduleWeekViewFragment();
+            Bundle args = new Bundle();
+            args.putInt("KEY_POSITION", i);
+            args.putLongArray("KEY_MILLSARRAY", timeMills);
+            args.putSerializable("KEY_ARRAY", Dates);
+            fragment.setArguments(args);
+
+            return fragment;
         }
 
         @Override
         public int getCount() {
-            return Dates.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return Dates[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ViewHolder dayTextHolder;
-
-            if (convertView == null) {
-                dayTextHolder = new ViewHolder();
-
-                convertView = inflater.inflate(R.layout.layout_list_myschedule, parent, false);
-
-                dayTextHolder.text = (TextView) convertView.findViewById(R.id.TextView_Day_EEE);
-
-                convertView.setTag(dayTextHolder);
-            } else {
-                dayTextHolder = (ViewHolder) convertView.getTag();
-            }
-
-            String dayText = Dates[position].substring(0, 3).toUpperCase();
-            String dateText = Dates[position].substring(Dates[position].length() - 2);
-            if (position == clickPosition) {
-                dayTextHolder.text.setTypeface(null, Typeface.BOLD);
-                if (Build.VERSION.SDK_INT >= 16) {
-                    dayTextHolder.text.setHasTransientState(true);
-                }
-            }
-            dayTextHolder.text.setText(dayText + "\n" + dateText);
-
-
-            return convertView;
-        }
-
-        @Override
-        public View getHeaderView(int position, View convertView, ViewGroup parent) {
-            HeaderViewHolder holder;
-            if (convertView == null) {
-                holder = new HeaderViewHolder();
-                convertView = inflater.inflate(R.layout.layout_list_schedule_datepicker_stickyheader, parent, false);
-                holder.text = (TextView) convertView.findViewById(R.id.textview_schedule_list_header);
-                convertView.setTag(holder);
-            } else {
-                holder = (HeaderViewHolder) convertView.getTag();
-            }
-            //set header text as first char in name
-            String headerText = "" + Day(monthHeader[position])[0];
-            holder.text.setText(headerText);
-            return convertView;
-        }
-
-        @Override
-        public long getHeaderId(int position) {
-            //return the first character of the country as ID because this is what headers are based upon
-            return monthHeader[position].subSequence(0, 1).charAt(0);
-        }
-
-        public String shiftedCalender(Calendar c, int Shift) {
-            Calendar calendar = c;
-            calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-            calendar.add(Calendar.DAY_OF_MONTH, Shift);
-            return (new SimpleDateFormat("MMMM EEEE dd").format(calendar.getTime()));
-        }
-
-        public String[] Day(String s) {
-            String p[];
-            p = s.split(" ");
-            return p;
+            return 20;
         }
     }
-
-    class HeaderViewHolder {
-        TextView text;
-    }
-
-    class ViewHolder {
-        TextView text;
-    }
-
 }

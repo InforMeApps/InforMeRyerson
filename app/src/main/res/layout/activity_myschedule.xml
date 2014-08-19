@@ -8,29 +8,119 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:orientation="horizontal"
-    android:weightSum="100">
+    android:orientation="vertical">
 
-    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
-        android:id="@+id/listview_myschedule_date"
+    <TextView
+        android:id="@+id/textview_schedule_month"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="70"
-        android:clickable="true"
-        android:divider="?android:listDivider"
-        android:dividerHeight="0dp"
-        android:focusable="true"
-        android:scrollbars="none" />
+        android:layout_height="wrap_content"
+        android:background="#3f51b5"
+        android:fontFamily="@string/robotoLight"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:text="September"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3f51b5"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:weightSum="7">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@string/robotoLight"
+            android:gravity="center"
+            android:text="SUN"
+            android:textColor="#88ffffff"
+            android:textSize="@dimen/schedule_day_name_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@string/robotoLight"
+            android:gravity="center"
+            android:text="MON"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_day_name_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@string/robotoLight"
+            android:gravity="center"
+            android:text="TUE"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_day_name_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@string/robotoLight"
+            android:gravity="center"
+            android:text="WED"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_day_name_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@string/robotoLight"
+            android:gravity="center"
+            android:text="THU"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_day_name_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@string/robotoLight"
+            android:gravity="center"
+            android:text="FRI"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_day_name_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@string/robotoLight"
+            android:gravity="center"
+            android:text="SAT"
+            android:textColor="#88ffffff"
+            android:textSize="@dimen/schedule_day_name_size" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_schedule_dates"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 
     <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="?android:listDivider" />
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#3949ab" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/drawer_shadow_horizontal" />
 
     <FrameLayout
         android:id="@+id/content_frame_myschedule"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="30" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

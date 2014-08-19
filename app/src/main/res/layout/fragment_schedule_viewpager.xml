@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="100">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="100"
+        android:background="#3f51b5"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <TextView
+            android:id="@+id/textview_schedule_viewpager_sunday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/imagebutton_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="17"
+            android:textColor="#88ffffff"
+            android:textSize="@dimen/schedule_pager_date_size" />
+
+        <TextView
+            android:id="@+id/textview_schedule_viewpager_monday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/imagebutton_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="17"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_pager_date_size" />
+
+        <TextView
+            android:id="@+id/textview_schedule_viewpager_tuesday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/imagebutton_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="17"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_pager_date_size" />
+
+        <TextView
+            android:id="@+id/textview_schedule_viewpager_wednesday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/imagebutton_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="17"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_pager_date_size" />
+
+        <TextView
+            android:id="@+id/textview_schedule_viewpager_thursday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/imagebutton_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="17"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_pager_date_size" />
+
+        <TextView
+            android:id="@+id/textview_schedule_viewpager_friday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/imagebutton_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="17"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/schedule_pager_date_size" />
+
+        <TextView
+            android:id="@+id/textview_schedule_viewpager_saturday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/imagebutton_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="17"
+            android:textColor="#88ffffff"
+            android:textSize="@dimen/schedule_pager_date_size" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

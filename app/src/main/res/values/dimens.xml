@@ -11,4 +11,7 @@
     <dimen name="aboutus_team_height">400dp</dimen>
     <dimen name="studentlife_explore_icons_size">70dp</dimen>
     <dimen name="studentlife_explore_icons_margin">8dp</dimen>
+    <dimen name="schedule_day_name_size">12sp</dimen>
+    <dimen name="schedule_pager_date_size">16sp</dimen>
+    <dimen name="schedule_pager_underline">4dp</dimen>
 </resources>

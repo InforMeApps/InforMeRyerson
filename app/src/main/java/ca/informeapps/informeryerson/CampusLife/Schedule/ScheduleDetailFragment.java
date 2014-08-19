@@ -5,7 +5,6 @@
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.DialogInterface;
@@ -14,6 +13,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,13 +48,13 @@ public class ScheduleDetailFragment extends Fragment {
         Bundle args = getArguments();
         timeMillsStart = args.getLong("timeMillsStart") + 1;
         timeMillsEnd = args.getLong("timeMillsEnd") - 1;
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_myschedule_detail, container, false);
-
         buildCalendarCursor();
 
         if (calendarFound) {
