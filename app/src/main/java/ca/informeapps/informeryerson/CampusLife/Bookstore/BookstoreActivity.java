@@ -90,10 +90,12 @@ public class BookstoreActivity extends Activity {
         int ResID;
         String n = StoreName.toLowerCase();
         String name = n.replaceAll("\\W", "");
-        if (map) {
+        if (map)
+        {
             name = name + "map";
-        } else {
-            name = name + "";
+        }
+        else if(!map)
+        {
         }
         ResID = getResources().getIdentifier(name, "drawable", getPackageName());
         return ResID;
@@ -136,6 +138,7 @@ public class BookstoreActivity extends Activity {
 
             BookStoreName.setText(getItem(position));
             Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
+            Picasso.with(this.getContext()).load(ResourceID(getItem(position), false)).into(BookStorePicture);
             BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK)]);
             bookstoreAddress.setText(Address[position]);
 

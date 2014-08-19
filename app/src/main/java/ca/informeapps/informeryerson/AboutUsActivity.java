@@ -16,24 +16,20 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
-import ca.informeapps.informeryerson.Misc.ExpandAnimation;
+import ca.informeapps.informeryerson.Misc.CircleImageView;
 
-public class AboutUsActivity extends FragmentActivity implements AdapterView.OnItemClickListener {
+public class AboutUsActivity extends FragmentActivity {
 
     private ListView listView;
     private ViewPager viewPager;
-    private String[] teamNames = {"Raj Chauhan", "Patrick Jankowski", "Tanmay Parikh", "Shahar Amin"};
+    private String[] teamNames = {"Raj", "Patrick", "Tanmay", "Shahar"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +52,6 @@ public class AboutUsActivity extends FragmentActivity implements AdapterView.OnI
         listView.setAdapter(adapter);
         listView.addHeaderView(headerView, null, false);
         listView.addFooterView(footerView, null, false);
-        listView.setOnItemClickListener(this);
     }
 
     @Override
@@ -69,13 +64,6 @@ public class AboutUsActivity extends FragmentActivity implements AdapterView.OnI
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        View expandedView = view.findViewById(R.id.layout_list_aboutus_team_expanded);
-        ExpandAnimation expandAnimation = new ExpandAnimation(expandedView, getResources().getInteger(R.integer.ExpandAnimationDuration));
-        expandedView.startAnimation(expandAnimation);
-        listView.smoothScrollToPositionFromTop(i, 100, getResources().getInteger(R.integer.SmoothScroolDuration));
-    }
 
     public static class AboutUsPagerFragment extends Fragment {
 
@@ -157,8 +145,6 @@ public class AboutUsActivity extends FragmentActivity implements AdapterView.OnI
             holder.imageView.setImageResource(R.drawable.campuslife_header);
 
 
-            ((LinearLayout.LayoutParams) holder.expandedView.getLayoutParams()).bottomMargin = -700;
-            holder.expandedView.setVisibility(View.GONE);
 
             return row;
         }
@@ -182,13 +168,11 @@ public class AboutUsActivity extends FragmentActivity implements AdapterView.OnI
 
         CircleImageView imageView;
         TextView textView;
-        View expandedView;
 
         ViewHolder(View v)
         {
             imageView= (CircleImageView) v.findViewById(R.id.imageview_aboutus_list_team);
             textView= (TextView) v.findViewById(R.id.textView_aboutus_team_name);
-            expandedView = v.findViewById(R.id.layout_list_aboutus_team_expanded);
         }
 
     }

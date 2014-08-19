@@ -5,11 +5,13 @@
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import ca.informeapps.informeryerson.Misc.FloatingActionButton;
 import ca.informeapps.informeryerson.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -34,6 +37,7 @@ public class ScheduleActivity extends FragmentActivity {
     private ScheduleDateListAdapter adapter;
     private long[] timeMills;
     private int clickPosition = 0;
+    ViewHolder dayTextHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,24 @@ public class ScheduleActivity extends FragmentActivity {
             }
         });
 
+        FloatingActionButton floatingActionButton;
+
+
+        floatingActionButton = new FloatingActionButton.Builder(this)
+                .withDrawable(getResources().getDrawable(R.drawable.ic_action_add))
+                .withButtonColor(Color.parseColor("#e91e63"))
+                .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
+                .withMargins(0, 0, 0, 0)
+                .withButtonSize(65)
+                .create();
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemSelection(0);
+                listView.smoothScrollToPositionFromTop(0,0,150);
+            }
+        });
         onItemSelection(0);
 
     }
@@ -119,15 +141,10 @@ public class ScheduleActivity extends FragmentActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            ViewHolder dayTextHolder;
-
             if (convertView == null) {
                 dayTextHolder = new ViewHolder();
-
                 convertView = inflater.inflate(R.layout.layout_list_myschedule, parent, false);
-
                 dayTextHolder.text = (TextView) convertView.findViewById(R.id.TextView_Day_EEE);
-
                 convertView.setTag(dayTextHolder);
             } else {
                 dayTextHolder = (ViewHolder) convertView.getTag();

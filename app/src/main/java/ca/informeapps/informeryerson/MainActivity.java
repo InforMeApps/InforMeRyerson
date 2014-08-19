@@ -84,7 +84,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        //new Handler().postDelayed(openDrawerRunnable(), 0); //When items are added to drawer
+        new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
 
     }
 
@@ -103,6 +103,21 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
         super.onRestart();
         mListAdapter.setSelectedItem(visibleFragment);
         mListAdapter.notifyDataSetChanged();
+        new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
+
     }
 
     @Override
