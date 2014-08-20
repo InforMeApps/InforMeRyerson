@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="25"
-        android:text="Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday"
+        android:text="Saturday\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday"
         android:textColor="#454545"
         android:textSize="17dp" />
 
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="75"
-        android:text="Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday"
+        android:text="Saturday\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday"
         android:textColor="#666666"
         android:textSize="17dp" />
 

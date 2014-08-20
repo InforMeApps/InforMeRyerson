@@ -13,6 +13,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -41,13 +44,48 @@ public class ScheduleActivity extends FragmentActivity {
         fillDatesArray();
 
         timeMills = new long[140];
-        for (int x = 0; x < 140; x++) {
-            timeMills[x] = shiftCalender(Calendar.getInstance(), offset).getTimeInMillis();
-            offset++;
+        int xyz = offset;
+        for (int abc = 0; abc < 140; abc++) {
+            timeMills[abc] = shiftCalender(Calendar.getInstance(), xyz).getTimeInMillis();
+            xyz++;
         }
 
         viewPager = (ViewPager) findViewById(R.id.pager_schedule_dates);
         viewPager.setAdapter(new ScheduleSlideAdapter(getSupportFragmentManager()));
+
+        Bundle b = new Bundle();
+        Log.d("LOG", "1st Transaction" + offset);
+        b.putLong("timeMillsStart", timeMills[-offset]);
+        Log.d("LOG", "2nd Transaction");
+        b.putLong("timeMillsEnd", timeMills[(-offset) + 1]);
+
+        ScheduleDetailFragment fragment = new ScheduleDetailFragment();
+        fragment.setArguments(b);
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame_myschedule, fragment).commit();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.schedule_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_schedule_today:
+                Bundle b = new Bundle();
+                b.putLong("timeMillsStart", timeMills[-offset]);
+                b.putLong("timeMillsEnd", timeMills[(-offset) + 1]);
+
+                ScheduleDetailFragment fragment = new ScheduleDetailFragment();
+                fragment.setArguments(b);
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame_myschedule, fragment).commit();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void changeMonthText(int i) {
@@ -59,7 +97,6 @@ public class ScheduleActivity extends FragmentActivity {
         Dates = new String[7][20];
         Months = new String[20];
 
-        boolean foundSunday = false;
         Calendar sunday = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
 
@@ -71,7 +108,7 @@ public class ScheduleActivity extends FragmentActivity {
         final long DAY_IN_MILLS = 1000 * 60 * 60 * 24;
 
         int i = (int) -((today.getTimeInMillis() - sunday.getTimeInMillis()) / DAY_IN_MILLS);
-
+        Log.d("OFFSET", i + "");
         offset = i;
 
         for (int j = 0; j < 20; j++) {
@@ -185,7 +222,6 @@ public class ScheduleActivity extends FragmentActivity {
         @Override
         public void onClick(View view) {
 
-            Log.d("CLICk", "CLICK");
             int clickPos = 0;
 
             switch (view.getId()) {

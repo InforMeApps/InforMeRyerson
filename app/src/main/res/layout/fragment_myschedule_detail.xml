@@ -9,10 +9,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textview_schedule_detail_list_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3949ab"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Tuesday"
+        android:textColor="#ffffff" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/textview_schedule_detail_list_header"
+        android:background="@drawable/drawer_shadow_horizontal" />
+
     <ListView
         android:id="@+id/listview_myschedule_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/textview_schedule_detail_list_header"
         android:layout_weight="30"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
@@ -26,6 +43,18 @@
         android:layout_centerInParent="true"
         android:drawableTop="@drawable/error_cat"
         android:text="Ryerson Calendar Not Found"
+        android:textSize="25sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textview_schedule_noclass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawablePadding="16dp"
+        android:drawableTop="@drawable/ic_schedule_noclass"
+        android:text="No Class Today!"
+        android:textColor="#666666"
         android:textSize="25sp"
         android:visibility="gone" />
 

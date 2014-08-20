@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,11 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import ca.informeapps.informeryerson.R;
@@ -40,6 +43,7 @@ public class ScheduleDetailFragment extends Fragment {
     private String[] calendarID;
     private List<Event> eventList;
     private boolean calendarFound = false;
+    private boolean listEmpty = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,12 +59,22 @@ public class ScheduleDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_myschedule_detail, container, false);
+        Log.d("DETAILFRAG", "1");
         buildCalendarCursor();
-
+        Log.d("DETAILFRAG", "2");
+        TextView header = (TextView) rootView.findViewById(R.id.textview_schedule_detail_list_header);
+        Date d = new Date(timeMillsStart);
+        header.setText(new SimpleDateFormat("EEEE").format(d));
+        Log.d("DETAILFRAG", "3");
         if (calendarFound) {
-            listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
-            adapter = new ScheduleDetailListAdapter();
-            listView.setAdapter(adapter);
+            if (!listEmpty) {
+                listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
+                adapter = new ScheduleDetailListAdapter();
+                listView.setAdapter(adapter);
+            } else {
+                TextView noEvent = (TextView) rootView.findViewById(R.id.textview_schedule_noclass);
+                noEvent.setVisibility(View.VISIBLE);
+            }
         } else {
             TextView textView = (TextView) rootView.findViewById(R.id.textview_schedule_error);
             listView.setVisibility(View.GONE);
@@ -131,8 +145,12 @@ public class ScheduleDetailFragment extends Fragment {
 
             }
 
-            //sort the list
-            sortEventList();
+            if (eventList.size() != 0) {
+                //sort the list
+                sortEventList();
+            } else {
+                listEmpty = true;
+            }
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Ryerson Calendar not found");
