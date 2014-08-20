@@ -28,9 +28,6 @@ import java.util.List;
 
 import ca.informeapps.informeryerson.R;
 
-/**
- * Created by Tanmay on 2014-08-07.
- */
 public class ScheduleDetailFragment extends Fragment {
 
     private ListView listView;

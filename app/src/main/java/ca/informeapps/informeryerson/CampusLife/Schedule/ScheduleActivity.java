@@ -27,10 +27,6 @@ import ca.informeapps.informeryerson.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-
-/**
- * Created by Tanmay on 2014-08-07.
- */
 public class ScheduleActivity extends FragmentActivity {
 
     private StickyListHeadersListView listView;
@@ -68,12 +64,13 @@ public class ScheduleActivity extends FragmentActivity {
 
 
         floatingActionButton = new FloatingActionButton.Builder(this)
-                .withDrawable(getResources().getDrawable(R.drawable.ic_action_add))
+                .withDrawable(getResources().getDrawable(R.drawable.todaybutton))
                 .withButtonColor(Color.parseColor("#e91e63"))
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
-                .withMargins(0, 0, 0, 0)
-                .withButtonSize(65)
+                .withMargins(0, 0, 10, 10)
                 .create();
+
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

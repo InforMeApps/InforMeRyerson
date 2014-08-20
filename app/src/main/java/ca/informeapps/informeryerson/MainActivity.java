@@ -80,7 +80,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
-                getActionBar().setTitle("InfroMeRyerson");
+                getActionBar().setTitle("InforMeRyerson");
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -103,20 +103,17 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
         super.onRestart();
         mListAdapter.setSelectedItem(visibleFragment);
         mListAdapter.notifyDataSetChanged();
-        new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
 
     }
 

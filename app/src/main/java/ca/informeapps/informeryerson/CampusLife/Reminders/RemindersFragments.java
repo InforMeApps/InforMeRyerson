@@ -103,6 +103,7 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
         slideUp.setInterpolator(getActivity(), android.R.anim.overshoot_interpolator);
         floatingActionButton.setAnimation(slideUp);
         floatingActionButton.setVisibility(View.VISIBLE);
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

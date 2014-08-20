@@ -4,9 +4,6 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
-/**
- * Created by Tanmay on 2014-08-17.
- */
 public class Event {
 
     private String time;
