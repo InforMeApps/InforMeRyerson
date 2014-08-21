@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/eventGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/video1Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/video1Play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
+                android:id="@+id/video1Pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/video2Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/video2Play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+
+            <Button
+                android:id="@+id/video2Pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/book1Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/book1View"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+
+            <Button
+                android:id="@+id/book1Share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/eventDispatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             />
+    </LinearLayout>
+
+</ScrollView>

@@ -11,14 +11,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 
+import ca.informeapps.informeryerson.AnalyticsSampleApp;
 import ca.informeapps.informeryerson.CampusLife.Bookstore.BookstoreActivity;
 import ca.informeapps.informeryerson.CampusLife.CampusMap.CampusMapActivity;
 import ca.informeapps.informeryerson.CampusLife.Directory.DirectoryActivity;
@@ -35,6 +41,8 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
     private String[] listTitles = {"My Schedule", "Reminders", "Directory", "Bookstore"};
     private int[] listImages = {R.drawable.campuslife_icons_schedule, R.drawable.campuslife_icons_reminders,
             R.drawable.campuslife_icons_directory, R.drawable.campuslife_icons_bookstore};
+    Tracker t;
+    AnalyticsSampleApp Trackers;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +64,12 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.mDrawerToggle.setDrawerIndicatorEnabled(true);
 
+        t = ((AnalyticsSampleApp)getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
+
+
         return rootView;
+
+
     }
 
     @Override
@@ -65,6 +78,14 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         switch (i) {
             case 0:
                 startActivity(new Intent(getActivity(), CampusMapActivity.class));
+
+                t.send(new HitBuilders.EventBuilder().setCategory("CAMPUS LIFE")
+                        .setAction("MAPS").setLabel("HOLLA").build());;
+
+
+                GoogleAnalytics.getInstance(getActivity().getApplicationContext()).dispatchLocalHits();
+
+
                 break;
             case 1:
                 startActivity(new Intent(getActivity(), ScheduleActivity.class));
@@ -79,6 +100,20 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
                 startActivity(new Intent(getActivity(), BookstoreActivity.class));
                 break;
         }
+    }
+
+
+
+    private void setupEvent(View v, int ClickId, final int categoryId, final int actionId,final int labelId) {
+        final Button pageviewButton = (Button)v.findViewById(ClickId);
+        pageviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tracker t = ((AnalyticsSampleApp)getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
+                t.send(new HitBuilders.EventBuilder().setCategory(getString(categoryId))
+                        .setAction(getString(actionId)).setLabel(getString(labelId)).build());
+            }
+        });
     }
 
     private class CampusLifeListAdapter extends BaseAdapter {

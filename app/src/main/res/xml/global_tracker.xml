@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
+  -->
+
+<resources>
+    <integer name="ga_sessionTimeout">300</integer>
+    <bool name="ga_autoActivityTracking">true</bool>
+    <screenName name="com.google.android.gms.analytics.samples.mobileplayground.ScreenviewFragment">
+        AnalyticsSampleApp ScreenView
+    </screenName>
+    <screenName name="com.google.android.gms.analytics.samples.mobileplayground.EcommerceFragment">
+        AnalyticsSampleApp ScreenView
+    </screenName>
+    <!--  The following value should be replaced with correct property id. -->
+    <string name="ga_trackingId">UA-54048021-1</string>
+</resources>

@@ -27,6 +27,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import ca.informeapps.informeryerson.CampusLife.CampusLifeFragment;
 
@@ -85,6 +89,8 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         //new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
 
+
+
     }
 
     private Runnable openDrawerRunnable() {
@@ -97,6 +103,11 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
         };
     }
 
+
+
+
+
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -107,7 +118,18 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
     @Override
     protected void onResume() {
         super.onResume();
+       /* int resultCode= GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if(resultCode== ConnectionResult.SUCCESS)
+        {
+            Toast.makeText(getApplicationContext(),
+                    "isGooglePlayServicesAvailable SUCCESS",
+                    Toast.LENGTH_LONG).show();
 
+        }
+        else
+        {
+            GooglePlayServicesUtil.getErrorDialog(resultCode, this, 1).show();
+        }*/
     }
 
     @Override
