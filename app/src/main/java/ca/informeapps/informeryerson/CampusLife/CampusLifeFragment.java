@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -24,7 +23,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 
-import ca.informeapps.informeryerson.AnalyticsSampleApp;
+import ca.informeapps.informeryerson.Misc.AnalyticsSampleApp;
 import ca.informeapps.informeryerson.CampusLife.Bookstore.BookstoreActivity;
 import ca.informeapps.informeryerson.CampusLife.CampusMap.CampusMapActivity;
 import ca.informeapps.informeryerson.CampusLife.Directory.DirectoryActivity;
@@ -43,7 +42,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
     private int[] listImages = {R.drawable.campuslife_icons_schedule, R.drawable.campuslife_icons_reminders,
             R.drawable.campuslife_icons_directory, R.drawable.campuslife_icons_bookstore, R.drawable.campuslife_icons_transit};
     Tracker t;
-    AnalyticsSampleApp Trackers;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +50,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         //getActivity().getActionBar().setTitle("Campus Life");
         rootView = inflater.inflate(R.layout.fragment_campuslife, container, false);
         View header = inflater.inflate(R.layout.layout_campuslife_list_header, mListView, false);
+
 
         mListView = (ListView) rootView.findViewById(R.id.listview_campuslife);
         adapter = new CampusLifeListAdapter(getActivity().getLayoutInflater());
@@ -66,6 +66,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         mainActivity.mDrawerToggle.setDrawerIndicatorEnabled(true);
 
         t = ((AnalyticsSampleApp)getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
+        t.setScreenName("Campus Life");
 
 
         return rootView;
@@ -79,30 +80,35 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         switch (i) {
             case 0:
                 startActivity(new Intent(getActivity(), CampusMapActivity.class));
-
-                t.send(new HitBuilders.EventBuilder().setCategory("CAMPUS LIFE")
-                        .setAction("MAPS").setLabel("HOLLA").build());;
-
-
-                GoogleAnalytics.getInstance(getActivity().getApplicationContext()).dispatchLocalHits();
-
-
+                t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
+                        .setAction("Maps").setLabel("IM LOST SHIIT!!").build());
                 break;
             case 1:
                 startActivity(new Intent(getActivity(), ScheduleActivity.class));
+                t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
+                        .setAction("MySchedule").setLabel("IM CHECKING CLASSES TO SKIP YOLO").build());
                 break;
             case 2:
                 startActivity(new Intent(getActivity(), RemindersActivity.class));
+                t.send(new HitBuilders.EventBuilder().setCategory("CAMPUS LIFE")
+                        .setAction("Reminders").setLabel("FORGETFUL MIND").build());
                 break;
             case 3:
                 startActivity(new Intent(getActivity(), DirectoryActivity.class));
+                t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
+                        .setAction("Directories").setLabel("STALKING SOME PEOPLE").build());
                 break;
             case 4:
                 startActivity(new Intent(getActivity(), BookstoreActivity.class));
+                t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
+                        .setAction("Bookstore").setLabel("NEEDA SAVE THAT MONEY #CASHMONEY").build());
                 break;
             case 5:
                 startActivity(new Intent(getActivity(), TransitActivity.class));
+                t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
+                        .setAction("TTC Info").setLabel("Cant be late").build());
         }
+        GoogleAnalytics.getInstance(getActivity().getApplicationContext()).dispatchLocalHits();
     }
 
 

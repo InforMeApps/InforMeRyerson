@@ -16,6 +16,7 @@
 
 
     <application
+        android:name=".Misc.AnalyticsSampleApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"

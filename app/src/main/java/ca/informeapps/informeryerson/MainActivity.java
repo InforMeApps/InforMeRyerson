@@ -4,6 +4,7 @@
 
 package ca.informeapps.informeryerson;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -117,7 +118,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
     @Override
     protected void onResume() {
         super.onResume();
-       /* int resultCode= GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        int resultCode= GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
         if(resultCode== ConnectionResult.SUCCESS)
         {
             Toast.makeText(getApplicationContext(),
@@ -125,10 +126,11 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                     Toast.LENGTH_LONG).show();
 
         }
-        else
-        {
-            GooglePlayServicesUtil.getErrorDialog(resultCode, this, 1).show();
-        }*/
+        else {
+            int requestCode = 10;
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, requestCode);
+            dialog.show();
+        }
     }
 
     @Override
