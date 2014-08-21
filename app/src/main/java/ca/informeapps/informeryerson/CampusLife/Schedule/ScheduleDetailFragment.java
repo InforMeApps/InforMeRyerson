@@ -60,7 +60,6 @@ public class ScheduleDetailFragment extends Fragment {
             listView.setAdapter(adapter);
         } else {
             TextView textView = (TextView) rootView.findViewById(R.id.textview_schedule_error);
-            listView.setVisibility(View.GONE);
             textView.setVisibility(View.VISIBLE);
         }
 

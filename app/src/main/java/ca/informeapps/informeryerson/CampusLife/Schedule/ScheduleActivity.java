@@ -29,11 +29,11 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class ScheduleActivity extends FragmentActivity {
 
+    ViewHolder dayTextHolder;
     private StickyListHeadersListView listView;
     private ScheduleDateListAdapter adapter;
     private long[] timeMills;
     private int clickPosition = 0;
-    ViewHolder dayTextHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class ScheduleActivity extends FragmentActivity {
 
 
         floatingActionButton = new FloatingActionButton.Builder(this)
-                .withDrawable(getResources().getDrawable(R.drawable.todaybutton))
+                .withDrawable(getResources().getDrawable(R.drawable.ic_action_today))
                 .withButtonColor(Color.parseColor("#e91e63"))
                 .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
                 .withMargins(0, 0, 10, 10)

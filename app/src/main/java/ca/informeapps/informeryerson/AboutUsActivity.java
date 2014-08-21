@@ -18,18 +18,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.viewpagerindicator.UnderlinePageIndicator;
-
-import ca.informeapps.informeryerson.Misc.CircleImageView;
 
 public class AboutUsActivity extends FragmentActivity {
 
     private ListView listView;
     private ViewPager viewPager;
     private String[] teamNames = {"Raj", "Patrick", "Tanmay", "Shahar"};
+    private String[] teamDescription = {"CoFounder/Project Lead/Marketing", "Co-Founder", "UI/UX Designer/Developer", "Developer"};
+    private int[] teamImages = {R.drawable.aboutus_raj, R.drawable.aboutus_patrick, R.drawable.aboutus_tanmay, R.drawable.aboutus_shahar};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +50,10 @@ public class AboutUsActivity extends FragmentActivity {
 
         listView = (ListView) findViewById(R.id.listview_aboutus);
         AboutUsListAdapter adapter = new AboutUsListAdapter();
-        listView.setAdapter(adapter);
         listView.addHeaderView(headerView, null, false);
         listView.addFooterView(footerView, null, false);
+        listView.setAdapter(adapter);
+
     }
 
     @Override
@@ -142,9 +144,8 @@ public class AboutUsActivity extends FragmentActivity {
             }
 
             holder.textView.setText(teamNames[i]);
-            holder.imageView.setImageResource(R.drawable.campuslife_header);
-
-
+            holder.imageView.setImageResource(teamImages[i]);
+            holder.descTextV.setText(teamDescription[i]);
 
             return row;
         }
@@ -166,13 +167,14 @@ public class AboutUsActivity extends FragmentActivity {
     class ViewHolder
     {
 
-        CircleImageView imageView;
-        TextView textView;
+        ImageView imageView;
+        TextView textView, descTextV;
 
         ViewHolder(View v)
         {
-            imageView= (CircleImageView) v.findViewById(R.id.imageview_aboutus_list_team);
+            imageView = (ImageView) v.findViewById(R.id.imageview_aboutus_list_team);
             textView= (TextView) v.findViewById(R.id.textView_aboutus_team_name);
+            descTextV = (TextView) v.findViewById(R.id.textView_aboutus_team_description);
         }
 
     }

@@ -12,7 +12,6 @@
 
     <style name="actionBarStyle" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">#3f51b5</item>
-        <item name="android:displayOptions">showTitle</item>
         <item name="android:textSize">20dp</item>
     </style>
 

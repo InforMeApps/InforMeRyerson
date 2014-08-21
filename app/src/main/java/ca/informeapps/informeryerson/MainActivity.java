@@ -9,7 +9,6 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -84,7 +83,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
+        //new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
 
     }
 

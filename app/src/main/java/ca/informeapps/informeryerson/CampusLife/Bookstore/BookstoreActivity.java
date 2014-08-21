@@ -44,7 +44,6 @@ public class BookstoreActivity extends Activity {
 
         final ArrayAdapter<String> BookStoreListAdapter = new ListAdapter(this, R.layout.layout_list_explore);
         BookStoreListAdapter.add("Ryerson Campus Store");
-        BookStoreListAdapter.add("Discount Textbooks");
         BookStoreListAdapter.add("Canadian Campus Bookstore");
         BookStoreListAdapter.add("Ryerson Students Union");
         final ListView BookStorelistView = (ListView) findViewById(R.id.listview_bookstore);
@@ -90,12 +89,9 @@ public class BookstoreActivity extends Activity {
         int ResID;
         String n = StoreName.toLowerCase();
         String name = n.replaceAll("\\W", "");
-        if (map)
-        {
+        if (map) {
             name = name + "map";
-        }
-        else if(!map)
-        {
+        } else if (!map) {
         }
         ResID = getResources().getIdentifier(name, "drawable", getPackageName());
         return ResID;
@@ -122,24 +118,24 @@ public class BookstoreActivity extends Activity {
 
             final String[][] HourDay = {{"Saturday   Closed", "Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm"},
                     {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
-                    {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
                     {"Saturday   Closed", "Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm"}};
 
             final String[] mapsUri =
                     {"https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
-                            "https://www.google.ca/maps/place/Discount+Textbooks/@43.6558521,-79.3794542,19z/data=!4m2!3m1!1s0x89d4cb34d8f9f5a9:0x598421247f805e0f?hl=en",
                             "https://www.google.ca/maps/place/Canadian+Campus+Bookstore/@43.6550156,-79.378763,18z/data=!4m2!3m1!1s0x89d4cb34d91b90db:0x5c40e77c86b0e682?hl=en",
                             "https://www.google.ca/maps/place/Ryerson+Students'+Union/@43.6579802,-79.3784305,19z/data=!4m2!3m1!1s0x89d4cb35645cd477:0x75bedc0285369c1d?hl=en"};
 
             final String[] Address = {"17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116",
-                    "215 Victoria St\n" + "Toronto, ON M5B\n",
                     "215 Victoria St #101\n" + "Toronto, ON M5B 1T8\n" + "Phone: (416) 369 1488"
                     , "Basement of Student Center\n55 Gould St.\n" + "Toronto, ON M5B 1E9" + "\nPhone: (416) 979 5263"};
+
+            final int[] images = {R.drawable.ryerson_campus_store, R.drawable.discount_textbooks, R.drawable.ryerson_students_union};
 
             BookStoreName.setText(getItem(position));
             Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
             BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK)]);
             bookstoreAddress.setText(Address[position]);
+            Picasso.with(this.getContext()).load(images[position]).into(BookStorePicture);
 
             BookStoreMap.setOnClickListener(new View.OnClickListener() {
                 @Override

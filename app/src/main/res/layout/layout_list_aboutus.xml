@@ -21,11 +21,11 @@
         android:paddingRight="16dp"
         android:paddingTop="8dp">
 
-        <ca.informeapps.informeryerson.Misc.CircleImageView
+        <ImageView
             android:id="@+id/imageview_aboutus_list_team"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerInside" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,6 +44,7 @@
                 android:textSize="25sp" />
 
             <TextView
+                android:id="@+id/textView_aboutus_team_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/robotoLight"

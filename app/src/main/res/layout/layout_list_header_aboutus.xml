@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:weightSum="3">
 
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -19,7 +19,16 @@
         android:fontFamily="sans-serif-light"
         android:text="@string/About"
         android:textColor="#454545"
-        android:textSize="30sp" />
+        android:textSize="30sp" />-->
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/informe_logo" />
 
     <View
         android:layout_width="match_parent"
