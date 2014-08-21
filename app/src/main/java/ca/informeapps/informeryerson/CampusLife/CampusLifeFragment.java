@@ -24,6 +24,7 @@ import ca.informeapps.informeryerson.CampusLife.CampusMap.CampusMapActivity;
 import ca.informeapps.informeryerson.CampusLife.Directory.DirectoryActivity;
 import ca.informeapps.informeryerson.CampusLife.Reminders.RemindersActivity;
 import ca.informeapps.informeryerson.CampusLife.Schedule.ScheduleActivity;
+import ca.informeapps.informeryerson.CampusLife.Transit.TransitActivity;
 import ca.informeapps.informeryerson.MainActivity;
 import ca.informeapps.informeryerson.R;
 
@@ -32,9 +33,9 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
     private View rootView;
     private ListView mListView;
     private CampusLifeListAdapter adapter;
-    private String[] listTitles = {"My Schedule", "Reminders", "Directory", "Bookstore"};
+    private String[] listTitles = {"My Schedule", "Reminders", "Directory", "Bookstore", "Transit Info."};
     private int[] listImages = {R.drawable.campuslife_icons_schedule, R.drawable.campuslife_icons_reminders,
-            R.drawable.campuslife_icons_directory, R.drawable.campuslife_icons_bookstore};
+            R.drawable.campuslife_icons_directory, R.drawable.campuslife_icons_bookstore, R.drawable.campuslife_icons_transit};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +79,8 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
             case 4:
                 startActivity(new Intent(getActivity(), BookstoreActivity.class));
                 break;
+            case 5:
+                startActivity(new Intent(getActivity(), TransitActivity.class));
         }
     }
 

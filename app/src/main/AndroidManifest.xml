@@ -74,6 +74,11 @@
             android:label="@string/Bookstore"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".CampusLife.Transit.TransitActivity"
+            android:label="@string/Transit_Info"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".CampusLife.Reminders.RemindersReceiver" />
 

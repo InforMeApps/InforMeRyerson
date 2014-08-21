@@ -5,6 +5,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:key="pref_key_privacy_category"
+        android:title="Privacy">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_key_google_analytics"
+            android:summary="Allow us to collect anonymous app usage data to help us make the app better"
+            android:title="Anonymous Usage Stats" />
+    </PreferenceCategory>
+    <PreferenceCategory
         android:key="pref_key_about_category"
         android:title="@string/prefs_about_category">
         <Preference

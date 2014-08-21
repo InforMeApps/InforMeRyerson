@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -39,7 +38,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
     private int visibleFragment = 0;
     private ListView mDrawerList;
     private DrawerListAdapter mListAdapter;
-    private String[] mDrawerItems = {"Campus Life", "Places", "Events", /*"Settings",*/ "About Us", "FeedBack"};
+    private String[] mDrawerItems = {"Campus Life", "Places", "Events", "Settings", "About Us", "FeedBack"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,15 +168,15 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                     /*fragment = new EventsFragment();
                     setVisibleFragment(i);*/
                     break;
-               /* case 3:
+                case 3:
                     isFragment = false;
                     startActivity(new Intent(this, PreferencesActivity.class));
-                    break;*/
-                case 3:
+                    break;
+                case 4:
                     isFragment = false;
                     startActivity(new Intent(this, AboutUsActivity.class));
                     break;
-                case 4:
+                case 5:
                     isFragment = false;
                     String[] emailAddress = {"informeapplications@gmail.com"};
                     String deviceInfo = "\n\n\nAPI Level: " + Build.VERSION.SDK_INT + "\n" + Build.DEVICE + "\n"
@@ -198,7 +197,6 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                 new android.os.Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentManager fragmentManager = getSupportFragmentManager();
                         getSupportFragmentManager().beginTransaction()
                                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                                 .replace(R.id.content_frame_main, finalFragment)
@@ -218,7 +216,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
 
         private LayoutInflater inflater;
         private int mSelectedItem;
-        private int[] mDrawerDrawables = {/*R.drawable.ic_settings,*/ R.drawable.ic_about, R.drawable.ic_feedback};
+        private int[] mDrawerDrawables = {R.drawable.ic_settings, R.drawable.ic_about, R.drawable.ic_feedback};
 
         public DrawerListAdapter(LayoutInflater inflater) {
             this.inflater = inflater;
