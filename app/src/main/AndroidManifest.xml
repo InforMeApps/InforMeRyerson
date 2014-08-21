@@ -25,6 +25,7 @@
             android:name="ca.informeapps.informeryerson.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,35 +36,44 @@
         <activity
             android:name=".AboutUsActivity"
             android:label="@string/aboutus"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PreferencesActivity"
             android:label="@string/Preferences"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".StudentLife.Explore.ExploreActivity"
             android:label="Explore"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CampusLife.Reminders.RemindersActivity"
             android:label="@string/Reminders"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CampusLife.CampusMap.CampusMapActivity"
             android:label="@string/CampusMap"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CampusLife.Schedule.ScheduleActivity"
             android:label="@string/my_schedule"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CampusLife.Directory.DirectoryActivity"
             android:label="@string/Directory"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".CampusLife.Bookstore.BookstoreActivity"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/Bookstore"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".CampusLife.Reminders.RemindersReceiver" />
 
