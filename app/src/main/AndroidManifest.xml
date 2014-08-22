@@ -87,6 +87,9 @@
             android:screenOrientation="portrait" />
 
         <receiver android:name=".CampusLife.Reminders.RemindersReceiver" />
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="8943663667c54cece67f154ec8fcec1d50d14cc6" />
 
     </application>
 
