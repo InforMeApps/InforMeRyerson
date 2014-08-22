@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 public class AboutUsActivity extends FragmentActivity {
@@ -38,6 +39,8 @@ public class AboutUsActivity extends FragmentActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_aboutus);
         getActionBar().setHomeButtonEnabled(true);
+
+        Crashlytics.start(this);
 
         View headerView = getLayoutInflater().inflate(R.layout.layout_list_header_aboutus, null);
         View footerView = getLayoutInflater().inflate(R.layout.layout_list_footer_aboutus, null);

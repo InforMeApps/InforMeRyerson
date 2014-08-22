@@ -6,10 +6,11 @@ package ca.informeapps.informeryerson;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+
+import com.crashlytics.android.Crashlytics;
 
 public class PreferencesActivity extends Activity {
 
@@ -19,6 +20,7 @@ public class PreferencesActivity extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Crashlytics.start(this);
 
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new MainPreferenceFragment())

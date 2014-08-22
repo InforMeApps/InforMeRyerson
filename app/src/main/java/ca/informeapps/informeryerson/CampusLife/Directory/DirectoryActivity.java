@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
+
 import ca.informeapps.informeryerson.R;
 
 public class DirectoryActivity extends Activity {
@@ -16,6 +18,8 @@ public class DirectoryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directory);
+
+        Crashlytics.start(this);
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame_directory, new DirectoryFragment())

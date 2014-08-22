@@ -19,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -39,6 +41,8 @@ public class ScheduleActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myschedule);
+
+        Crashlytics.start(this);
 
         timeMills = new long[180];
 
@@ -71,12 +75,11 @@ public class ScheduleActivity extends FragmentActivity {
                 .create();
 
 
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onItemSelection(0);
-                listView.smoothScrollToPositionFromTop(0,0,150);
+                listView.smoothScrollToPositionFromTop(0, 0, 150);
             }
         });
         onItemSelection(0);

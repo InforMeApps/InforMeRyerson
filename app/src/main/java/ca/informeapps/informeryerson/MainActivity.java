@@ -48,10 +48,11 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MainActivity", "onCreate");
         setContentView(R.layout.activity_main);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+
+        Crashlytics.start(this);
 
         if (savedInstanceState == null) {
             getActionBar().setTitle(mDrawerItems[0]);
@@ -61,11 +62,8 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                     .commit();
         }
 
-        Crashlytics.start(this);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        mDrawerList.setVisibility(View.GONE);
         mListAdapter = new DrawerListAdapter(LayoutInflater.from(this));
         mDrawerList = (ListView) findViewById(R.id.listview_drawer);
         mDrawerList.setAdapter(mListAdapter);
@@ -113,12 +111,10 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
     @Override
     protected void onResume() {
         super.onResume();
-        int resultCode= GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-        if(resultCode== ConnectionResult.SUCCESS)
-        {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+        if (resultCode == ConnectionResult.SUCCESS) {
 
-        }
-        else {
+        } else {
             int requestCode = 10;
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, requestCode);
             dialog.show();

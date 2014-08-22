@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.List;
 
 import ca.informeapps.informeryerson.R;
@@ -23,6 +25,8 @@ public class RemindersActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminders);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Crashlytics.start(this);
 
         new Handler().postDelayed(new Runnable() {
             @Override

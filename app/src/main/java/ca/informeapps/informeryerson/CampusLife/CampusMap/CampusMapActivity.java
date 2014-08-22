@@ -17,20 +17,23 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import ca.informeapps.informeryerson.R;
 
 public class CampusMapActivity extends Activity {
 
+    LinearLayout linearLayout;
+    boolean noConnection = false;
     private String mapsUrl = "https://m.ryerson.ca/core_apps/map/beta/";
     private WebView webView;
     private Menu optionsMenu;
-    LinearLayout linearLayout;
-    boolean noConnection=false;
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campusmap);
+
+        Crashlytics.start(this);
 
         linearLayout = (LinearLayout) findViewById(R.id.layout_campus_map_NoConnection);
 
@@ -77,15 +80,15 @@ public class CampusMapActivity extends Activity {
                 Toast.makeText(activity, "Oh no! Please Check Internet Connection", Toast.LENGTH_SHORT).show();
                 linearLayout.setVisibility(View.VISIBLE);
                 webView.setVisibility(View.INVISIBLE);
-                noConnection=true;
+                noConnection = true;
             }
         });
 
         webView.loadUrl(mapsUrl);
 
 
-            linearLayout.setVisibility(View.INVISIBLE);
-            webView.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.INVISIBLE);
+        webView.setVisibility(View.VISIBLE);
     }
 
     @Override

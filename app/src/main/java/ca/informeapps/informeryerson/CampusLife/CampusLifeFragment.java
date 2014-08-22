@@ -5,7 +5,9 @@
 package ca.informeapps.informeryerson.CampusLife;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +25,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.picasso.Picasso;
 
-import ca.informeapps.informeryerson.Misc.AnalyticsSampleApp;
 import ca.informeapps.informeryerson.CampusLife.Bookstore.BookstoreActivity;
 import ca.informeapps.informeryerson.CampusLife.CampusMap.CampusMapActivity;
 import ca.informeapps.informeryerson.CampusLife.Directory.DirectoryActivity;
@@ -31,18 +32,18 @@ import ca.informeapps.informeryerson.CampusLife.Reminders.RemindersActivity;
 import ca.informeapps.informeryerson.CampusLife.Schedule.ScheduleActivity;
 import ca.informeapps.informeryerson.CampusLife.Transit.TransitActivity;
 import ca.informeapps.informeryerson.MainActivity;
+import ca.informeapps.informeryerson.Misc.AnalyticsSampleApp;
 import ca.informeapps.informeryerson.R;
 
 public class CampusLifeFragment extends Fragment implements AdapterView.OnItemClickListener {
 
+    Tracker t;
     private View rootView;
     private ListView mListView;
     private CampusLifeListAdapter adapter;
     private String[] listTitles = {"My Schedule", "Reminders", "Directory", "Bookstore", "Transit Info."};
     private int[] listImages = {R.drawable.campuslife_icons_schedule, R.drawable.campuslife_icons_reminders,
             R.drawable.campuslife_icons_directory, R.drawable.campuslife_icons_bookstore, R.drawable.campuslife_icons_transit};
-    Tracker t;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,7 +109,11 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
                 t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
                         .setAction("TTC Info").setLabel("Cant be late").build());
         }
-        GoogleAnalytics.getInstance(getActivity().getApplicationContext()).dispatchLocalHits();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if (preferences.getBoolean("pref_key_google_analytics", true)) {
+            GoogleAnalytics.getInstance(getActivity().getApplicationContext()).dispatchLocalHits();
+        }
     }
 
 
