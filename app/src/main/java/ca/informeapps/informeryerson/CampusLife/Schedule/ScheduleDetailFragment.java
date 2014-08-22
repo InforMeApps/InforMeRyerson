@@ -106,19 +106,22 @@ public class ScheduleDetailFragment extends Fragment {
 
                 String[] description = eventsCursor.getString(1).split(System.getProperty("line.separator"));
 
-                event.setTime(description[3]);
-                event.setCourse(description[0]);
-                event.setCourseName(description[1]);
-                event.setLocation(description[4]);
-                if (description.length == 7) {
-                    event.setInstructor(description[6]);
-                } else {
-                    event.setInstructor(description[5]);
-                }
-                event.setLecture(description[2]);
-                event.setBegin(eventsCursor.getLong(0));
+                if (description.length > 5) {
 
-                eventList.add(event);
+                    event.setTime(description[3]);
+                    event.setCourse(description[0]);
+                    event.setCourseName(description[1]);
+                    event.setLocation(description[4]);
+                    if (description.length == 7) {
+                        event.setInstructor(description[6]);
+                    } else {
+                        event.setInstructor(description[5]);
+                    }
+                    event.setLecture(description[2]);
+                    event.setBegin(eventsCursor.getLong(0));
+
+                    eventList.add(event);
+                }
 
             }
 

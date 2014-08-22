@@ -106,15 +106,31 @@ public class TransitActivity extends FragmentActivity implements SwipeRefreshLay
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
 
-            view = getLayoutInflater().inflate(R.layout.layout_list_servicealerts, null);
+            ViewHolder holder;
 
-            TextView alertTextV = (TextView) view.findViewById(R.id.textview_servicealert_ttc_list_alert);
-            TextView updateTextV = (TextView) view.findViewById(R.id.textview_servicealert_ttc_list_update);
+            if (view == null) {
+                view = getLayoutInflater().inflate(R.layout.layout_list_servicealerts, null);
+                holder = new ViewHolder(view);
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
 
-            alertTextV.setText(alertList.get(i));
-            updateTextV.setText(lastUpdatedList.get(i));
+            holder.alertTextV.setText(alertList.get(i));
+            holder.updateTextV.setText(lastUpdatedList.get(i));
 
             return view;
+        }
+    }
+
+    public class ViewHolder {
+
+        private TextView alertTextV;
+        private TextView updateTextV;
+
+        public ViewHolder(View v) {
+            alertTextV = (TextView) v.findViewById(R.id.textview_servicealert_ttc_list_alert);
+            updateTextV = (TextView) v.findViewById(R.id.textview_servicealert_ttc_list_update);
         }
     }
 
