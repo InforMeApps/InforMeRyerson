@@ -27,8 +27,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -61,9 +61,11 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                     .commit();
         }
 
+        Crashlytics.start(this);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
+        mDrawerList.setVisibility(View.GONE);
         mListAdapter = new DrawerListAdapter(LayoutInflater.from(this));
         mDrawerList = (ListView) findViewById(R.id.listview_drawer);
         mDrawerList.setAdapter(mListAdapter);
@@ -87,9 +89,6 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        //new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
-
-
 
     }
 
@@ -102,10 +101,6 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             }
         };
     }
-
-
-
-
 
 
     @Override
@@ -121,9 +116,6 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
         int resultCode= GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
         if(resultCode== ConnectionResult.SUCCESS)
         {
-            Toast.makeText(getApplicationContext(),
-                    "isGooglePlayServicesAvailable SUCCESS",
-                    Toast.LENGTH_LONG).show();
 
         }
         else {
