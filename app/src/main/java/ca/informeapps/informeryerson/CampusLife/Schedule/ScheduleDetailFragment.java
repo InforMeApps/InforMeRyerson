@@ -79,9 +79,12 @@ public class ScheduleDetailFragment extends Fragment {
         while (calendarNamesCursor.moveToNext()) {
             final String _id = calendarNamesCursor.getString(0);
             final String displayName = calendarNamesCursor.getString(1);
+            String output = "";
 
             int stringLength = displayName.length();
-            String output = displayName.substring(stringLength - 10);
+            if (stringLength > 9) {
+                output = displayName.substring(stringLength - 10);
+            }
 
             if (output.equals("ryerson.ca")) {
                 calendarID = new String[]{_id};
