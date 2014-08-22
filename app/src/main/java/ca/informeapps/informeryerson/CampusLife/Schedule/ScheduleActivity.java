@@ -6,25 +6,24 @@ package ca.informeapps.informeryerson.CampusLife.Schedule;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,21 +39,22 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class ScheduleActivity extends FragmentActivity {
 
+    private static final int MAX_VIEWS = 6;
     ViewHolder dayTextHolder;
+    ViewPager mViewPager;
     private StickyListHeadersListView listView;
     private ScheduleDateListAdapter adapter;
     private long[] timeMills;
     private int clickPosition = 0;
-    private static final int MAX_VIEWS = 6;
-    ViewPager mViewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ScheduleDetailFragment scheduleDetailFragment= new ScheduleDetailFragment();
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        ScheduleDetailFragment scheduleDetailFragment = new ScheduleDetailFragment();
 
-        if(checkCalender()) {
+        if (checkCalender()) {
             setContentView(R.layout.activity_myschedule);
             timeMills = new long[180];
 
@@ -95,17 +95,23 @@ public class ScheduleActivity extends FragmentActivity {
                 }
             });
             onItemSelection(0);
-        }
-        else if(!checkCalender())
-        {
+        } else if (!checkCalender()) {
             setContentView(R.layout.walkthrough_ryerson_email);
             mViewPager = (ViewPager) findViewById(R.id.view_pager);
             mViewPager.setAdapter(new WalkthroughPagerAdapter());
             mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
         }
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        }
 
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -132,6 +138,35 @@ public class ScheduleActivity extends FragmentActivity {
         fragInfo.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.content_frame_myschedule, fragInfo).commit();
 
+    }
+
+    private boolean checkCalender() {
+        boolean calendarFound = false;
+        ContentResolver contentResolver = this.getContentResolver();
+
+        //Getting the ids and names of all the calendars available on the device
+        final Cursor calendarNamesCursor = contentResolver.query(CalendarContract.Calendars.CONTENT_URI,
+                (new String[]{CalendarContract.Calendars.CALENDAR_DISPLAY_NAME}),
+                null, null, null);
+
+        //finding ryerson.ca calendar
+        while (calendarNamesCursor.moveToNext()) {
+
+            final String displayName = calendarNamesCursor.getString(0);
+            String output = "";
+
+            int stringLength = displayName.length();
+            if (stringLength > 9) {
+                output = displayName.substring(stringLength - 10);
+            }
+
+            if (output.equals("ryerson.ca")) {
+                calendarFound = true;
+            }
+        }
+
+        calendarNamesCursor.close();
+        return calendarFound;
     }
 
     class ScheduleDateListAdapter extends BaseAdapter implements StickyListHeadersAdapter {
@@ -238,12 +273,6 @@ public class ScheduleActivity extends FragmentActivity {
         TextView text;
     }
 
-
-
-
-
-
-
     class WalkthroughPagerAdapter extends PagerAdapter {
 
         @Override
@@ -261,48 +290,44 @@ public class ScheduleActivity extends FragmentActivity {
             Log.e("walkthrough", "instantiateItem(" + position + ");");
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View viewz = inflater.inflate(R.layout.walkthrough_single_view, null);
+            TextView textView2 = (TextView) viewz.findViewById(R.id.textview_schedule_viewpager_enlightenment);
             ImageView imageView = (ImageView) viewz.findViewById(R.id.Walkthroug_image);
-            TextView textView = (TextView)viewz.findViewById(R.id.Walkthroug_text);
-            Button button=(Button)viewz.findViewById(R.id.Walkthroug_Buttn);
+            TextView textView = (TextView) viewz.findViewById(R.id.Walkthroug_text);
 
-            switch(position) {
+            switch (position) {
                 case 0:
-                    textView.setText("OH NOES LOOKS LIKE YOU DONT HAVE RYERSON EMAIL ON YOUR DEVICE\nFOLLOW THE TUTORIAL TO BE ENLIGHTENED");
+                    textView.setText("Oh No! Looks like you dont have your Ryerson Account on your device :(\n\nFollow the tutorial to be enlightened");
                     imageView.setImageResource(R.drawable.error_cat);
                     break;
 
                 case 1:
                     textView.setText("Log into your my.ryerson account and click the Apps on the top");
+                    textView2.setText("Your Journey Has Just \nBegun -->");
                     imageView.setImageResource(R.drawable.step1);
                     break;
 
                 case 2:
                     textView.setText("Click on \"Activate Google Token\"");
+                    textView2.setText("You can do it! \nAll you have to do is \nBELIEVE -->");
                     imageView.setImageResource(R.drawable.step2);
                     break;
 
                 case 3:
                     textView.setText("Click on Activate");
+                    textView2.setText("So close to the end you can feel it -->");
                     imageView.setImageResource(R.drawable.step3);
                     break;
 
                 case 4:
                     textView.setText("Next on Your Device Go to Settings and Add An Existing Google Account");
+                    textView2.setText("So close u can lick it -->");
                     imageView.setImageResource(R.drawable.step4);
                     break;
 
                 case 5:
                     textView.setText("Sign in Using Ryerson Email and Use The Token As The Password\nRemember to Have Ryerson Calendar Synced!");
                     imageView.setImageResource(R.drawable.step7);
-                    button.setVisibility(View.VISIBLE);
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                            browserIntent.setData(Uri.parse("https://my.ryerson.ca/render.userLayoutRootNode.uP"));
-                            startActivity(browserIntent);
-                        }
-                    });
+                    textView2.setText("Looks like you have completed your Journey\nHope to never see you here again :P");
                     break;
             }
 
@@ -312,10 +337,9 @@ public class ScheduleActivity extends FragmentActivity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager)container).removeView((View)object);
+            ((ViewPager) container).removeView((View) object);
         }
     }
-
 
     class WalkthroughPageChangeListener implements ViewPager.OnPageChangeListener {
 
@@ -332,7 +356,7 @@ public class ScheduleActivity extends FragmentActivity {
         @Override
         public void onPageSelected(int position) {
             // Here is where you should show change the view of page indicator
-            switch(position) {
+            switch (position) {
 
                 case MAX_VIEWS - 1:
                     break;
@@ -343,33 +367,5 @@ public class ScheduleActivity extends FragmentActivity {
 
         }
 
-    }
-
-    private boolean checkCalender()
-    {
-        boolean calendarFound = false;
-        ContentResolver contentResolver = this.getContentResolver();
-
-        //Getting the ids and names of all the calendars available on the device
-        final Cursor calendarNamesCursor = contentResolver.query(CalendarContract.Calendars.CONTENT_URI,
-                (new String[]{ CalendarContract.Calendars.CALENDAR_DISPLAY_NAME}),
-                null, null, null);
-
-        //finding ryerson.ca calendar
-        while (calendarNamesCursor.moveToNext()) {
-
-            final String displayName = calendarNamesCursor.getString(0);
-            String output = "";
-
-            int stringLength = displayName.length();
-            if (stringLength > 9) {
-                output = displayName.substring(stringLength - 10);
-            }
-
-            if (output.equals("ryerson.ca")) {
-                calendarFound = true;
-            }
-        }
-        return calendarFound;
     }
 }

@@ -15,6 +15,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -127,6 +129,8 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
 
     public class DepartmentListAdapter extends BaseAdapter {
 
+        private int lastPosition = -1;
+
         @Override
         public int getCount() {
             return spinnerItems.length;
@@ -150,6 +154,16 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
             TextView textView = (TextView) view.findViewById(R.id.textview_directory_list_department_name);
             String s = spinnerItems[i];
             textView.setText(WordUtils.capitalizeFully(s));
+
+            TranslateAnimation animation = null;
+            if (i > lastPosition) {
+                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 2.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+                animation.setDuration(600);
+                animation.setInterpolator(getActivity(), android.R.anim.decelerate_interpolator);
+                view.startAnimation(animation);
+                lastPosition = i;
+            }
 
             return view;
         }

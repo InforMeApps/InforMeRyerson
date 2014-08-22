@@ -6,6 +6,7 @@ package ca.informeapps.informeryerson.CampusLife.CampusMap;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -110,6 +111,9 @@ public class CampusMapActivity extends Activity {
                 webView.reload();
                 linearLayout.setVisibility(View.INVISIBLE);
                 webView.setVisibility(View.VISIBLE);
+                return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
 

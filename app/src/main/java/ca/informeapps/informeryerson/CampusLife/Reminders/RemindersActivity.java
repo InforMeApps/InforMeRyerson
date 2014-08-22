@@ -7,6 +7,7 @@ package ca.informeapps.informeryerson.CampusLife.Reminders;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
@@ -48,6 +49,8 @@ public class RemindersActivity extends FragmentActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 getSupportFragmentManager().popBackStack();
                 return true;
+            } else {
+                NavUtils.navigateUpFromSameTask(this);
             }
         }
         return super.onOptionsItemSelected(item);

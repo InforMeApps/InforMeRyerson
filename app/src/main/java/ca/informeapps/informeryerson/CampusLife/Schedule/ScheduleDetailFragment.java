@@ -49,10 +49,9 @@ public class ScheduleDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         buildCalendarCursor();
         View rootView = inflater.inflate(R.layout.fragment_myschedule_detail, container, false);
-                listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
-                adapter = new ScheduleDetailListAdapter();
-                listView.setAdapter(adapter);
-
+        listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
+        adapter = new ScheduleDetailListAdapter();
+        listView.setAdapter(adapter);
 
 
         return rootView;
@@ -127,13 +126,12 @@ public class ScheduleDetailFragment extends Fragment {
 
             //sort the list
             sortEventList();
-
+            calendarNamesCursor.close();
+            eventsCursor.close();
 
         }
 
     }
-
-
 
 
     private void sortEventList() {
