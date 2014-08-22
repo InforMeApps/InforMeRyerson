@@ -26,8 +26,6 @@ public class RemindersActivity extends FragmentActivity {
         setContentView(R.layout.activity_reminders);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Crashlytics.start(this);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -36,6 +34,12 @@ public class RemindersActivity extends FragmentActivity {
                         .commit();
             }
         }, 50);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Crashlytics.start(this);
     }
 
     @Override

@@ -42,8 +42,6 @@ public class ScheduleActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myschedule);
 
-        Crashlytics.start(this);
-
         timeMills = new long[180];
 
         for (int z = 0; z < 180; z++) {
@@ -84,6 +82,12 @@ public class ScheduleActivity extends FragmentActivity {
         });
         onItemSelection(0);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Crashlytics.start(this);
     }
 
     public Calendar shiftedCalender(Calendar c, int Shift) {

@@ -40,8 +40,6 @@ public class AboutUsActivity extends FragmentActivity {
         setContentView(R.layout.activity_aboutus);
         getActionBar().setHomeButtonEnabled(true);
 
-        Crashlytics.start(this);
-
         View headerView = getLayoutInflater().inflate(R.layout.layout_list_header_aboutus, null);
         View footerView = getLayoutInflater().inflate(R.layout.layout_list_footer_aboutus, null);
 
@@ -57,6 +55,12 @@ public class AboutUsActivity extends FragmentActivity {
         listView.addFooterView(footerView, null, false);
         listView.setAdapter(adapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Crashlytics.start(this);
     }
 
     @Override
@@ -133,17 +137,14 @@ public class AboutUsActivity extends FragmentActivity {
         public View getView(int i, View view, ViewGroup viewGroup) {
 
             View row = view;
-            ViewHolder holder= null;
+            ViewHolder holder = null;
 
-            if(row==null)
-            {
+            if (row == null) {
                 row = getLayoutInflater().inflate(R.layout.layout_list_aboutus, null);
-                holder= new ViewHolder(row);
+                holder = new ViewHolder(row);
                 row.setTag(holder);
-            }
-            else
-            {
-               holder= (ViewHolder)row.getTag();
+            } else {
+                holder = (ViewHolder) row.getTag();
             }
 
             holder.textView.setText(teamNames[i]);
@@ -167,16 +168,14 @@ public class AboutUsActivity extends FragmentActivity {
         }
     }
 
-    class ViewHolder
-    {
+    class ViewHolder {
 
         ImageView imageView;
         TextView textView, descTextV;
 
-        ViewHolder(View v)
-        {
+        ViewHolder(View v) {
             imageView = (ImageView) v.findViewById(R.id.imageview_aboutus_list_team);
-            textView= (TextView) v.findViewById(R.id.textView_aboutus_team_name);
+            textView = (TextView) v.findViewById(R.id.textView_aboutus_team_name);
             descTextV = (TextView) v.findViewById(R.id.textView_aboutus_team_description);
         }
 

@@ -33,8 +33,6 @@ public class CampusMapActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campusmap);
 
-        Crashlytics.start(this);
-
         linearLayout = (LinearLayout) findViewById(R.id.layout_campus_map_NoConnection);
 
 
@@ -97,6 +95,12 @@ public class CampusMapActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.campusmap_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Crashlytics.start(this);
     }
 
     @Override

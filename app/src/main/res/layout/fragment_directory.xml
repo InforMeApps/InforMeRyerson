@@ -60,11 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="@drawable/drawer_shadow_horizontal" />
-        <!--<ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/directory_image" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,30 +68,6 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="8dp">
-
-            <!-- <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_gravity="center_horizontal"
-                 android:descendantFocusability="beforeDescendants"
-                 android:fontFamily="sans-serif-light"
-                 android:text="SEARCH BY NAME"
-                 android:textColor="#5677fc"
-                 android:textSize="20sp" />
-
-             <EditText
-                 android:id="@+id/edittext_directory_search"
-                 android:layout_width="match_parent"
-                 android:layout_height="48dp"
-                 android:layout_marginTop="16dp"
-                 android:drawableStart="@drawable/ic_search"
-                 android:background="@drawable/card_noround"
-                 android:hint="Enter First or Last Name"
-                 android:imeOptions="actionSearch"
-                 android:inputType="text"
-                 android:paddingLeft="8dp"
-                 android:paddingRight="16dp"
-                 android:textSize="15sp" />-->
 
             <TextView
                 android:layout_width="wrap_content"

@@ -43,8 +43,6 @@ public class TransitActivity extends FragmentActivity implements SwipeRefreshLay
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transit);
 
-        Crashlytics.start(this);
-
         alertList = new LinkedList<String>();
         lastUpdatedList = new LinkedList<String>();
 
@@ -62,6 +60,12 @@ public class TransitActivity extends FragmentActivity implements SwipeRefreshLay
         } else {
             Toast.makeText(this, "No Internet Connection :(", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Crashlytics.start(this);
     }
 
     private boolean isNetworkAvailable() {

@@ -52,8 +52,6 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        Crashlytics.start(this);
-
         if (savedInstanceState == null) {
             getActionBar().setTitle(mDrawerItems[0]);
             getSupportFragmentManager().beginTransaction()
@@ -111,6 +109,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
     @Override
     protected void onResume() {
         super.onResume();
+        Crashlytics.start(this);
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
         if (resultCode == ConnectionResult.SUCCESS) {
 

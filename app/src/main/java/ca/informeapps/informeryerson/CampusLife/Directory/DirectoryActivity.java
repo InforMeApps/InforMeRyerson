@@ -19,11 +19,15 @@ public class DirectoryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directory);
 
-        Crashlytics.start(this);
-
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame_directory, new DirectoryFragment())
                 .commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Crashlytics.start(this);
     }
 
     @Override
