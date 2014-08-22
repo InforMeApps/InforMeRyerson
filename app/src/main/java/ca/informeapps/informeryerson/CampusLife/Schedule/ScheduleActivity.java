@@ -4,12 +4,19 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -36,51 +45,66 @@ public class ScheduleActivity extends FragmentActivity {
     private ScheduleDateListAdapter adapter;
     private long[] timeMills;
     private int clickPosition = 0;
+    private static final int MAX_VIEWS = 6;
+    ViewPager mViewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myschedule);
+        ScheduleDetailFragment scheduleDetailFragment= new ScheduleDetailFragment();
 
-        timeMills = new long[180];
+        if(checkCalender()) {
+            setContentView(R.layout.activity_myschedule);
+            timeMills = new long[180];
 
-        for (int z = 0; z < 180; z++) {
+            for (int z = 0; z < 180; z++) {
 
-            timeMills[z] = shiftedCalender(Calendar.getInstance(), z).getTimeInMillis();
+                timeMills[z] = shiftedCalender(Calendar.getInstance(), z).getTimeInMillis();
+            }
+
+
+            adapter = new ScheduleDateListAdapter(this);
+            listView = (StickyListHeadersListView) findViewById(R.id.listview_myschedule_date);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    onItemSelection(i);
+                    clickPosition = i;
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            FloatingActionButton floatingActionButton;
+
+
+            floatingActionButton = new FloatingActionButton.Builder(this)
+                    .withDrawable(getResources().getDrawable(R.drawable.ic_action_today))
+                    .withButtonColor(Color.parseColor("#e91e63"))
+                    .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
+                    .withMargins(0, 0, 10, 10)
+                    .create();
+
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemSelection(0);
+                    listView.smoothScrollToPositionFromTop(0, 0, 150);
+                }
+            });
+            onItemSelection(0);
+        }
+        else if(!checkCalender())
+        {
+            setContentView(R.layout.walkthrough_ryerson_email);
+            mViewPager = (ViewPager) findViewById(R.id.view_pager);
+            mViewPager.setAdapter(new WalkthroughPagerAdapter());
+            mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
         }
 
 
-        adapter = new ScheduleDateListAdapter(this);
-        listView = (StickyListHeadersListView) findViewById(R.id.listview_myschedule_date);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onItemSelection(i);
-                clickPosition = i;
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        FloatingActionButton floatingActionButton;
-
-
-        floatingActionButton = new FloatingActionButton.Builder(this)
-                .withDrawable(getResources().getDrawable(R.drawable.ic_action_today))
-                .withButtonColor(Color.parseColor("#e91e63"))
-                .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
-                .withMargins(0, 0, 10, 10)
-                .create();
-
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItemSelection(0);
-                listView.smoothScrollToPositionFromTop(0, 0, 150);
-            }
-        });
-        onItemSelection(0);
 
     }
 
@@ -121,7 +145,7 @@ public class ScheduleActivity extends FragmentActivity {
             Dates = new String[180];
             monthHeader = new String[180];
 
-            for (int x = 0; x < 180; x++) {
+            for (int x = 0; x < Dates.length; x++) {
                 Dates[x] = Day(shiftedCalender(Calendar.getInstance(), x))[1] + ", " + Day(shiftedCalender(Calendar.getInstance(), x))[2];
                 monthHeader[x] = (shiftedCalender(Calendar.getInstance(), x));
             }
@@ -214,4 +238,138 @@ public class ScheduleActivity extends FragmentActivity {
         TextView text;
     }
 
+
+
+
+
+
+
+    class WalkthroughPagerAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return MAX_VIEWS;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == (View) object;
+        }
+
+        @Override
+        public Object instantiateItem(View container, int position) {
+            Log.e("walkthrough", "instantiateItem(" + position + ");");
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View viewz = inflater.inflate(R.layout.walkthrough_single_view, null);
+            ImageView imageView = (ImageView) viewz.findViewById(R.id.Walkthroug_image);
+            TextView textView = (TextView)viewz.findViewById(R.id.Walkthroug_text);
+            Button button=(Button)viewz.findViewById(R.id.Walkthroug_Buttn);
+
+            switch(position) {
+                case 0:
+                    textView.setText("OH NOES LOOKS LIKE YOU DONT HAVE RYERSON EMAIL ON YOUR DEVICE\nFOLLOW THE TUTORIAL TO BE ENLIGHTENED");
+                    imageView.setImageResource(R.drawable.error_cat);
+                    break;
+
+                case 1:
+                    textView.setText("Log into your my.ryerson account and click the Apps on the top");
+                    imageView.setImageResource(R.drawable.step1);
+                    break;
+
+                case 2:
+                    textView.setText("Click on \"Activate Google Token\"");
+                    imageView.setImageResource(R.drawable.step2);
+                    break;
+
+                case 3:
+                    textView.setText("Click on Activate");
+                    imageView.setImageResource(R.drawable.step3);
+                    break;
+
+                case 4:
+                    textView.setText("Next on Your Device Go to Settings and Add An Existing Google Account");
+                    imageView.setImageResource(R.drawable.step4);
+                    break;
+
+                case 5:
+                    textView.setText("Sign in Using Ryerson Email and Use The Token As The Password\nRemember to Have Ryerson Calendar Synced!");
+                    imageView.setImageResource(R.drawable.step7);
+                    button.setVisibility(View.VISIBLE);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                            browserIntent.setData(Uri.parse("https://my.ryerson.ca/render.userLayoutRootNode.uP"));
+                            startActivity(browserIntent);
+                        }
+                    });
+                    break;
+            }
+
+            ((ViewPager) container).addView(viewz, 0);
+            return viewz;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            ((ViewPager)container).removeView((View)object);
+        }
+    }
+
+
+    class WalkthroughPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            // Here is where you should show change the view of page indicator
+            switch(position) {
+
+                case MAX_VIEWS - 1:
+                    break;
+
+                default:
+
+            }
+
+        }
+
+    }
+
+    private boolean checkCalender()
+    {
+        boolean calendarFound = false;
+        ContentResolver contentResolver = this.getContentResolver();
+
+        //Getting the ids and names of all the calendars available on the device
+        final Cursor calendarNamesCursor = contentResolver.query(CalendarContract.Calendars.CONTENT_URI,
+                (new String[]{ CalendarContract.Calendars.CALENDAR_DISPLAY_NAME}),
+                null, null, null);
+
+        //finding ryerson.ca calendar
+        while (calendarNamesCursor.moveToNext()) {
+
+            final String displayName = calendarNamesCursor.getString(0);
+            String output = "";
+
+            int stringLength = displayName.length();
+            if (stringLength > 9) {
+                output = displayName.substring(stringLength - 10);
+            }
+
+            if (output.equals("ryerson.ca")) {
+                calendarFound = true;
+            }
+        }
+        return calendarFound;
+    }
 }

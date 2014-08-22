@@ -4,12 +4,9 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentUris;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -50,18 +47,13 @@ public class ScheduleDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_myschedule_detail, container, false);
-
         buildCalendarCursor();
+        View rootView = inflater.inflate(R.layout.fragment_myschedule_detail, container, false);
+                listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
+                adapter = new ScheduleDetailListAdapter();
+                listView.setAdapter(adapter);
 
-        if (calendarFound) {
-            listView = (ListView) rootView.findViewById(R.id.listview_myschedule_detail);
-            adapter = new ScheduleDetailListAdapter();
-            listView.setAdapter(adapter);
-        } else {
-            TextView textView = (TextView) rootView.findViewById(R.id.textview_schedule_error);
-            textView.setVisibility(View.VISIBLE);
-        }
+
 
         return rootView;
     }
@@ -132,26 +124,14 @@ public class ScheduleDetailFragment extends Fragment {
 
             //sort the list
             sortEventList();
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Ryerson Calendar not found");
-            builder.setMessage("Please click the Instructions button to set up the Ryerson calendar on your phone");
-            builder.setPositiveButton("Instructions", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    String url = "http://www.ryerson.ca/google/usingapps/viamobile/android/androidnativeappsnew.html";
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-                    browserIntent.setData(Uri.parse(url));
-                    startActivity(browserIntent);
-                }
-            });
 
-            AlertDialog dialog = builder.create();
-            dialog.show();
 
         }
 
     }
+
+
+
 
     private void sortEventList() {
 
