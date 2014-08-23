@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -90,6 +92,7 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
         buttonText = (Button) rootView.findViewById(R.id.button_directory_searchtext);
         departmentList = (ListView) rootView.findViewById(R.id.listview_directory_departmentlist);
         departmentList.setOnItemClickListener(this);
+        departmentList.setFastScrollEnabled(true);
         buttonText.setOnClickListener(this);
     }
 
@@ -155,12 +158,12 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
             String s = spinnerItems[i];
             textView.setText(WordUtils.capitalizeFully(s));
 
-            TranslateAnimation animation = null;
+
+            ScaleAnimation animation = null;
             if (i > lastPosition) {
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 2.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setDuration(600);
-                animation.setInterpolator(getActivity(), android.R.anim.decelerate_interpolator);
+                animation = new ScaleAnimation(0.0f,Animation.RELATIVE_TO_SELF ,0.0f, Animation.RELATIVE_TO_SELF,  Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                animation.setDuration(300);
+                animation.setInterpolator(getActivity(), android.R.anim.accelerate_decelerate_interpolator);
                 view.startAnimation(animation);
                 lastPosition = i;
             }

@@ -42,6 +42,7 @@ public class ScheduleDetailFragment extends Fragment {
         Bundle args = getArguments();
         timeMillsStart = args.getLong("timeMillsStart") + 1;
         timeMillsEnd = args.getLong("timeMillsEnd") - 1;
+
     }
 
 

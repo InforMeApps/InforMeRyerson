@@ -6,10 +6,12 @@ package ca.informeapps.informeryerson.CampusLife.Bookstore;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +34,7 @@ import java.util.Calendar;
 import ca.informeapps.informeryerson.Misc.ExpandAnimation;
 import ca.informeapps.informeryerson.R;
 
-public class BookstoreActivity extends Activity {
+public class BookstoreActivity extends FragmentActivity {
 
     private boolean isRotated = false;
 
@@ -129,9 +131,9 @@ public class BookstoreActivity extends Activity {
             TextView BookstoreHours = (TextView) convertView.findViewById(R.id.textview_bookstore_hours);
             TextView bookstoreAddress = (TextView) convertView.findViewById(R.id.textview_bookstore_address);
 
-            final String[][] HourDay = {{"Saturday   Closed", "Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm"},
-                    {"Saturday   10:00 am – 4:00 pm", "Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm"},
-                    {"Saturday   Closed", "Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm"}};
+            final String[][] HourDay = {{ "Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm","Saturday   Closed"},
+                    { "Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm","Saturday   10:00 am – 4:00 pm"},
+                    { "Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm","Saturday   Closed"}};
 
             final String[] mapsUri =
                     {"https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
@@ -146,7 +148,7 @@ public class BookstoreActivity extends Activity {
 
             BookStoreName.setText(getItem(position));
             Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
-            BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK)]);
+            BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1]);
             bookstoreAddress.setText(Address[position]);
             Picasso.with(this.getContext()).load(images[position]).into(BookStorePicture);
 

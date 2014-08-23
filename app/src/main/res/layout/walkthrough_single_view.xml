@@ -21,7 +21,7 @@
     <ImageView
         android:id="@+id/Walkthroug_image"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="220dp"
         android:layout_below="@id/Walkthroug_text"
         android:layout_gravity="center"
         android:layout_marginBottom="32dp"
@@ -35,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:fontFamily="@string/robotoThin"
         android:gravity="center"
-        android:text="Enlghtenment this way -->"
+        android:text="Enlightenment this way -->"
         android:textSize="25sp" />
 
 </RelativeLayout>

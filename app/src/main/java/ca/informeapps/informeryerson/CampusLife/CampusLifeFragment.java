@@ -91,7 +91,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
                 break;
             case 2:
                 startActivity(new Intent(getActivity(), RemindersActivity.class));
-                t.send(new HitBuilders.EventBuilder().setCategory("CAMPUS LIFE")
+                t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
                         .setAction("Reminders").setLabel("FORGETFUL MIND").build());
                 break;
             case 3:

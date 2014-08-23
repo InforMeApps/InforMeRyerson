@@ -4,6 +4,7 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,16 +23,28 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.lang.annotation.Documented;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Map;
 
+import ca.informeapps.informeryerson.CampusLife.WalkthrougAsync;
 import ca.informeapps.informeryerson.Misc.FloatingActionButton;
 import ca.informeapps.informeryerson.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -296,7 +309,7 @@ public class ScheduleActivity extends FragmentActivity {
 
             switch (position) {
                 case 0:
-                    textView.setText("Oh No! Looks like you dont have your Ryerson Account on your device :(\n\nFollow the tutorial to be enlightened");
+                    textView.setText("Oh No! Looks like you dont have your Ryerson Account on your device :(\nFollow the tutorial to be enlightened");
                     imageView.setImageResource(R.drawable.error_cat);
                     break;
 
@@ -308,7 +321,7 @@ public class ScheduleActivity extends FragmentActivity {
 
                 case 2:
                     textView.setText("Click on \"Activate Google Token\"");
-                    textView2.setText("You can do it! \nAll you have to do is \nBELIEVE -->");
+                    textView2.setText("You can do it! Just BELIEVE!! -->");
                     imageView.setImageResource(R.drawable.step2);
                     break;
 
@@ -325,9 +338,31 @@ public class ScheduleActivity extends FragmentActivity {
                     break;
 
                 case 5:
-                    textView.setText("Sign in Using Ryerson Email and Use The Token As The Password\nRemember to Have Ryerson Calendar Synced!");
+                    textView.setText("Sign in using your ryerson email, and the token as password. Remember to have calender synced");
                     imageView.setImageResource(R.drawable.step7);
-                    textView2.setText("Looks like you have completed your Journey\nHope to never see you here again :P");
+                    textView2.setText("You have been enlightened!\nClick here to let us do the dirty work");
+                    textView2.setTextColor(Color.parseColor("#0099cc"));
+                    if(android.os.Build.VERSION.SDK_INT<15) {
+                        textView2.setBackgroundDrawable(getResources().getDrawable(R.drawable.image_button_grey_selector));
+                    }
+                    else
+                        textView2.setBackground(getResources().getDrawable(R.drawable.image_button_grey_selector));
+                    textView2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            final Dialog dialog = new Dialog(ScheduleActivity.this);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setContentView(R.layout.layout_dialogue_schedule_ryerson_login);
+                            dialog.show();
+                            String username="siamin";
+                            String Password="";
+
+                            WalkthrougAsync walkthrougAsync = new WalkthrougAsync();
+                            Element element= walkthrougAsync.getOne();
+                            Toast.makeText(getApplicationContext(),"HIIIIIIIII"+element,Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                     break;
             }
 
