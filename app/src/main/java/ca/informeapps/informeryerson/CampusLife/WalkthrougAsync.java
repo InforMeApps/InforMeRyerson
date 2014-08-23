@@ -4,8 +4,6 @@
 
 package ca.informeapps.informeryerson.CampusLife;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -18,7 +16,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.Map;
 
-import ca.informeapps.informeryerson.CampusLife.Bookstore.BookstoreActivity;
 
 /**
  * Created by Shahar on 2014-08-23.
@@ -42,6 +39,8 @@ public class WalkthrougAsync extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(aVoid);
         Elements results = doc.select("div#googletoken");
         one =results.get(0);
+        Log.d("",""+one);
+
 
     }
 
@@ -49,8 +48,8 @@ public class WalkthrougAsync extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         Connection.Response res=null;
         try {
-            res = Jsoup.connect("http://techmvs.technion.ac.il:80/cics/wmn/wmngrad?aapmlkwi&ORD=1&s=1")
-                    .data("username", "siamin", "password", "passs")
+            res = Jsoup.connect("https://cas.ryerson.ca/login?service=https%3A%2F%2Fmy.ryerson.ca%2FLogin")
+                    .data("username", "siamin", "password", "pass")
                     .method(Connection.Method.POST)
                     .execute();
             Log.d("", "here");
