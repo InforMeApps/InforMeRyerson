@@ -32,6 +32,8 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import java.util.logging.Handler;
+
 import ca.informeapps.informeryerson.CampusLife.CampusLifeFragment;
 
 /* TOO LAZY TO DOCUMENT STUFF #YOLOSWAG */
@@ -85,6 +87,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+       //new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
 
     }
 

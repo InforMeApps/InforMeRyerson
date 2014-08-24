@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.CalendarContract;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
@@ -45,6 +46,7 @@ import java.util.Calendar;
 import java.util.Map;
 
 import ca.informeapps.informeryerson.CampusLife.WalkthrougAsync;
+import ca.informeapps.informeryerson.CustomViewPager;
 import ca.informeapps.informeryerson.Misc.FloatingActionButton;
 import ca.informeapps.informeryerson.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -54,7 +56,7 @@ public class ScheduleActivity extends FragmentActivity {
 
     private static final int MAX_VIEWS = 6;
     ViewHolder dayTextHolder;
-    ViewPager mViewPager;
+    CustomViewPager mViewPager;
     private StickyListHeadersListView listView;
     private ScheduleDateListAdapter adapter;
     private long[] timeMills;
@@ -110,10 +112,27 @@ public class ScheduleActivity extends FragmentActivity {
             onItemSelection(0);
         } else if (!checkCalender()) {
             setContentView(R.layout.walkthrough_ryerson_email);
-            mViewPager = (ViewPager) findViewById(R.id.view_pager);
+            mViewPager = (CustomViewPager) findViewById(R.id.view_pager);
             mViewPager.setAdapter(new WalkthroughPagerAdapter());
             mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
+            mViewPager.setCurrentItem(MAX_VIEWS);
+            new Handler().postDelayed(WalkThroughFlashAnimations(), 1000);
+
         }
+    }
+
+    private Runnable WalkThroughFlashAnimations() {
+        return new Runnable() {
+
+            @Override
+            public void run() {
+                mViewPager.setScrollDurationFactor(3);
+                mViewPager.setCurrentItem(0,true);
+                mViewPager.setScrollDurationFactor(1);
+
+
+            }
+        };
     }
 
     @Override

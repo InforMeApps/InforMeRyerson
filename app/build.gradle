@@ -29,15 +29,9 @@ repositories {
 
 android {
     signingConfigs {
-        config {
-            keyAlias 'InforMeRyerson'
-            keyPassword '9323225464'
-            storeFile file('C:/Users/Tanmay/Desktop/Code/InforMeRyerson/informeryerson.jks')
-            storePassword '9323225464'
-        }
     }
     compileSdkVersion 20
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '20.0.0'
     defaultConfig {
         applicationId "ca.informeapps.informeryerson"
         minSdkVersion 15
@@ -62,8 +56,6 @@ dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'se.emilsjolander:stickylistheaders:2.5.0'
     compile 'com.google.android.gms:play-services:5.0.+'
-    compile('com.doomonafireball.betterpickers:library:1.5.2') {
-        exclude group: 'com.android.support', module: 'support-v4'
-    }
+    compile 'com.doomonafireball.betterpickers:library:1.5.2'
     compile 'com.crashlytics.android:crashlytics:1.+'
 }
