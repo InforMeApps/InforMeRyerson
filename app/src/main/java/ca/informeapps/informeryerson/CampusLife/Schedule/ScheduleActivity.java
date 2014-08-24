@@ -33,19 +33,11 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.lang.annotation.Documented;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 
-import ca.informeapps.informeryerson.CampusLife.WalkthrougAsync;
 import ca.informeapps.informeryerson.CustomViewPager;
 import ca.informeapps.informeryerson.Misc.FloatingActionButton;
 import ca.informeapps.informeryerson.R;
@@ -67,7 +59,6 @@ public class ScheduleActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        ScheduleDetailFragment scheduleDetailFragment = new ScheduleDetailFragment();
 
         if (checkCalender()) {
             setContentView(R.layout.activity_myschedule);
@@ -115,8 +106,11 @@ public class ScheduleActivity extends FragmentActivity {
             mViewPager = (CustomViewPager) findViewById(R.id.view_pager);
             mViewPager.setAdapter(new WalkthroughPagerAdapter());
             mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
-            mViewPager.setCurrentItem(MAX_VIEWS);
-            new Handler().postDelayed(WalkThroughFlashAnimations(), 1000);
+
+           mViewPager.setCurrentItem(MAX_VIEWS);
+          new Handler().postDelayed(WalkThroughFlashAnimations(), 500);
+
+
 
         }
     }
@@ -134,6 +128,7 @@ public class ScheduleActivity extends FragmentActivity {
             }
         };
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -376,9 +371,8 @@ public class ScheduleActivity extends FragmentActivity {
                             String username="siamin";
                             String Password="";
 
-                            WalkthrougAsync walkthrougAsync = new WalkthrougAsync();
-                            Element element= walkthrougAsync.getOne();
-                            Toast.makeText(getApplicationContext(),"HIIIIIIIII"+element,Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(getApplicationContext(),"HIIIIIIIII",Toast.LENGTH_SHORT).show();
 
                         }
                     });

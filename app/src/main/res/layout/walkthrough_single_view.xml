@@ -28,6 +28,7 @@
         android:layout_marginTop="16dp"
         android:scaleType="centerInside" />
 
+
     <TextView
         android:id="@+id/textview_schedule_viewpager_enlightenment"
         android:layout_width="match_parent"
