@@ -15,10 +15,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -26,10 +22,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.text.WordUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Set;
 
 import ca.informeapps.informeryerson.R;
 
@@ -130,9 +132,30 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    public class DepartmentListAdapter extends BaseAdapter {
+    public class DepartmentListAdapter extends BaseAdapter implements SectionIndexer {
 
-        private int lastPosition = -1;
+        HashMap<String, Integer> indexer;
+        String[] sections;
+
+        public DepartmentListAdapter() {
+            indexer = new HashMap<String, Integer>();
+            int size = spinnerItems.length;
+
+            for (int x = 0; x < size; x++) {
+                String s = spinnerItems[x];
+                String firstCh = s.substring(0, 1);
+                firstCh = firstCh.toUpperCase();
+                if (!indexer.containsKey(firstCh)) {
+                    indexer.put(firstCh, x);
+                }
+            }
+
+            Set<String> sectionLetters = indexer.keySet();
+            ArrayList<String> sectionList = new ArrayList<String>(sectionLetters);
+            Collections.sort(sectionList);
+            sections = new String[sectionList.size()];
+            sectionList.toArray(sections);
+        }
 
         @Override
         public int getCount() {
@@ -141,12 +164,12 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
 
         @Override
         public Object getItem(int i) {
-            return null;
+            return spinnerItems[i];
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
@@ -158,17 +181,22 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener,
             String s = spinnerItems[i];
             textView.setText(WordUtils.capitalizeFully(s));
 
-
-            ScaleAnimation animation = null;
-            if (i > lastPosition) {
-                animation = new ScaleAnimation(0.0f,Animation.RELATIVE_TO_SELF ,0.0f, Animation.RELATIVE_TO_SELF,  Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                animation.setDuration(300);
-                animation.setInterpolator(getActivity(), android.R.anim.accelerate_decelerate_interpolator);
-                view.startAnimation(animation);
-                lastPosition = i;
-            }
-
             return view;
+        }
+
+        @Override
+        public Object[] getSections() {
+            return sections;
+        }
+
+        @Override
+        public int getPositionForSection(int i) {
+            return indexer.get(sections[i]);
+        }
+
+        @Override
+        public int getSectionForPosition(int i) {
+            return 0;
         }
     }
 }
