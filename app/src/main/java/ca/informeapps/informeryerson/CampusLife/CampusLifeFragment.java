@@ -33,6 +33,7 @@ import ca.informeapps.informeryerson.CampusLife.Schedule.ScheduleActivity;
 import ca.informeapps.informeryerson.CampusLife.Transit.TransitActivity;
 import ca.informeapps.informeryerson.MainActivity;
 import ca.informeapps.informeryerson.Misc.AnalyticsSampleApp;
+import ca.informeapps.informeryerson.NewSchedule;
 import ca.informeapps.informeryerson.R;
 
 public class CampusLifeFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -47,7 +48,6 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("CampusLifeFragment", "onCreateView");
         //getActivity().getActionBar().setTitle("Campus Life");
         rootView = inflater.inflate(R.layout.fragment_campuslife, container, false);
         View header = inflater.inflate(R.layout.layout_campuslife_list_header, mListView, false);
@@ -68,8 +68,6 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
 
         t = ((AnalyticsSampleApp)getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
         t.setScreenName("Campus Life");
-
-
         return rootView;
 
 
@@ -85,7 +83,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
                         .setAction("Maps").setLabel("IM LOST SHIIT!!").build());
                 break;
             case 1:
-                startActivity(new Intent(getActivity(), ScheduleActivity.class));
+                startActivity(new Intent(getActivity(), NewSchedule.class));
                 t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
                         .setAction("MySchedule").setLabel("IM CHECKING CLASSES TO SKIP YOLO").build());
                 break;

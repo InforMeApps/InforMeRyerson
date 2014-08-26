@@ -88,7 +88,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".CampusLife.Schedule.ScheduleActivity"
+            android:name=".NewSchedule"
             android:label="@string/my_schedule"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
