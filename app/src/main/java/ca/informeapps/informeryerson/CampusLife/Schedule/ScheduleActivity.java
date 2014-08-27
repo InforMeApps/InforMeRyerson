@@ -35,6 +35,8 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 
+
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -110,6 +112,8 @@ public class ScheduleActivity extends FragmentActivity {
             new Handler().postDelayed(WalkThroughFlashAnimations(), 700);
 
 
+
+
         }
     }
 
@@ -119,14 +123,13 @@ public class ScheduleActivity extends FragmentActivity {
             @Override
             public void run() {
                 mViewPager.setScrollDurationFactor(3);
-                mViewPager.setCurrentItem(0, true);
+                mViewPager.setCurrentItem(0,true);
                 mViewPager.setScrollDurationFactor(1);
 
 
             }
         };
     }
-
     private Runnable BounceAnimation() {
         return new Runnable() {
 
@@ -143,15 +146,6 @@ public class ScheduleActivity extends FragmentActivity {
                     }
                 });
                 animator.addListener(new Animator.AnimatorListener() {
-
-                    public void onAnimationStart(Animator animation) {
-                        mViewPager.beginFakeDrag();
-                    }
-
-                    public void onAnimationEnd(Animator animation) {
-                        mViewPager.endFakeDrag();
-                    }
-
                     @Override
                     public void onAnimationCancel(Animator animator) {
 
@@ -161,6 +155,14 @@ public class ScheduleActivity extends FragmentActivity {
                     public void onAnimationRepeat(Animator animator) {
 
                     }
+
+                    public void onAnimationStart(Animator animation) {
+                        mViewPager.beginFakeDrag();
+                    }
+
+                    public void onAnimationEnd(Animator animation) {
+                        mViewPager.endFakeDrag();
+                    }
                 });
                 animator.start();
 
@@ -168,6 +170,7 @@ public class ScheduleActivity extends FragmentActivity {
             }
         };
     }
+
 
 
     @Override
@@ -188,9 +191,11 @@ public class ScheduleActivity extends FragmentActivity {
     }
 
     public Calendar shiftedCalender(Calendar c, int Shift) {
-        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-        c.add(Calendar.DAY_OF_YEAR, Shift);
-        return c;
+        Calendar calendar = c;
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+
+        calendar.add(Calendar.DAY_OF_YEAR, Shift);
+        return calendar;
     }
 
     public void onItemSelection(int Pos) {

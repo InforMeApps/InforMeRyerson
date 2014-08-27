@@ -31,9 +31,16 @@ public class TransitActivity extends FragmentActivity implements AdapterView.OnI
         getActionBar().setHomeButtonEnabled(true);
         setContentView(R.layout.activity_transit);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_transit);
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner_transit);
         spinner.setAdapter(new TransitSpinnerAdapter());
         spinner.setOnItemSelectedListener(this);
+        ImageView imageView = (ImageView)findViewById(R.id.ChangeMode);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinner.performClick();
+            }
+        });
     }
 
     @Override
