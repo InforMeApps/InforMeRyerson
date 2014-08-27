@@ -4,9 +4,7 @@
 
 package ca.informeapps.informeryerson.CampusLife.Bookstore;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -68,6 +67,12 @@ public class BookstoreActivity extends FragmentActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Crashlytics.start(this);
     }
 
     @Override

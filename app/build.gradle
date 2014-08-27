@@ -35,11 +35,11 @@ android {
         minSdkVersion 15
         targetSdkVersion 20
         versionCode 5
-        versionName "0.1.4 Internal-Builds"
+        versionName "0.1.4"
     }
     buildTypes {
         release {
-            runProguard true
+            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
