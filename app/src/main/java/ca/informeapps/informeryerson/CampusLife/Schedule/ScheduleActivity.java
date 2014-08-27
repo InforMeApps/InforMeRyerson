@@ -107,11 +107,8 @@ public class ScheduleActivity extends FragmentActivity {
             mViewPager = (CustomViewPager) findViewById(R.id.view_pager);
             mViewPager.setAdapter(new WalkthroughPagerAdapter());
             mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
-            mViewPager.setCurrentItem(MAX_VIEWS);
-          new Handler().postDelayed(WalkThroughFlashAnimations()  , 700);
-
-
-
+            mViewPager.setCurrentItem(0);
+          new Handler().postDelayed(BounceAnimation()  , 5000);
 
         }
     }
@@ -135,7 +132,7 @@ public class ScheduleActivity extends FragmentActivity {
             @Override
             public void run() {
                 ValueAnimator animator = ValueAnimator.ofFloat(0, 100);
-                animator.setDuration(1000);
+                animator.setDuration(700);
                 animator.setRepeatCount(2);
                 animator.setRepeatMode(ValueAnimator.REVERSE);
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -145,15 +142,6 @@ public class ScheduleActivity extends FragmentActivity {
                     }
                 });
                 animator.addListener(new Animator.AnimatorListener() {
-
-                    public void onAnimationStart(Animator animation) {
-                        mViewPager.beginFakeDrag();
-                    }
-
-                    public void onAnimationEnd(Animator animation) {
-                        mViewPager.endFakeDrag();
-                    }
-
                     @Override
                     public void onAnimationCancel(Animator animator) {
 
@@ -162,6 +150,14 @@ public class ScheduleActivity extends FragmentActivity {
                     @Override
                     public void onAnimationRepeat(Animator animator) {
 
+                    }
+
+                    public void onAnimationStart(Animator animation) {
+                        mViewPager.beginFakeDrag();
+                    }
+
+                    public void onAnimationEnd(Animator animation) {
+                        mViewPager.endFakeDrag();
                     }
                 });
                 animator.start();

@@ -83,7 +83,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
                         .setAction("Maps").setLabel("IM LOST SHIIT!!").build());
                 break;
             case 1:
-                startActivity(new Intent(getActivity(), NewSchedule.class));
+                startActivity(new Intent(getActivity(), ScheduleActivity.class));
                 t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
                         .setAction("MySchedule").setLabel("IM CHECKING CLASSES TO SKIP YOLO").build());
                 break;

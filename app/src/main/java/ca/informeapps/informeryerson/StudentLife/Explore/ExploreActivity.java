@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -21,6 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
+import java.io.IOError;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 import ca.informeapps.informeryerson.Misc.ExpandAnimation;
 import ca.informeapps.informeryerson.R;
 
@@ -30,8 +37,8 @@ import ca.informeapps.informeryerson.R;
 public class ExploreActivity extends Activity {
 
     private boolean isRotated = false;
-
     private String Title;
+    private ListView ExploreViewListItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +47,7 @@ public class ExploreActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        final ListView ExploreViewListItems = (ListView) findViewById(R.id.ListExploreView);
+        ExploreViewListItems = (ListView) findViewById(R.id.ListExploreView);
         ArrayAdapter<String> ExploreListAdapter = new ListAdapter(this, R.layout.layout_list_explore);
 
         Title = getIntent().getStringExtra("Name");
@@ -104,6 +111,9 @@ public class ExploreActivity extends Activity {
         return ResID;
     }
 
+
+
+
     class ListAdapter extends ArrayAdapter<String> {
 
         public ListAdapter(Context context, int textViewResourceId) {
@@ -111,7 +121,7 @@ public class ExploreActivity extends Activity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.layout_list_explore, null);
@@ -132,6 +142,19 @@ public class ExploreActivity extends Activity {
             fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    String favData[][] = new String[ExploreViewListItems.getCount()][2];
+                    favData[position][0]=position+"";
+                    favData[position][1]=getItem(position);
+                    FavsData favsData = new FavsData(getApplicationContext(),favData);
+                    try {
+                        favsData.writeToFile();
+                    }
+                    catch (IOException e) {
+                        Crashlytics.log("I DIDN'T WRITE THE FAVOURITE D:");
+                    }
+
+
                     ScaleAnimation scaleDown =
                             new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                     scaleDown.setFillAfter(true);
