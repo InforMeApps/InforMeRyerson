@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -33,8 +34,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-
-
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -107,10 +106,8 @@ public class ScheduleActivity extends FragmentActivity {
             mViewPager = (CustomViewPager) findViewById(R.id.view_pager);
             mViewPager.setAdapter(new WalkthroughPagerAdapter());
             mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
-            mViewPager.setCurrentItem(MAX_VIEWS);
-          new Handler().postDelayed(WalkThroughFlashAnimations()  , 700);
-
-
+            mViewPager.setCurrentItem(2);
+            new Handler().postDelayed(WalkThroughFlashAnimations(), 700);
 
 
         }
@@ -122,13 +119,14 @@ public class ScheduleActivity extends FragmentActivity {
             @Override
             public void run() {
                 mViewPager.setScrollDurationFactor(3);
-                mViewPager.setCurrentItem(0,true);
+                mViewPager.setCurrentItem(0, true);
                 mViewPager.setScrollDurationFactor(1);
 
 
             }
         };
     }
+
     private Runnable BounceAnimation() {
         return new Runnable() {
 
@@ -172,7 +170,6 @@ public class ScheduleActivity extends FragmentActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -191,11 +188,9 @@ public class ScheduleActivity extends FragmentActivity {
     }
 
     public Calendar shiftedCalender(Calendar c, int Shift) {
-        Calendar calendar = c;
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-
-        calendar.add(Calendar.DAY_OF_YEAR, Shift);
-        return calendar;
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        c.add(Calendar.DAY_OF_YEAR, Shift);
+        return c;
     }
 
     public void onItemSelection(int Pos) {
@@ -357,7 +352,6 @@ public class ScheduleActivity extends FragmentActivity {
 
         @Override
         public Object instantiateItem(View container, int position) {
-            Log.e("walkthrough", "instantiateItem(" + position + ");");
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View viewz = inflater.inflate(R.layout.walkthrough_single_view, null);
             TextView textView2 = (TextView) viewz.findViewById(R.id.textview_schedule_viewpager_enlightenment);
@@ -367,6 +361,7 @@ public class ScheduleActivity extends FragmentActivity {
             switch (position) {
                 case 0:
                     textView.setText("Oh No! Looks like you dont have your Ryerson Account on your device :(\nFollow the tutorial to be enlightened");
+                    imageView.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                     imageView.setImageResource(R.drawable.error_cat);
                     break;
 
@@ -378,7 +373,7 @@ public class ScheduleActivity extends FragmentActivity {
 
                 case 2:
                     textView.setText("Click on \"Activate Google Token\"");
-                    textView2.setText("You can do it! Just BELIEVE!! -->");
+                    textView2.setText("You can do it! Just \nBELIEVE!! -->");
                     imageView.setImageResource(R.drawable.step2);
                     break;
 
@@ -399,11 +394,12 @@ public class ScheduleActivity extends FragmentActivity {
                     imageView.setImageResource(R.drawable.step7);
                     textView2.setText("You have been enlightened!\nClick here to go to my.ryerson");
                     textView2.setTextColor(Color.parseColor("#0099cc"));
-                    if(android.os.Build.VERSION.SDK_INT<15) {
+                    if (android.os.Build.VERSION.SDK_INT < 16) {
                         textView2.setBackgroundDrawable(getResources().getDrawable(R.drawable.image_button_grey_selector));
+                    } else {
+                        textView2.setBackground(getResources().getDrawable(R.drawable.imagebutton_selector));
                     }
-                    else
-                        textView2.setBackground(getResources().getDrawable(R.drawable.image_button_grey_selector));
+                    textView2.setTextColor(Color.parseColor("#e8eaf6"));
                     textView2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

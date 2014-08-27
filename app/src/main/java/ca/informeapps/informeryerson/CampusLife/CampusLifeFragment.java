@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ import ca.informeapps.informeryerson.CampusLife.Schedule.ScheduleActivity;
 import ca.informeapps.informeryerson.CampusLife.Transit.TransitActivity;
 import ca.informeapps.informeryerson.MainActivity;
 import ca.informeapps.informeryerson.Misc.AnalyticsSampleApp;
-import ca.informeapps.informeryerson.NewSchedule;
 import ca.informeapps.informeryerson.R;
 
 public class CampusLifeFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -66,7 +64,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.mDrawerToggle.setDrawerIndicatorEnabled(true);
 
-        t = ((AnalyticsSampleApp)getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
+        t = ((AnalyticsSampleApp) getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
         t.setScreenName("Campus Life");
         return rootView;
 
@@ -83,7 +81,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
                         .setAction("Maps").setLabel("IM LOST SHIIT!!").build());
                 break;
             case 1:
-                startActivity(new Intent(getActivity(), NewSchedule.class));
+                startActivity(new Intent(getActivity(), ScheduleActivity.class));
                 t.send(new HitBuilders.EventBuilder().setCategory("Campus Life")
                         .setAction("MySchedule").setLabel("IM CHECKING CLASSES TO SKIP YOLO").build());
                 break;
@@ -115,13 +113,12 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
     }
 
 
-
-    private void setupEvent(View v, int ClickId, final int categoryId, final int actionId,final int labelId) {
-        final Button pageviewButton = (Button)v.findViewById(ClickId);
+    private void setupEvent(View v, int ClickId, final int categoryId, final int actionId, final int labelId) {
+        final Button pageviewButton = (Button) v.findViewById(ClickId);
         pageviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tracker t = ((AnalyticsSampleApp)getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
+                Tracker t = ((AnalyticsSampleApp) getActivity().getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
                 t.send(new HitBuilders.EventBuilder().setCategory(getString(categoryId))
                         .setAction(getString(actionId)).setLabel(getString(labelId)).build());
             }

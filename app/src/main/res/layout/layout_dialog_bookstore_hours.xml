@@ -1,10 +1,7 @@
 <!--
-
   ~ Copyright (c) 2014. Permission to use, copy, modify, distribute and sell this software and its documentation for any purpose is not granted without permission from owner, for more information please contact informeapplications@gmail.com
-  
--->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -16,9 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="25"
-        android:text="Saturday\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday"
+        android:text="Sunday\nMonday\nTuesday\nWednesday\nThursday\nFriday\nSaturday"
         android:textColor="#454545"
-        android:textSize="17dp"/>
+        android:textSize="17dp" />
 
     <TextView
         android:id="@+id/textview_bookstore_dialog_hours"
@@ -27,6 +24,6 @@
         android:layout_weight="75"
         android:text="Saturday\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday"
         android:textColor="#666666"
-        android:textSize="17dp"/>
+        android:textSize="17dp" />
 
 </LinearLayout>

@@ -9,6 +9,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/actionBarStyle</item>
         <item name="android:dropDownListViewStyle">@style/SpinnerStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
     </style>
 
     <style name="mainActivityTheme" parent="android:Theme.Holo.Light.DarkActionBar">
