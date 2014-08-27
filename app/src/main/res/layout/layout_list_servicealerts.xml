@@ -16,7 +16,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/textview_servicealert_ttc_list_alert"
+            android:id="@+id/textview_servicealert_list_alert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Elevator Alert: Broadview Station, eastbound subway platform to concourse level, out of service."
@@ -24,7 +24,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textview_servicealert_ttc_list_update"
+            android:id="@+id/textview_servicealert_list_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

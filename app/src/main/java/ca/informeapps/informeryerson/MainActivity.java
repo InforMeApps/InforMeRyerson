@@ -32,8 +32,6 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import java.util.logging.Handler;
-
 import ca.informeapps.informeryerson.CampusLife.CampusLifeFragment;
 
 /* TOO LAZY TO DOCUMENT STUFF #YOLOSWAG */
@@ -69,7 +67,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
         mDrawerList.setAdapter(mListAdapter);
         mDrawerList.setOnItemClickListener(this);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_navigation_drawer,
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_nav,
                 R.string.drawer_open, R.string.drawer_close) {
 
             @Override
@@ -87,6 +85,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
        //new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
 
     }
@@ -137,7 +136,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        //mDrawerToggle.syncState();
     }
 
     @Override

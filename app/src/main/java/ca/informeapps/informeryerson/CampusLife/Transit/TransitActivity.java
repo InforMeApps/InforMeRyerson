@@ -4,41 +4,25 @@
 
 package ca.informeapps.informeryerson.CampusLife.Transit;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.crashlytics.android.Crashlytics;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import com.squareup.picasso.Picasso;
 
 import ca.informeapps.informeryerson.R;
 
-public class TransitActivity extends FragmentActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class TransitActivity extends FragmentActivity implements AdapterView.OnItemSelectedListener {
 
-    private List<String> alertList, lastUpdatedList;
-    private ListView listView;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private ServiceAlertListAdapter adapter;
+    private int[] spinnerImages = {R.drawable.ttc_logo, R.drawable.go_logo};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +31,9 @@ public class TransitActivity extends FragmentActivity implements SwipeRefreshLay
         getActionBar().setHomeButtonEnabled(true);
         setContentView(R.layout.activity_transit);
 
-        alertList = new LinkedList<String>();
-        lastUpdatedList = new LinkedList<String>();
-
-        listView = (ListView) findViewById(R.id.listview_transit_servicealert_ttc);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh_container_servicealert_ttc);
-
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark,
-                android.R.color.holo_green_dark,
-                android.R.color.holo_orange_dark,
-                android.R.color.holo_red_dark);
-
-        if (isNetworkAvailable()) {
-            new TTCServiceAlerts().execute();
-        } else {
-            Toast.makeText(this, "No Internet Connection :(", Toast.LENGTH_SHORT).show();
-        }
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_transit);
+        spinner.setAdapter(new TransitSpinnerAdapter());
+        spinner.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -83,110 +53,58 @@ public class TransitActivity extends FragmentActivity implements SwipeRefreshLay
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
     @Override
-    public void onRefresh() {
-        if (isNetworkAvailable()) {
-            alertList.clear();
-            lastUpdatedList.clear();
-            new TTCServiceAlerts().execute();
-        } else {
-            Toast.makeText(this, "No Internet Connection :(", Toast.LENGTH_SHORT).show();
-            swipeRefreshLayout.setRefreshing(false);
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i == 0) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame_transit, new TTCUpdatesFragment()).commit();
+        } else if (i == 1) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame_transit, new GOUpdatesFragment()).commit();
         }
     }
 
-    public class ServiceAlertListAdapter extends BaseAdapter {
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    public class TransitSpinnerAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return alertList.size();
+            return spinnerImages.length;
         }
 
         @Override
         public Object getItem(int i) {
-            return null;
+            return spinnerImages[i];
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-
-            ViewHolder holder;
-
-            if (view == null) {
-                view = getLayoutInflater().inflate(R.layout.layout_list_servicealerts, null);
-                holder = new ViewHolder(view);
-                view.setTag(holder);
-            } else {
-                holder = (ViewHolder) view.getTag();
-            }
-
-            holder.alertTextV.setText(alertList.get(i));
-            holder.updateTextV.setText(lastUpdatedList.get(i));
-
-            return view;
-        }
-    }
-
-    public class ViewHolder {
-
-        private TextView alertTextV;
-        private TextView updateTextV;
-
-        public ViewHolder(View v) {
-            alertTextV = (TextView) v.findViewById(R.id.textview_servicealert_ttc_list_alert);
-            updateTextV = (TextView) v.findViewById(R.id.textview_servicealert_ttc_list_update);
-        }
-    }
-
-    public class TTCServiceAlerts extends AsyncTask<Void, Void, Void> {
-
-        private final String url = "https://m.ttc.ca/mobile/index.jsp";
-        private Document doc;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            swipeRefreshLayout.setRefreshing(true);
+            return getCustomView(i, view, viewGroup);
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-
-            try {
-                doc = Jsoup.connect(url).get();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
 
-            Elements serviceAlerts = doc.select("div[class=ttc-service-alert");
+            View rootView = getLayoutInflater().inflate(R.layout.layout_spinner_transit, null);
 
-            for (int i = 0; i < serviceAlerts.size(); i++) {
-                Element alert = serviceAlerts.get(i);
-                alertList.add(alert.child(1).text());
-                lastUpdatedList.add(alert.child(2).text());
-            }
+            ImageView imageView = (ImageView) rootView.findViewById(R.id.imageview_transit_spinner);
 
-            adapter = new ServiceAlertListAdapter();
-            listView.setAdapter(adapter);
-            swipeRefreshLayout.setRefreshing(false);
+            Picasso.with(TransitActivity.this).load(spinnerImages[position]).into(imageView);
+
+            return rootView;
         }
     }
 }

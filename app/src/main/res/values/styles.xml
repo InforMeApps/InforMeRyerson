@@ -8,12 +8,27 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:actionBarStyle">@style/actionBarStyle</item>
+        <item name="android:dropDownListViewStyle">@style/SpinnerStyle</item>
+    </style>
+
+    <style name="mainActivityTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/actionBarStyle</item>
+        <item name="android:dropDownListViewStyle">@style/SpinnerStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_nav</item>
     </style>
 
     <style name="actionBarStyle" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">#3f51b5</item>
         <item name="android:displayOptions">showTitle</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:height">58dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SpinnerStyle" parent="android:style/Widget.ListView.DropDown">
+        <item name="android:divider">#00ff0000</item>
+        <item name="android:dividerHeight">5dp</item>
+        <item name="android:popupBackground">@drawable/card_noround</item>
     </style>
 
 </resources>
