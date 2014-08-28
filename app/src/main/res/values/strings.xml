@@ -21,7 +21,7 @@
     <string name="prefs_about_category">ABOUT</string>
     <string name="images">Images</string>
     <string name="prefs_about_appVersion">App Version</string>
-    <string name="prefs_about_appVersion_value">0.1.4</string>
+    <string name="prefs_about_appVersion_value">0.1.5</string>
     <string name="Search">Search</string>
     <string name="Bookstore">Bookstore</string>
     <string name="Description">Description</string>
