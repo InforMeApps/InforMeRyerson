@@ -16,3 +16,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep public class org.jsoup.** {
+public *;
+}
