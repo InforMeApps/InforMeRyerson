@@ -10,6 +10,8 @@
 
 
 
+
+
 buildscript {
     repositories {
         maven { url 'http://download.crashlytics.com/maven' }
@@ -37,8 +39,8 @@ android {
         applicationId "ca.informeapps.informeryerson"
         minSdkVersion 15
         targetSdkVersion 20
-        versionCode 7
-        versionName "0.1.6"
+        versionCode 8
+        versionName "0.1.7 Internal"
     }
     buildTypes {
         release {
