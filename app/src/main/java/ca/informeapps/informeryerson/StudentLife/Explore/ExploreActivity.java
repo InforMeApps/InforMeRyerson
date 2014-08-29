@@ -69,7 +69,11 @@ public class ExploreActivity extends Activity {
         }
 
 
+
         ExploreViewListItems.setAdapter(ExploreListAdapter);
+
+
+
 
         ExploreViewListItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
@@ -137,29 +141,27 @@ public class ExploreActivity extends Activity {
             ((LinearLayout.LayoutParams) toolbar.getLayoutParams()).bottomMargin = -50;
             toolbar.setVisibility(View.GONE);
 
+
+
+
+
+
+
             //Favourites button click listener
             final ImageButton fav = (ImageButton) convertView.findViewById(R.id.imagebutton_explore_list_favourite);
+
             fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    String favData[][] = new String[ExploreViewListItems.getCount()][2];
-                    favData[position][0]=position+"";
-                    favData[position][1]=getItem(position);
-                    FavsData favsData = new FavsData(getApplicationContext(),favData);
-                    try {
-                        favsData.writeToFile();
-                    }
-                    catch (IOException e) {
-                        Crashlytics.log("I DIDN'T WRITE THE FAVOURITE D:");
-                    }
+
 
 
                     ScaleAnimation scaleDown =
                             new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                     scaleDown.setFillAfter(true);
                     scaleDown.setFillEnabled(true);
-                    scaleDown.setDuration(150l);
+                    scaleDown.setDuration(150);
                     fav.startAnimation(scaleDown);
 
                     new Handler().postDelayed(new Runnable() {

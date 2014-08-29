@@ -41,6 +41,7 @@ public class GOUpdatesFragment extends Fragment implements SwipeRefreshLayout.On
     private ListView listView;
     private List<String> alertList, lastUpdatedList;
     private View rootView;
+    TransitActivity transitActivity= new TransitActivity();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -175,26 +176,34 @@ public class GOUpdatesFragment extends Fragment implements SwipeRefreshLayout.On
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Elements updatesArea = doc.select("div[id=divupdates_train]");
-            Elements onlyAlert = updatesArea.select("div[class=publishedContent]");
-            Elements timeArea = doc.select("div[class=RadAjaxPanel]");
-            Elements time = timeArea.select("span[id=serviceUpdateTimeStampPage");
+            if(transitActivity.isActive) {
 
-            for (int i = 0; i < onlyAlert.size(); i++) {
-                alertList.add(onlyAlert.get(i).text());
-                lastUpdatedList.add("Last Updated: " + time.get(0).text());
+
+                Elements updatesArea = doc.select("div[id=divupdates_train]");
+                Elements onlyAlert = updatesArea.select("div[class=publishedContent]");
+                Elements timeArea = doc.select("div[class=RadAjaxPanel]");
+                Elements time = timeArea.select("span[id=serviceUpdateTimeStampPage");
+
+                for (int i = 0; i < onlyAlert.size(); i++) {
+                    alertList.add(onlyAlert.get(i).text());
+                    lastUpdatedList.add("Last Updated: " + time.get(0).text());
+                }
+
+                TextView textView = (TextView) rootView.findViewById(R.id.textview_transit_noerror);
+
+                if (alertList.size() != 0) {
+                    adapter = new ServiceAlertListAdapter();
+                    listView.setAdapter(adapter);
+                    swipeRefreshLayout.setRefreshing(false);
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
+            else
+            {
 
-            TextView textView = (TextView) rootView.findViewById(R.id.textview_transit_noerror);
-
-            if (alertList.size() != 0) {
-                adapter = new ServiceAlertListAdapter();
-                listView.setAdapter(adapter);
-                swipeRefreshLayout.setRefreshing(false);
-                textView.setVisibility(View.GONE);
-            } else {
-                textView.setVisibility(View.VISIBLE);
-                swipeRefreshLayout.setRefreshing(false);
             }
 
         }

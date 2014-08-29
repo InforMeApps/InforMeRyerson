@@ -109,10 +109,7 @@ public class ScheduleActivity extends FragmentActivity {
             mViewPager.setAdapter(new WalkthroughPagerAdapter());
             mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
             mViewPager.setCurrentItem(2);
-            new Handler().postDelayed(WalkThroughFlashAnimations(), 700);
-
-
-
+            new Handler().postDelayed(WalkThroughFlashAnimations(), 500);
 
         }
     }
@@ -130,47 +127,6 @@ public class ScheduleActivity extends FragmentActivity {
             }
         };
     }
-    private Runnable BounceAnimation() {
-        return new Runnable() {
-
-            @Override
-            public void run() {
-                ValueAnimator animator = ValueAnimator.ofFloat(0, 100);
-                animator.setDuration(1000);
-                animator.setRepeatCount(2);
-                animator.setRepeatMode(ValueAnimator.REVERSE);
-                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        Float value = (Float) animation.getAnimatedValue();
-                        mViewPager.fakeDragBy(value);
-                    }
-                });
-                animator.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
-
-                    }
-
-                    public void onAnimationStart(Animator animation) {
-                        mViewPager.beginFakeDrag();
-                    }
-
-                    public void onAnimationEnd(Animator animation) {
-                        mViewPager.endFakeDrag();
-                    }
-                });
-                animator.start();
-
-
-            }
-        };
-    }
-
 
 
     @Override

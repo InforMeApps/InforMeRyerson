@@ -28,13 +28,15 @@ public class CampusMapActivity extends Activity {
     boolean noConnection = false;
     private String mapsUrl = "https://m.ryerson.ca/core_apps/map/beta/";
     private WebView webView;
-    private Menu optionsMenu;
+    private Menu optionsMenu,GpsMenu;
+    private boolean enableGPS=false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campusmap);
 
         linearLayout = (LinearLayout) findViewById(R.id.layout_campus_map_NoConnection);
+        GpsMenu=(Menu)findViewById(R.id.GPSEnabled);
 
 
         webView = (WebView) findViewById(R.id.webview_campusmap);
@@ -51,9 +53,13 @@ public class CampusMapActivity extends Activity {
 
         webView.setWebChromeClient(new WebChromeClient() {
 
+
             @Override//passes current location to webview
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                callback.invoke(origin, true, false);
+                if(enableGPS)
+                {
+                    callback.invoke(origin, true, false);//sets currnet location
+                }
             }
 
             public void onProgressChanged(WebView view, int progress) {
@@ -114,6 +120,18 @@ public class CampusMapActivity extends Activity {
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.GPSEnabled:
+                if(!enableGPS)
+                {
+                    enableGPS=true;
+                    webView.reload();
+                }
+                else
+                {
+                    enableGPS=false;
+                    webView.reload();
+                }
                 return true;
         }
 

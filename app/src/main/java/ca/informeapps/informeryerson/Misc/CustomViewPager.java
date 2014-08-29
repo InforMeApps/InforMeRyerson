@@ -52,7 +52,17 @@ public class CustomViewPager extends ViewPager {
      * Set the factor by which the duration will change
      */
     public void setScrollDurationFactor(double scrollFactor) {
-        mScroller.setScrollDurationFactor(scrollFactor);
+        if(mScroller!=null)
+        {
+            mScroller.setScrollDurationFactor(scrollFactor);
+        }
+        else
+        {
+            postInitViewPager();
+            mScroller.setScrollDurationFactor(scrollFactor);
+
+        }
+
     }
 
 }

@@ -26,6 +26,9 @@ public class FavsData {
         this.context=context;
         this.data=data;
     }
+    FavsData()
+    {}
+
 
 
 
@@ -53,7 +56,7 @@ public class FavsData {
             InputStreamReader streamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(streamReader);
             String l;
-            while (( l = bufferedReader.readLine()) != null && !((l=bufferedReader.readLine()).equals("null null"))) {
+            while (( l = bufferedReader.readLine()) != null) {
 
                 soup.add(bufferedReader.readLine());
             }
@@ -62,6 +65,7 @@ public class FavsData {
         for(int x=0;x<soup.size();x++)
         {
             flying[x][0]= soup.get(x).split("  ")[0];
+            flying[x][1]=soup.get(x).split("  ")[1];
 
         }
         return flying;

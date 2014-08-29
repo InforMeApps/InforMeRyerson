@@ -23,6 +23,7 @@ import ca.informeapps.informeryerson.R;
 public class TransitActivity extends FragmentActivity implements AdapterView.OnItemSelectedListener {
 
     private int[] spinnerImages = {R.drawable.ttc_logo, R.drawable.go_logo};
+    public static boolean isActive=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +62,33 @@ public class TransitActivity extends FragmentActivity implements AdapterView.OnI
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        isActive=true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isActive=false;
+    }
+
+
+
+    @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (i == 0) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame_transit, new TTCUpdatesFragment()).commit();
-        } else if (i == 1) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame_transit, new GOUpdatesFragment()).commit();
+        if(isActive) {
+            if (i == 0) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame_transit, new TTCUpdatesFragment()).commit();
+            } else if (i == 1) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame_transit, new GOUpdatesFragment()).commit();
+            }
+        }
+        else
+        {
+
         }
     }
 

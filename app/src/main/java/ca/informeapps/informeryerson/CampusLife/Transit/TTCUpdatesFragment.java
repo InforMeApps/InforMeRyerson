@@ -42,11 +42,14 @@ public class TTCUpdatesFragment extends Fragment implements SwipeRefreshLayout.O
     private ListView listView;
     private List<String> alertList, lastUpdatedList;
     private View rootView;
+    TransitActivity transitActivity= new TransitActivity();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_transit_detail, container, false);
+
 
         alertList = new LinkedList<String>();
         lastUpdatedList = new LinkedList<String>();
@@ -150,7 +153,6 @@ public class TTCUpdatesFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     public class TTCServiceAlerts extends AsyncTask<Void, Void, Void> {
-
         private final String url = "https://m.ttc.ca/mobile/index.jsp";
         private Document doc;
 
@@ -176,26 +178,36 @@ public class TTCUpdatesFragment extends Fragment implements SwipeRefreshLayout.O
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Elements serviceAlerts = doc.select("div[class=ttc-service-alert");
+            if(transitActivity.isActive) {
 
-            for (int i = 0; i < serviceAlerts.size(); i++) {
-                Element alert = serviceAlerts.get(i);
-                alertList.add(alert.child(1).text());
-                lastUpdatedList.add(alert.child(2).text());
+
+                Elements serviceAlerts = doc.select("div[class=ttc-service-alert");
+
+                for (int i = 0; i < serviceAlerts.size(); i++) {
+                    Element alert = serviceAlerts.get(i);
+                    alertList.add(alert.child(1).text());
+                    lastUpdatedList.add(alert.child(2).text());
+                }
+
+                TextView textView = (TextView) rootView.findViewById(R.id.textview_transit_noerror);
+
+                if (alertList.size() != 0) {
+                    adapter = new ServiceAlertListAdapter();
+                    listView.setAdapter(adapter);
+                    swipeRefreshLayout.setRefreshing(false);
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
+            else
+            {
 
-            TextView textView = (TextView) rootView.findViewById(R.id.textview_transit_noerror);
-
-            if (alertList.size() != 0) {
-                adapter = new ServiceAlertListAdapter();
-                listView.setAdapter(adapter);
-                swipeRefreshLayout.setRefreshing(false);
-                textView.setVisibility(View.GONE);
-            } else {
-                textView.setVisibility(View.VISIBLE);
-                swipeRefreshLayout.setRefreshing(false);
             }
 
         }
+
+
     }
 }
