@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/GPSEnabled"
-        android:icon="@drawable/ic_action_delete"
+        android:icon="@drawable/ic_action_gps_fixed"
         android:showAsAction="always"
         android:title="Enable GPS" />
     <item

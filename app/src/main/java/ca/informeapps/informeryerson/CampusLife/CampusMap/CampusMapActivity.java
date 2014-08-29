@@ -30,7 +30,7 @@ public class CampusMapActivity extends Activity {
     private WebView webView;
     private Menu optionsMenu;
     private MenuItem gpsMenuItem;
-    private boolean enableGPS=false;
+    private boolean enableGPS = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +56,7 @@ public class CampusMapActivity extends Activity {
 
             @Override//passes current location to webview
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                if(enableGPS)
-                {
+                if (enableGPS) {
                     callback.invoke(origin, true, false);//sets currnet location
                 }
             }
@@ -123,17 +122,14 @@ public class CampusMapActivity extends Activity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.GPSEnabled:
-                if(!enableGPS)
-                {
-                    enableGPS=true;
+                if (!enableGPS) {
+                    enableGPS = true;
                     webView.reload();
-                    gpsMenuItem.setIcon(R.drawable.ic_action_add);
-                }
-                else
-                {
-                    enableGPS=false;
+                    gpsMenuItem.setIcon(R.drawable.ic_action_gps_fixed_selected);
+                } else {
+                    enableGPS = false;
                     webView.reload();
-                    gpsMenuItem.setIcon(R.drawable.ic_action_delete);
+                    gpsMenuItem.setIcon(R.drawable.ic_action_gps_fixed);
                 }
                 return true;
         }

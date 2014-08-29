@@ -4,8 +4,6 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,12 +33,9 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 
-
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import ca.informeapps.informeryerson.Misc.CustomViewPager;
 import ca.informeapps.informeryerson.Misc.FloatingActionButton;
 import ca.informeapps.informeryerson.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -50,7 +45,7 @@ public class ScheduleActivity extends FragmentActivity {
 
     private static final int MAX_VIEWS = 6;
     ViewHolder dayTextHolder;
-    CustomViewPager mViewPager;
+    ViewPager mViewPager;
     private StickyListHeadersListView listView;
     private ScheduleDateListAdapter adapter;
     private long[] timeMills;
@@ -103,31 +98,21 @@ public class ScheduleActivity extends FragmentActivity {
                 }
             });
             onItemSelection(0);
-        } else if (!checkCalender()) {
-            setContentView(R.layout.walkthrough_ryerson_email);
-            mViewPager = (CustomViewPager) findViewById(R.id.view_pager);
+        } else {
+            setContentView(R.layout.activity_myschedule_walkthrough);
+            mViewPager = (ViewPager) findViewById(R.id.view_pager);
             mViewPager.setAdapter(new WalkthroughPagerAdapter());
             mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
             mViewPager.setCurrentItem(2);
-            new Handler().postDelayed(WalkThroughFlashAnimations(), 500);
 
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mViewPager.setCurrentItem(0, true);
+                }
+            }, 500);
         }
     }
-
-    private Runnable WalkThroughFlashAnimations() {
-        return new Runnable() {
-
-            @Override
-            public void run() {
-                mViewPager.setScrollDurationFactor(3);
-                mViewPager.setCurrentItem(0,true);
-                mViewPager.setScrollDurationFactor(1);
-
-
-            }
-        };
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -146,10 +131,8 @@ public class ScheduleActivity extends FragmentActivity {
         Crashlytics.start(this);
     }
 
-    public Calendar shiftedCalender(Calendar c, int Shift) {
-        Calendar calendar = c;
+    public Calendar shiftedCalender(Calendar calendar, int Shift) {
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-
         calendar.add(Calendar.DAY_OF_YEAR, Shift);
         return calendar;
     }
@@ -312,12 +295,12 @@ public class ScheduleActivity extends FragmentActivity {
         }
 
         @Override
-        public Object instantiateItem(View container, int position) {
+        public Object instantiateItem(ViewGroup container, int position) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View viewz = inflater.inflate(R.layout.walkthrough_single_view, null);
-            TextView textView2 = (TextView) viewz.findViewById(R.id.textview_schedule_viewpager_enlightenment);
-            ImageView imageView = (ImageView) viewz.findViewById(R.id.Walkthroug_image);
-            TextView textView = (TextView) viewz.findViewById(R.id.Walkthroug_text);
+            View pagerLayout = inflater.inflate(R.layout.layout_viewpager_schedule_walkthrough, null);
+            TextView bottomTextV = (TextView) pagerLayout.findViewById(R.id.textview_schedule_viewpager_enlightenment);
+            ImageView imageView = (ImageView) pagerLayout.findViewById(R.id.Walkthroug_image);
+            TextView textView = (TextView) pagerLayout.findViewById(R.id.Walkthroug_text);
 
             switch (position) {
                 case 0:
@@ -328,40 +311,40 @@ public class ScheduleActivity extends FragmentActivity {
 
                 case 1:
                     textView.setText("Log into your my.ryerson account and click the Apps on the top");
-                    textView2.setText("Your Journey Has Just \nBegun -->");
+                    bottomTextV.setText("Your Journey Has Just \nBegun -->");
                     imageView.setImageResource(R.drawable.step1);
                     break;
 
                 case 2:
                     textView.setText("Click on \"Activate Google Token\"");
-                    textView2.setText("You can do it! Just \nBELIEVE!! -->");
+                    bottomTextV.setText("You can do it! Just \nBELIEVE!! -->");
                     imageView.setImageResource(R.drawable.step2);
                     break;
 
                 case 3:
                     textView.setText("Click on Activate");
-                    textView2.setText("So close to the end you can feel it -->");
+                    bottomTextV.setText("So close to the end you can feel it -->");
                     imageView.setImageResource(R.drawable.step3);
                     break;
 
                 case 4:
                     textView.setText("Next on Your Device Go to Settings and Add An Existing Google Account");
-                    textView2.setText("So close u can lick it -->");
+                    bottomTextV.setText("So close u can lick it -->");
                     imageView.setImageResource(R.drawable.step4);
                     break;
 
                 case 5:
                     textView.setText("Sign in using your ryerson email, and the token as password. Remember to have calender synced");
                     imageView.setImageResource(R.drawable.step7);
-                    textView2.setText("You have been enlightened!\nClick here to go to my.ryerson");
-                    textView2.setTextColor(Color.parseColor("#0099cc"));
+                    bottomTextV.setText("You have been enlightened!\nClick here to go to my.ryerson");
+                    bottomTextV.setTextColor(Color.parseColor("#0099cc"));
                     if (android.os.Build.VERSION.SDK_INT < 16) {
-                        textView2.setBackgroundDrawable(getResources().getDrawable(R.drawable.image_button_grey_selector));
+                        bottomTextV.setBackgroundDrawable(getResources().getDrawable(R.drawable.image_button_grey_selector));
                     } else {
-                        textView2.setBackground(getResources().getDrawable(R.drawable.imagebutton_selector));
+                        bottomTextV.setBackground(getResources().getDrawable(R.drawable.imagebutton_selector));
                     }
-                    textView2.setTextColor(Color.parseColor("#e8eaf6"));
-                    textView2.setOnClickListener(new View.OnClickListener() {
+                    bottomTextV.setTextColor(Color.parseColor("#e8eaf6"));
+                    bottomTextV.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Uri intentUri = Uri.parse("https://cas.ryerson.ca/login?service=https%3A%2F%2Fmy.ryerson.ca%2FLogin");
@@ -372,8 +355,8 @@ public class ScheduleActivity extends FragmentActivity {
                     break;
             }
 
-            ((ViewPager) container).addView(viewz, 0);
-            return viewz;
+            ((ViewPager) container).addView(pagerLayout, 0);
+            return pagerLayout;
         }
 
         @Override

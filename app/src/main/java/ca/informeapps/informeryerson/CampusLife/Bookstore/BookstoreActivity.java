@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
@@ -111,7 +110,7 @@ public class BookstoreActivity extends FragmentActivity {
         String name = n.replaceAll("\\W", "");
         if (map) {
             name = name + "map";
-        } else if (!map) {
+        } else {
         }
         ResID = getResources().getIdentifier(name, "drawable", getPackageName());
         return ResID;
@@ -136,9 +135,9 @@ public class BookstoreActivity extends FragmentActivity {
             TextView BookstoreHours = (TextView) convertView.findViewById(R.id.textview_bookstore_hours);
             TextView bookstoreAddress = (TextView) convertView.findViewById(R.id.textview_bookstore_address);
 
-            final String[][] HourDay = {{ "Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm","Saturday   Closed"},
-                    { "Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm","Saturday   10:00 am – 4:00 pm"},
-                    { "Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm","Saturday   Closed"}};
+            final String[][] HourDay = {{"Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm", "Saturday   Closed"},
+                    {"Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm", "Saturday   10:00 am – 4:00 pm"},
+                    {"Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm", "Saturday   Closed"}};
 
             final String[] mapsUri =
                     {"https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
@@ -152,10 +151,12 @@ public class BookstoreActivity extends FragmentActivity {
             final int[] images = {R.drawable.ryerson_campus_store, R.drawable.discount_textbooks, R.drawable.ryerson_students_union};
 
             BookStoreName.setText(getItem(position));
-            Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
-            BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-1]);
+            BookStoreMap.setImageResource(ResourceID(getItem(position), true));
+            //Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
+            BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1]);
             bookstoreAddress.setText(Address[position]);
-            Picasso.with(this.getContext()).load(images[position]).into(BookStorePicture);
+            BookStorePicture.setImageResource(images[position]);
+            //Picasso.with(this.getContext()).load(images[position]).into(BookStorePicture);
 
             BookStoreMap.setOnClickListener(new View.OnClickListener() {
                 @Override

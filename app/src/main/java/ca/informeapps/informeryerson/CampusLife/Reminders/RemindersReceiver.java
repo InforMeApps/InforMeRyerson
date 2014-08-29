@@ -36,11 +36,11 @@ public class RemindersReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_stat_today)
+                .setTicker(title)
                 .setContentTitle(title)
                 .setContentText(description)
                 .setSound(soundUri)
                 .setVibrate(pattern);
-
 
 
         Intent resultIntent = new Intent(context, RemindersActivity.class);
@@ -52,9 +52,7 @@ public class RemindersReceiver extends BroadcastReceiver {
 
             pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(pendingIntent);
-        }
-
-        else {
+        } else {
             pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(pendingIntent);
         }

@@ -8,6 +8,8 @@
 
 
 
+
+
 buildscript {
     repositories {
         maven { url 'http://download.crashlytics.com/maven' }
@@ -36,7 +38,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 20
         versionCode 7
-        versionName "0.1.6 Internal"
+        versionName "0.1.6"
     }
     buildTypes {
         release {

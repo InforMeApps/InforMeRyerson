@@ -114,11 +114,11 @@ public class SearchByKeyword extends AsyncTask<Void, Void, Void> {
         }
         progressDialog.dismiss();
 
-        String[] namesArray = nameList.toArray(new String[0]);
-        String[] titlesArray = titleList.toArray(new String[0]);
-        String[] locationsArray = locationList.toArray(new String[0]);
-        String[] extensionsArray = extensionList.toArray(new String[0]);
-        String[] emailsArray = emailList.toArray(new String[0]);
+        String[] namesArray = nameList.toArray(new String[nameList.size()]);
+        String[] titlesArray = titleList.toArray(new String[titleList.size()]);
+        String[] locationsArray = locationList.toArray(new String[locationList.size()]);
+        String[] extensionsArray = extensionList.toArray(new String[extensionList.size()]);
+        String[] emailsArray = emailList.toArray(new String[emailList.size()]);
         int[] numArray = ArrayUtils.toPrimitive(numResults.toArray(new Integer[numResults.size()]));
 
         Fragment resultFragment = new DirectoryResultsFragment();

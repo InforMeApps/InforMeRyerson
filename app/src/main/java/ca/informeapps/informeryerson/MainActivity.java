@@ -4,19 +4,22 @@
 
 package ca.informeapps.informeryerson;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +36,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import ca.informeapps.informeryerson.CampusLife.CampusLifeFragment;
-import ca.informeapps.informeryerson.StudentLife.StudentLifeFragment;
 
 /* TOO LAZY TO DOCUMENT STUFF #YOLOSWAG */
 
@@ -87,20 +89,8 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
-       //new Handler().postDelayed(openDrawerRunnable(), 500); //When items are added to drawer
 
     }
-
-    private Runnable openDrawerRunnable() {
-        return new Runnable() {
-
-            @Override
-            public void run() {
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-            }
-        };
-    }
-
 
     @Override
     protected void onRestart() {
@@ -112,14 +102,42 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-        if (resultCode == ConnectionResult.SUCCESS) {
 
-        } else {
+        final String PREFS_NAME = "firstRunCheck";
+        SharedPreferences firstRun = getSharedPreferences(PREFS_NAME, 0);
+
+        Crashlytics.start(this);
+
+        //check if google play services exist
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
+        if (resultCode == ConnectionResult.SERVICE_MISSING) {
             int requestCode = 10;
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, requestCode);
             dialog.show();
+        }
+
+        //check if first app run
+        if (firstRun.getBoolean("firstRun", true)) {
+            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Allow us to collect anonymous app usage data to help us make the app better")
+                    .setTitle("Anonymous Usage Stats");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    preferences.edit().putBoolean("pref_key_google_analytics", true).commit();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    preferences.edit().putBoolean("pref_key_google_analytics", false).commit();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            firstRun.edit().putBoolean("firstRun", false).commit();
         }
     }
 
@@ -173,8 +191,9 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                     setVisibleFragment(i);
                     break;
                 case 1:
-                    fragment = new StudentLifeFragment();
-                    setVisibleFragment(i);
+                    isFragment = false;
+                    /*fragment = new StudentLifeFragment();
+                    setVisibleFragment(i);*/
                     break;
                 case 2:
                     isFragment = false;
@@ -192,8 +211,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                 case 5:
                     isFragment = false;
                     String[] emailAddress = {"informeapplications@gmail.com"};
-                    String deviceInfo = "\n\n\nAPI Level: " + Build.VERSION.SDK_INT + "\n" + Build.DEVICE + "\n"
-                            + Build.MODEL + "\n" + Build.MANUFACTURER + "\n" + Build.PRODUCT;
+                    String deviceInfo = getDeviceInfo();
                     Intent emailIntent = new Intent(Intent.ACTION_SEND);
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, emailAddress);
                     emailIntent.setType("plain/text");
@@ -219,6 +237,11 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             }
         }
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    public String getDeviceInfo() {
+        return "\n\n\nAPI Level: " + Build.VERSION.SDK_INT + "\n" + Build.DEVICE + "\n"
+                + Build.MODEL + "\n" + Build.MANUFACTURER + "\n" + Build.PRODUCT;
     }
 
     public void setVisibleFragment(int i) {
