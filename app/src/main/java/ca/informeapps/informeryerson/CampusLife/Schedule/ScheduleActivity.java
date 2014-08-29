@@ -4,6 +4,9 @@
 
 package ca.informeapps.informeryerson.CampusLife.Schedule;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,17 +24,21 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.Property;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -103,14 +110,7 @@ public class ScheduleActivity extends FragmentActivity {
             mViewPager = (ViewPager) findViewById(R.id.view_pager);
             mViewPager.setAdapter(new WalkthroughPagerAdapter());
             mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
-            mViewPager.setCurrentItem(2);
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mViewPager.setCurrentItem(0, true);
-                }
-            }, 500);
         }
     }
 
@@ -298,7 +298,7 @@ public class ScheduleActivity extends FragmentActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View pagerLayout = inflater.inflate(R.layout.layout_viewpager_schedule_walkthrough, null);
-            TextView bottomTextV = (TextView) pagerLayout.findViewById(R.id.textview_schedule_viewpager_enlightenment);
+            final TextView bottomTextV = (TextView) pagerLayout.findViewById(R.id.textview_schedule_viewpager_enlightenment);
             ImageView imageView = (ImageView) pagerLayout.findViewById(R.id.Walkthroug_image);
             TextView textView = (TextView) pagerLayout.findViewById(R.id.Walkthroug_text);
 
@@ -306,6 +306,15 @@ public class ScheduleActivity extends FragmentActivity {
                 case 0:
                     textView.setText("Oh No! Looks like you dont have your Ryerson Account on your device :(\nFollow the tutorial to be enlightened");
                     imageView.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                    final int Dur=2000;
+                    ColorText(bottomTextV,"#00FF00",Dur);
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            ColorText(bottomTextV, "#FFFFFF", Dur);;
+                        }
+                    }, Dur+10);
                     imageView.setImageResource(R.drawable.error_cat);
                     break;
 
@@ -392,4 +401,26 @@ public class ScheduleActivity extends FragmentActivity {
         }
 
     }
+    public void ColorText(TextView textView, String color, int Duration)
+    {
+        final Property<TextView, Integer> property = new Property<TextView, Integer>(int.class, "textColor") {
+            @Override
+            public Integer get(TextView object) {
+                return object.getCurrentTextColor();
+            }
+
+            @Override
+            public void set(TextView object, Integer value) {
+                object.setTextColor(value);
+            }
+        };
+        final ObjectAnimator animator = ObjectAnimator.ofInt(textView, property,Color.parseColor(color));
+        animator.setDuration(Duration);
+        animator.setEvaluator(new ArgbEvaluator());
+        animator.setInterpolator(new DecelerateInterpolator(2));
+        animator.start();
+    }
+
+
+
 }
