@@ -28,7 +28,8 @@ public class CampusMapActivity extends Activity {
     boolean noConnection = false;
     private String mapsUrl = "https://m.ryerson.ca/core_apps/map/beta/";
     private WebView webView;
-    private Menu optionsMenu,GpsMenu;
+    private Menu optionsMenu;
+    private MenuItem gpsMenuItem;
     private boolean enableGPS=false;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,6 @@ public class CampusMapActivity extends Activity {
         setContentView(R.layout.activity_campusmap);
 
         linearLayout = (LinearLayout) findViewById(R.id.layout_campus_map_NoConnection);
-        GpsMenu=(Menu)findViewById(R.id.GPSEnabled);
 
 
         webView = (WebView) findViewById(R.id.webview_campusmap);
@@ -101,6 +101,7 @@ public class CampusMapActivity extends Activity {
         this.optionsMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.campusmap_menu, menu);
+        gpsMenuItem = menu.findItem(R.id.GPSEnabled);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -126,11 +127,13 @@ public class CampusMapActivity extends Activity {
                 {
                     enableGPS=true;
                     webView.reload();
+                    gpsMenuItem.setIcon(R.drawable.ic_action_add);
                 }
                 else
                 {
                     enableGPS=false;
                     webView.reload();
+                    gpsMenuItem.setIcon(R.drawable.ic_action_delete);
                 }
                 return true;
         }
