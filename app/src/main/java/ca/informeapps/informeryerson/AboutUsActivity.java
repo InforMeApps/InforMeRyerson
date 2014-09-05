@@ -18,12 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.viewpagerindicator.UnderlinePageIndicator;
+
+import ca.informeapps.informeryerson.Misc.CircleImageView2;
 
 public class AboutUsActivity extends FragmentActivity {
 
@@ -170,11 +171,11 @@ public class AboutUsActivity extends FragmentActivity {
 
     class ViewHolder {
 
-        ImageView imageView;
+        CircleImageView2 imageView;
         TextView textView, descTextV;
 
         ViewHolder(View v) {
-            imageView = (ImageView) v.findViewById(R.id.imageview_aboutus_list_team);
+            imageView = (CircleImageView2) v.findViewById(R.id.imageview_aboutus_list_team);
             textView = (TextView) v.findViewById(R.id.textView_aboutus_team_name);
             descTextV = (TextView) v.findViewById(R.id.textView_aboutus_team_description);
         }

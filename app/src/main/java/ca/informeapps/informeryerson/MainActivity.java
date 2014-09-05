@@ -36,6 +36,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import ca.informeapps.informeryerson.CampusLife.CampusLifeFragment;
+import ca.informeapps.informeryerson.Events.EventsFragment;
 
 /* TOO LAZY TO DOCUMENT STUFF #YOLOSWAG */
 
@@ -196,9 +197,8 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                     setVisibleFragment(i);*/
                     break;
                 case 2:
-                    isFragment = false;
-                    /*fragment = new EventsFragment();
-                    setVisibleFragment(i);*/
+                    fragment = new EventsFragment();
+                    setVisibleFragment(i);
                     break;
                 case 3:
                     isFragment = false;
