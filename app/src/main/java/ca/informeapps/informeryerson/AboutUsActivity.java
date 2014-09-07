@@ -31,7 +31,7 @@ public class AboutUsActivity extends FragmentActivity {
     private ListView listView;
     private ViewPager viewPager;
     private String[] teamNames = {"Raj", "Patrick", "Tanmay", "Shahar"};
-    private String[] teamDescription = {"CoFounder/Project Lead/Marketing", "Co-Founder/COO/CFO", "UI/UX Designer/Developer", "Developer"};
+    private String[] teamDescription = {"CoFounder/Project Lead/Marketing", "CoFounder/COO/CFO", "UI/UX Designer/Developer", "Developer"};
     private int[] teamImages = {R.drawable.aboutus_raj, R.drawable.aboutus_patrick, R.drawable.aboutus_tanmay, R.drawable.aboutus_shahar};
 
     @Override

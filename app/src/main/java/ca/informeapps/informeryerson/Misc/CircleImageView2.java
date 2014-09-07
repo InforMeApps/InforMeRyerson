@@ -6,9 +6,14 @@
 package ca.informeapps.informeryerson.Misc;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.RectF;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -35,13 +40,55 @@ public class CircleImageView2 extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        float radius = 90.0f; // angle of round corners
-        Path clipPath = new Path();
-        RectF rect = new RectF(0, 0, this.getWidth(), this.getHeight());
-        clipPath.addRoundRect(rect, radius, radius, Path.Direction.CW);
-        canvas.clipPath(clipPath);
 
-        super.onDraw(canvas);
+        Drawable drawable = getDrawable();
+
+        if (drawable == null) {
+            return;
+        }
+
+        if (getWidth() == 0 || getHeight() == 0) {
+            return;
+        }
+
+        Bitmap bitmap =  ((BitmapDrawable)drawable).getBitmap() ;
+        Bitmap bitmap2 = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+        int w = getWidth(), h = getHeight();
+
+
+        Bitmap roundBitmap =  createRoundedness(bitmap2,w,h);
+        canvas.drawBitmap(roundBitmap, 0,0, null);
+
+    }
+
+    public Bitmap createRoundedness(Bitmap scaleBitmapImage,int w, int h) {
+
+        int Width = w;
+        int Height = h;
+
+        Bitmap roundedBitmap = Bitmap.createBitmap(Width, Height,Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(roundedBitmap);
+        Path path = new Path();
+        path.addCircle((((float) Width - 1) / 2), (((float) Height - 1) / 2),
+                (Math.min  (((float) Width),  ((float) Height)) / 2),
+                Path.Direction.CCW);
+
+        canvas.clipPath(path);
+
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setColor(Color.WHITE);
+        canvas.drawARGB(0, 0, 0, 0);
+
+
+        Bitmap sourceBitmap = scaleBitmapImage;
+        canvas.drawBitmap(sourceBitmap,
+                new Rect(0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight()),
+                new Rect(0, 0, Width, Height), paint);
+        return roundedBitmap;
     }
 }
 
