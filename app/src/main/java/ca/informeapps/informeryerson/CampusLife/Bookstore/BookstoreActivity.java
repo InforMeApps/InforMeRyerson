@@ -73,7 +73,6 @@ public class BookstoreActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
     }
 
     @Override

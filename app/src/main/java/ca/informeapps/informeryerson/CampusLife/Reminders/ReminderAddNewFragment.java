@@ -43,6 +43,7 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
     private int tYear, tMonth, tDay, tHour, tMinute;
     private ReminderDatabaseHandler databaseHandler;
     private ImageView done;
+    private boolean pressed = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +81,8 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
         databaseHandler = new ReminderDatabaseHandler(getActivity());
     }
 
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -93,32 +96,60 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
                 getActivity().getSupportFragmentManager().popBackStack();
                 break;
             case R.id.button_newreminder_add:
-                addButtonPressed();
+                if (title.getText().toString().length() > 0 || description.getText().toString().length() > 0)
+                    addButtonPressed(true);
+                else {
+                    Toast.makeText(getActivity(), "Enter a description or title", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
 
-    private void addButtonPressed() {
 
-        if (!title.getText().toString().equals("")) {
-            databaseHandler.addReminder(new Reminder(title.getText().toString(), description.getText().toString(),
-                    tDay, tMonth, tYear, tHour, tMinute));
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(!pressed)
+        {
+            if (title.getText().toString().length() > 0 || description.getText().toString().length() > 0)
+                addButtonPressed(false);
+            else
+                Toast.makeText(getActivity(),"Empty reminder not created",Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+
+    private void addButtonPressed(boolean popBack) {
+            pressed = true;
             add.setClickable(false);
-            processNotification();
+            if (!date.getText().toString().equals("Select Date") || !time.getText().toString().equals("Select Time")) {
+                databaseHandler.addReminder(new Reminder(title.getText().toString(), description.getText().toString(), tDay, tMonth, tYear, tHour, tMinute));
+                processNotification();
+            }
+            else
+            {
+                databaseHandler.addReminder(new Reminder(title.getText().toString(), description.getText().toString(), tDay, 10000, tYear, tHour, tMinute));
+
+            }
+
             Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up_rotate);
             animation.setInterpolator(getActivity(), android.R.anim.overshoot_interpolator);
             done.setAnimation(animation);
             done.setVisibility(View.VISIBLE);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getActivity().getSupportFragmentManager().popBackStack();
-                }
-            }, 700);
-        } else {
-            Toast.makeText(getActivity(), "Title field cannot be empty", Toast.LENGTH_SHORT).show();
-        }
+
+            if (popBack)
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                }, 700);
+
+
     }
+
 
     private void timePickerPressed() {
         RadialTimePickerDialog radialTimePickerDialog = RadialTimePickerDialog

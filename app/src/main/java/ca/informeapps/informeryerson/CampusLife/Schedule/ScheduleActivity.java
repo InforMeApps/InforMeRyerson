@@ -128,7 +128,6 @@ public class ScheduleActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
     }
 
     public Calendar shiftedCalender(Calendar calendar, int Shift) {

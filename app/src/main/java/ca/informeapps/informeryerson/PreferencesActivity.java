@@ -20,7 +20,6 @@ public class PreferencesActivity extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Crashlytics.start(this);
 
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new MainPreferenceFragment())

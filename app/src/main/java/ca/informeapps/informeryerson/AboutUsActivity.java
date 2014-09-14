@@ -4,7 +4,9 @@
 
 package ca.informeapps.informeryerson;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,12 +24,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
+import ca.informeapps.informeryerson.Misc.AnalyticsSampleApp;
 import ca.informeapps.informeryerson.Misc.CircleImageView2;
 
 public class AboutUsActivity extends FragmentActivity {
 
+    private Tracker t;
     private ListView listView;
     private ViewPager viewPager;
     private String[] teamNames = {"Raj", "Patrick", "Tanmay", "Shahar"};
@@ -56,12 +63,21 @@ public class AboutUsActivity extends FragmentActivity {
         listView.addFooterView(footerView, null, false);
         listView.setAdapter(adapter);
 
+        t = ((AnalyticsSampleApp) getApplication()).getTracker(AnalyticsSampleApp.TrackerName.APP_TRACKER);
+        t.setScreenName("About us");
+        t.send(new HitBuilders.EventBuilder().setCategory("About us").build());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getBoolean("pref_key_google_analytics", true)) {
+            GoogleAnalytics.getInstance(getApplicationContext()).dispatchLocalHits();
+        }
+
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
     }
 
     @Override

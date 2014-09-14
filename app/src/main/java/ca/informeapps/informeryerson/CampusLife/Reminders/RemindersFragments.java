@@ -7,8 +7,8 @@ package ca.informeapps.informeryerson.CampusLife.Reminders;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +45,7 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_reminders, container, false);//setting layout
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);//for going back
@@ -145,10 +145,25 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
 
     private class ReminderListAdapter extends BaseAdapter {
 
+        private SparseBooleanArray mSelectedItemsIds;
+
+
+        public void toggleSelection(int position) {
+            selectView(position);
+        }
+        public void selectView(int position) {
+
+            mSelectedItemsIds.delete(position);
+
+            notifyDataSetChanged();
+        }
+
         private LayoutInflater inflater;
 
         public ReminderListAdapter() {
+
             inflater = getActivity().getLayoutInflater();
+            mSelectedItemsIds = new SparseBooleanArray();
         }
 
         @Override
@@ -181,17 +196,18 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
 
             String mTitle = reminder.get_title();
             String mDescription = reminder.get_description();
-
-            Date date = new Date(reminder.get_year(), reminder.get_month(), reminder.get_day(), reminder.get_hour(), reminder.get_minute());
-            DateFormat timeFormat = new SimpleDateFormat("hh:mm aa");
-            DateFormat monthFormat = new SimpleDateFormat("MMM");
-            DateFormat dayFormat = new SimpleDateFormat("dd");
-
-            day.setText(dayFormat.format(date));
-            month.setText(monthFormat.format(date));
-            time.setText(timeFormat.format(date));
             title.setText(mTitle);
             description.setText(mDescription);
+            Date date = new Date(reminder.get_year(), reminder.get_month(), reminder.get_day(), reminder.get_hour(), reminder.get_minute());
+
+            if(reminder.get_month()!=10000) {
+                DateFormat timeFormat = new SimpleDateFormat("hh:mm aa");
+                DateFormat monthFormat = new SimpleDateFormat("MMM");
+                DateFormat dayFormat = new SimpleDateFormat("dd");
+                day.setText(dayFormat.format(date));
+                month.setText(monthFormat.format(date));
+                time.setText(timeFormat.format(date));
+            }
 
             return view;
         }
