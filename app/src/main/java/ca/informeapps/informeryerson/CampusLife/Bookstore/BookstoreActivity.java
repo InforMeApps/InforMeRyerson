@@ -45,7 +45,7 @@ public class BookstoreActivity extends FragmentActivity {
         getActionBar().setHomeButtonEnabled(true);
         setTitle("Bookstores");
 
-        final ArrayAdapter<String> BookStoreListAdapter = new ListAdapter(this, R.layout.layout_list_explore);
+        final ArrayAdapter<String> BookStoreListAdapter = new ListAdapter(this, R.layout.layout_list_bookstore);
         BookStoreListAdapter.add("Ryerson Campus Store");
         BookStoreListAdapter.add("Ryerson Students Union");
         BookStoreListAdapter.add("Canadian Campus Bookstore");

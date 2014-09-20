@@ -53,7 +53,6 @@ public class ReminderDatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_REMINDERS);
-
         onCreate(sqLiteDatabase);
     }
 
@@ -113,7 +112,6 @@ public class ReminderDatabaseHandler extends SQLiteOpenHelper {
                 reminder.set_year(cursor.getInt(5));
                 reminder.set_hour(cursor.getInt(6));
                 reminder.set_minute(cursor.getInt(7));
-
                 reminderList.add(reminder);
             } while (cursor.moveToNext());
         }

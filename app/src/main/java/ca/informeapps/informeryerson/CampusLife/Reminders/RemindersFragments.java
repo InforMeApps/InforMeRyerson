@@ -143,27 +143,18 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
                 .commit();
     }
 
+
+
+
+    //adapter
     private class ReminderListAdapter extends BaseAdapter {
 
-        private SparseBooleanArray mSelectedItemsIds;
-
-
-        public void toggleSelection(int position) {
-            selectView(position);
-        }
-        public void selectView(int position) {
-
-            mSelectedItemsIds.delete(position);
-
-            notifyDataSetChanged();
-        }
 
         private LayoutInflater inflater;
 
         public ReminderListAdapter() {
 
             inflater = getActivity().getLayoutInflater();
-            mSelectedItemsIds = new SparseBooleanArray();
         }
 
         @Override
@@ -211,5 +202,6 @@ public class RemindersFragments extends Fragment implements AdapterView.OnItemCl
 
             return view;
         }
+
     }
 }

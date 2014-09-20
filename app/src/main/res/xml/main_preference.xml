@@ -14,6 +14,18 @@
             android:title="Anonymous Usage Stats" />
     </PreferenceCategory>
     <PreferenceCategory
+        android:key="pref_key_notif_category"
+        android:title="Notifications &amp; Reminders">
+       <ListPreference
+            android:key="Reminders_default_value"
+            android:title="Default reminder time"
+            android:summary="Remind me %s before"
+            android:entries="@array/updateInterval"
+            android:entryValues="@array/updateIntervalValues"
+           android:defaultValue="0"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory
         android:key="pref_key_about_category"
         android:title="@string/prefs_about_category">
         <Preference

@@ -14,6 +14,29 @@
         <item>Scott de Jonge</item>
     </string-array>
 
+    <string-array name="updateInterval">
+        <item name="0 Minutes">0 minutes</item>
+        <item name="10 Minutes">10 minutes </item>
+        <item name="30 Minutes">30 minutes</item>
+        <item name="1 Hour">1 hour</item>
+        <item name="2 Hours">2 hours</item>
+        <item name="1 Day">1 day</item>
+        <item name="2 Day">2 days</item>
+
+    </string-array>
+
+    <string-array name="updateIntervalValues">
+        <item name="0 Minutes">0</item>
+        <item name="10 Minutes">600</item>
+        <item name="30 Minutes">1800</item>
+        <item name="1 Hour">3600</item>
+        <item name="2 Hours">7200</item>
+        <item name="1 Day">86400</item>
+        <item name="2 Days">172800</item>
+
+    </string-array>
+
+
     <string-array name="Images">
         <item>Farhan Riaz</item>
     </string-array>

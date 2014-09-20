@@ -4,11 +4,6 @@
 
 package ca.informeapps.informeryerson.CampusLife.Reminders;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -31,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import ca.informeapps.informeryerson.Notifications;
 import ca.informeapps.informeryerson.R;
 
 public class ReminderAddNewFragment extends Fragment implements View.OnClickListener {
@@ -62,7 +58,7 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
         mYear = calendar.get(Calendar.YEAR);
         mMonth = calendar.get(Calendar.MONTH);
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        mHour = calendar.get(Calendar.HOUR);
+        mHour = calendar.get(Calendar.HOUR_OF_DAY);
         mMinute = calendar.get(Calendar.MINUTE);
 
         date = (Button) rootView.findViewById(R.id.button_newreminder_date);
@@ -126,7 +122,8 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
             add.setClickable(false);
             if (!date.getText().toString().equals("Select Date") || !time.getText().toString().equals("Select Time")) {
                 databaseHandler.addReminder(new Reminder(title.getText().toString(), description.getText().toString(), tDay, tMonth, tYear, tHour, tMinute));
-                processNotification();
+                Notifications notifications = new Notifications(title.getText().toString(),description.getText().toString(),tMinute, tHour, tDay, tMonth, tYear);
+                notifications.sendAlarmMangerNotification(getActivity(),RemindersReceiver.class);
             }
             else
             {
@@ -183,25 +180,5 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
                 }, mYear, mMonth, mDay);
         calendarDatePickerDialog.show(getActivity().getSupportFragmentManager(), "DATE_PICKER");
 
-    }
-
-    private void processNotification() {
-        Calendar notificationDate = Calendar.getInstance();
-        notificationDate.setTimeInMillis(System.currentTimeMillis());
-        notificationDate.set(tYear, tMonth, tDay, tHour, tMinute);
-
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-        Intent notificationIntent = new Intent(getActivity(), RemindersReceiver.class);
-        Bundle args = new Bundle();
-        args.putString("KEY_TITLE", title.getText().toString());
-        args.putString("KEY_DESCRIPTION", description.getText().toString());
-        notificationIntent.putExtra("TITLE_DESCRIPTION", args);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (Build.VERSION.SDK_INT < 19) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, notificationDate.getTimeInMillis(), pendingIntent);
-        } else {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationDate.getTimeInMillis(), pendingIntent);
-        }
     }
 }

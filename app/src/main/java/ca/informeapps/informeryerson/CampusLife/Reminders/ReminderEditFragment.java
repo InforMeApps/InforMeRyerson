@@ -5,11 +5,6 @@
 package ca.informeapps.informeryerson.CampusLife.Reminders;
 
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -21,25 +16,21 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import ca.informeapps.informeryerson.Notifications;
 import ca.informeapps.informeryerson.R;
 
-/**
- * Created by Shahar on 2014-09-13.
- */
 public class ReminderEditFragment extends Fragment  {
 
     private List<Reminder> reminders;
@@ -75,8 +66,6 @@ public class ReminderEditFragment extends Fragment  {
             time.setText(new SimpleDateFormat("h:mm:aa").format(new Date(0,reminder.get_month(),reminder.get_day(),reminder.get_hour(),reminder.get_minute())));
             date.setText(new SimpleDateFormat("MMM dd").format(new Date(0,reminder.get_month(),reminder.get_day())));
             a=reminder.get_year(); b=reminder.get_month(); c=reminder.get_day();
-
-
         }
         else
         {
@@ -84,7 +73,6 @@ public class ReminderEditFragment extends Fragment  {
             date.setText("Select Date");
             Calendar d = Calendar.getInstance();
             a=d.get(d.YEAR);b=d.get(d.MONTH);c=d.get(d.DAY_OF_MONTH);
-
         }
 
 
@@ -92,14 +80,15 @@ public class ReminderEditFragment extends Fragment  {
         des.setText(reminder.get_description());
         done.setText("Done");
 
-
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (!date.getText().toString().equals("Select Date") || !time.getText().toString().equals("Select Time")) {
                     reminder.set_month(tMonth);
-                    processNotification();
+                    Notifications notifications = new Notifications(title.getText().toString(),des.getText().toString(),tMinute, tHour, tDay, tMonth, tYear );
+                    notifications.sendAlarmMangerNotification(getActivity(),RemindersReceiver.class);
+
                 }
                 else
                 {
@@ -113,7 +102,6 @@ public class ReminderEditFragment extends Fragment  {
                 reminder.set_year(tYear);
                 reminder.set_minute(tMinute);
                 databaseHandler.editReminder(reminder);
-                Toast.makeText(getActivity(),"",Toast.LENGTH_SHORT).show();
                 ImageView imageView = (ImageView) rootView.findViewById(R.id.imageview_newreminder_done);
 
                 Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up_rotate);
@@ -178,25 +166,7 @@ public class ReminderEditFragment extends Fragment  {
 
     }
 
-    private void processNotification() {
-        Calendar notificationDate = Calendar.getInstance();
-        notificationDate.setTimeInMillis(System.currentTimeMillis());
-        notificationDate.set(tYear, tMonth, tDay, tHour, tMinute);
 
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-        Intent notificationIntent = new Intent(getActivity(), RemindersReceiver.class);
-        Bundle args = new Bundle();
-        args.putString("KEY_TITLE", title.getText().toString());
-        args.putString("KEY_DESCRIPTION", des.getText().toString());
-        notificationIntent.putExtra("TITLE_DESCRIPTION", args);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (Build.VERSION.SDK_INT < 19) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, notificationDate.getTimeInMillis(), pendingIntent);
-        } else {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationDate.getTimeInMillis(), pendingIntent);
-        }
-    }
 
 
 }

@@ -16,10 +16,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
+import java.util.Random;
+
 import ca.informeapps.informeryerson.R;
 
-public class RemindersReceiver extends BroadcastReceiver {
-
+public class RemindersReceiver extends BroadcastReceiver{
     private Bundle bundle;
     private String title, description;
     private int id = 1;
@@ -56,9 +57,11 @@ public class RemindersReceiver extends BroadcastReceiver {
             pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(pendingIntent);
         }
+        Random rand = new Random();
+        int randomNum = rand.nextInt((1000000 - 0) + 1) + 0;
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(id, mBuilder.build());
+        notificationManager.notify(randomNum, mBuilder.build());
 
     }
 }
