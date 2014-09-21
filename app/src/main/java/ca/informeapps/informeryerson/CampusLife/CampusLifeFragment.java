@@ -12,10 +12,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,6 +54,24 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         rootView = inflater.inflate(R.layout.fragment_campuslife, container, false);
         View header = inflater.inflate(R.layout.layout_campuslife_list_header, mListView, false);
 
+        //IOS RECRUIT STUFF
+        final LinearLayout recruitLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_campuslife_recruit);
+        ImageButton closeRecruit = (ImageButton) rootView.findViewById(R.id.imagebutton_campuslife_recruit);
+        closeRecruit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation slideDown = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down_exit);
+                recruitLayout.setAnimation(slideDown);
+                recruitLayout.setVisibility(View.GONE);
+            }
+        });
+        TextView moreInfo = (TextView) rootView.findViewById(R.id.textview_campuslife_recruit);
+        moreInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         mListView = (ListView) rootView.findViewById(R.id.listview_campuslife);
         adapter = new CampusLifeListAdapter(getActivity().getLayoutInflater());

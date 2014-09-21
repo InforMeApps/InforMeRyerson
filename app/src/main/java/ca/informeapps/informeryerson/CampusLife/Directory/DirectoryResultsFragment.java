@@ -5,7 +5,9 @@
 package ca.informeapps.informeryerson.CampusLife.Directory;
 
 import android.app.Fragment;
-import android.content.Intent;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.commons.lang3.text.WordUtils;
 
@@ -29,6 +32,7 @@ public class DirectoryResultsFragment extends Fragment {
     private String[] names, titles, locations, extensions, emails;
     private String searchText;
     private int[] nums;
+    private ClipboardManager clipboardManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class DirectoryResultsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().getActionBar().setTitle("Search: " + searchText);
+        clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         rootView = inflater.inflate(R.layout.fragment_directory_results, container, false);
         errorView = (LinearLayout) rootView.findViewById(R.id.layout_directory_results_error);
         listView = (ListView) rootView.findViewById(R.id.listview_directory_results);
@@ -109,9 +114,9 @@ public class DirectoryResultsFragment extends Fragment {
                 email.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent emailTextIntent = new Intent(Intent.ACTION_SEND);
-                        emailTextIntent.putExtra(Intent.EXTRA_EMAIL, emails[pos]);
-                        startActivity(emailTextIntent);
+                        ClipData clipData = ClipData.newPlainText("copy", emails[pos].substring(7));
+                        clipboardManager.setPrimaryClip(clipData);
+                        Toast.makeText(getActivity(), "Email id copied to clipboard", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -131,6 +136,17 @@ public class DirectoryResultsFragment extends Fragment {
                 TextView extension = (TextView) rootview.findViewById(R.id.textview_directory_list_extension_4);
                 TextView email = (TextView) rootview.findViewById(R.id.textview_directory_list_email_4);
 
+                final int pos = i;
+                email.setClickable(true);
+                email.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ClipData clipData = ClipData.newPlainText("copy", emails[pos].substring(7));
+                        clipboardManager.setPrimaryClip(clipData);
+                        Toast.makeText(getActivity(), "Email id copied to clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 name.setText(names[i]);
                 location.setText(locations[i]);
                 extension.setText(extensions[i]);
@@ -145,6 +161,17 @@ public class DirectoryResultsFragment extends Fragment {
                 TextView extension = (TextView) rootview.findViewById(R.id.textview_directory_list_extension_3);
                 TextView email = (TextView) rootview.findViewById(R.id.textview_directory_list_email_3);
 
+                final int pos = i;
+                email.setClickable(true);
+                email.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ClipData clipData = ClipData.newPlainText("copy", emails[pos].substring(7));
+                        clipboardManager.setPrimaryClip(clipData);
+                        Toast.makeText(getActivity(), "Email id copied to clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 name.setText(names[i]);
                 extension.setText(extensions[i]);
                 email.setText(emails[i]);
@@ -156,6 +183,17 @@ public class DirectoryResultsFragment extends Fragment {
                 two.setVisibility(View.VISIBLE);
                 TextView name = (TextView) rootview.findViewById(R.id.textview_directory_list_name_2);
                 TextView email = (TextView) rootview.findViewById(R.id.textview_directory_list_email_2);
+
+                final int pos = i;
+                email.setClickable(true);
+                email.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ClipData clipData = ClipData.newPlainText("copy", emails[pos].substring(7));
+                        clipboardManager.setPrimaryClip(clipData);
+                        Toast.makeText(getActivity(), "Email id copied to clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 name.setText(names[i]);
                 email.setText(emails[i]);
