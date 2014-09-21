@@ -68,16 +68,14 @@ public class RemindersDetailFragment extends Fragment {
         Reminder reminder = reminders.get(clickPosition);
 
         Date date = new Date(reminder.get_year(), reminder.get_month(), reminder.get_day(), reminder.get_hour(), reminder.get_minute());
-        DateFormat timeFormatter = new SimpleDateFormat("hh:mm aa");
-        DateFormat monthFormatter = new SimpleDateFormat("MMMM");
-        String mTime = timeFormatter.format(date);
-        String monthText = monthFormatter.format(date);
 
         title.setText(reminder.get_title());
         description.setText(reminder.get_description());
 
-        String displayTime = reminder.get_day() + " " + monthText + " at " + mTime;
-        time.setText(displayTime);
+        if(reminder.get_month()!=10000)
+        time.setText(reminder.get_day() + " " + new SimpleDateFormat("MMMM").format(date) + " at " + new SimpleDateFormat("hh:mm aa").format(date));
+        else
+        time.setText("No reminder date set");
 
         return rootView;
     }
@@ -95,6 +93,9 @@ public class RemindersDetailFragment extends Fragment {
             case R.id.action_reminders_delete:
                 deleteReminderPressed();
                 break;
+            //case R.id.action_reminders_edit:
+               // editReminderPressed();
+               // break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -114,5 +115,17 @@ public class RemindersDetailFragment extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         }, 700);
+    }
+
+    private void editReminderPressed() {
+        Fragment fragment = new ReminderEditFragment();
+        Bundle args = new Bundle();
+        args.putInt("KEY_CLICK_POSITION", clickPosition);
+        fragment.setArguments(args);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_up_enter, R.anim.alpha_out, R.anim.alpha_in, R.anim.slide_down_exit)
+                .replace(R.id.content_frame_reminders, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

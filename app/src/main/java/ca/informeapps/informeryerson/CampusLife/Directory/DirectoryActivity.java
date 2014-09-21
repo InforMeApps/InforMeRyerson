@@ -28,7 +28,6 @@ public class DirectoryActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
     }
 
     @Override

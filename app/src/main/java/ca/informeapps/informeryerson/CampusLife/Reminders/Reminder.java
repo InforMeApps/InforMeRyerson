@@ -20,14 +20,14 @@ public class Reminder implements Parcelable {
             return new Reminder[i];
         }
     };
-    int _id;
-    String _title;
-    String _description;
-    int _day;
-    int _month;
-    int _year;
-    int _hour;
-    int _minute;
+    private int _id;
+    private String _title;
+    private String _description;
+    private int _day;
+    private int _month;
+    private int _year;
+    private int _hour;
+    private int _minute;
 
     public Reminder() {
     }
@@ -35,17 +35,17 @@ public class Reminder implements Parcelable {
     public Reminder(Parcel in) {
         String[] data = new String[2];
         in.readStringArray(data);
-        this._title = data[0];
-        this._description = data[1];
+        _title = data[0];
+        _description = data[1];
 
         int[] moreData = new int[6];
         in.readIntArray(moreData);
-        this._id = moreData[0];
-        this._year = moreData[1];
-        this._month = moreData[2];
-        this._day = moreData[3];
-        this._hour = moreData[4];
-        this._minute = moreData[5];
+        _id = moreData[0];
+        _year = moreData[1];
+        _month = moreData[2];
+        _day = moreData[3];
+        _hour = moreData[4];
+        _minute = moreData[5];
     }
 
     public Reminder(String title, String description, int day, int month, int year, int hour, int minute) {
@@ -58,16 +58,6 @@ public class Reminder implements Parcelable {
         _minute = minute;
     }
 
-    public Reminder(int id, String title, String description, int day, int month, int year, int hour, int minute) {
-        _id = id;
-        _title = title;
-        _description = description;
-        _day = day;
-        _month = month;
-        _year = year;
-        _hour = hour;
-        _minute = minute;
-    }
 
     public int get_id() {
         return _id;

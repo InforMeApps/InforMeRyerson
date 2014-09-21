@@ -107,7 +107,6 @@ public class CampusMapActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
     }
 
     @Override

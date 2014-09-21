@@ -128,7 +128,6 @@ public class ScheduleActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
     }
 
     public Calendar shiftedCalender(Calendar calendar, int Shift) {
@@ -307,12 +306,11 @@ public class ScheduleActivity extends FragmentActivity {
                     textView.setText("Oh No! Looks like you dont have your Ryerson Account on your device :(\nFollow the tutorial to be enlightened");
                     imageView.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                     final int Dur=2000;
-                    ColorText(bottomTextV,"#00FF00",Dur);
                     new Handler().postDelayed(new Runnable() {
 
                         @Override
                         public void run() {
-                            ColorText(bottomTextV, "#FFFFFF", Dur);;
+                            ColorText(bottomTextV, "#000000", Dur);;
                         }
                     }, Dur+10);
                     imageView.setImageResource(R.drawable.error_cat);

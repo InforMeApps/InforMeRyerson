@@ -5,14 +5,22 @@
 package ca.informeapps.informeryerson;
 
 import android.app.Activity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
-import com.crashlytics.android.Crashlytics;
 
-public class PreferencesActivity extends Activity {
+import java.util.ArrayList;
+
+
+public class PreferencesActivity extends Activity  {
+
 
 
     @Override
@@ -20,7 +28,6 @@ public class PreferencesActivity extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Crashlytics.start(this);
 
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new MainPreferenceFragment())
@@ -37,10 +44,17 @@ public class PreferencesActivity extends Activity {
     }
 
     public static class MainPreferenceFragment extends PreferenceFragment {
+
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.main_preference);
+
         }
     }
+
+
+
+
 }

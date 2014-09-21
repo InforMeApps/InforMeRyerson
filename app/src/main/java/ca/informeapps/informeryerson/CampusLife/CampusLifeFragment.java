@@ -36,7 +36,7 @@ import ca.informeapps.informeryerson.R;
 
 public class CampusLifeFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    Tracker t;
+    private Tracker t;
     private View rootView;
     private ListView mListView;
     private CampusLifeListAdapter adapter;

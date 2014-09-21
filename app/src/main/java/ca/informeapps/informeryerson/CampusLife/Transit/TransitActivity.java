@@ -47,7 +47,6 @@ public class TransitActivity extends FragmentActivity implements AdapterView.OnI
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
     }
 
     @Override

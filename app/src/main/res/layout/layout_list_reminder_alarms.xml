@@ -8,14 +8,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ca.informeapps.informeryerson.HorizontalCalendarView
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:id="@+id/Month"/>
-
-    <ca.informeapps.informeryerson.HorizontalCalendarView
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:id="@+id/ss"/>
+    <TextView
+        android:id="@+id/textview_reminder_detail_time"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-light"
+        android:text="12 August at 2:30PM"
+        android:textColor="#e91e63"
+        android:textSize="20sp" />
 
 </LinearLayout>

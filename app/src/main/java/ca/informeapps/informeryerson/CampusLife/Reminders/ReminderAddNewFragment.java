@@ -4,11 +4,6 @@
 
 package ca.informeapps.informeryerson.CampusLife.Reminders;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -31,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import ca.informeapps.informeryerson.Notifications;
 import ca.informeapps.informeryerson.R;
 
 public class ReminderAddNewFragment extends Fragment implements View.OnClickListener {
@@ -43,6 +39,7 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
     private int tYear, tMonth, tDay, tHour, tMinute;
     private ReminderDatabaseHandler databaseHandler;
     private ImageView done;
+    private boolean pressed = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +58,7 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
         mYear = calendar.get(Calendar.YEAR);
         mMonth = calendar.get(Calendar.MONTH);
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        mHour = calendar.get(Calendar.HOUR);
+        mHour = calendar.get(Calendar.HOUR_OF_DAY);
         mMinute = calendar.get(Calendar.MINUTE);
 
         date = (Button) rootView.findViewById(R.id.button_newreminder_date);
@@ -80,6 +77,8 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
         databaseHandler = new ReminderDatabaseHandler(getActivity());
     }
 
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -93,32 +92,61 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
                 getActivity().getSupportFragmentManager().popBackStack();
                 break;
             case R.id.button_newreminder_add:
-                addButtonPressed();
+                if (title.getText().toString().length() > 0 || description.getText().toString().length() > 0)
+                    addButtonPressed(true);
+                else {
+                    Toast.makeText(getActivity(), "Enter a description or title", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
 
-    private void addButtonPressed() {
 
-        if (!title.getText().toString().equals("")) {
-            databaseHandler.addReminder(new Reminder(title.getText().toString(), description.getText().toString(),
-                    tDay, tMonth, tYear, tHour, tMinute));
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(!pressed)
+        {
+            if (title.getText().toString().length() > 0 || description.getText().toString().length() > 0)
+                addButtonPressed(false);
+            else
+                Toast.makeText(getActivity(),"Empty reminder not created",Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+
+    private void addButtonPressed(boolean popBack) {
+            pressed = true;
             add.setClickable(false);
-            processNotification();
+            if (!date.getText().toString().equals("Select Date") || !time.getText().toString().equals("Select Time")) {
+                databaseHandler.addReminder(new Reminder(title.getText().toString(), description.getText().toString(), tDay, tMonth, tYear, tHour, tMinute));
+                Notifications notifications = new Notifications(title.getText().toString(),description.getText().toString(),tMinute, tHour, tDay, tMonth, tYear);
+                notifications.sendAlarmMangerNotification(getActivity(),RemindersReceiver.class);
+            }
+            else
+            {
+                databaseHandler.addReminder(new Reminder(title.getText().toString(), description.getText().toString(), tDay, 10000, tYear, tHour, tMinute));
+
+            }
+
             Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.scale_up_rotate);
             animation.setInterpolator(getActivity(), android.R.anim.overshoot_interpolator);
             done.setAnimation(animation);
             done.setVisibility(View.VISIBLE);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getActivity().getSupportFragmentManager().popBackStack();
-                }
-            }, 700);
-        } else {
-            Toast.makeText(getActivity(), "Title field cannot be empty", Toast.LENGTH_SHORT).show();
-        }
+
+            if (popBack)
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                }, 700);
+
+
     }
+
 
     private void timePickerPressed() {
         RadialTimePickerDialog radialTimePickerDialog = RadialTimePickerDialog
@@ -152,25 +180,5 @@ public class ReminderAddNewFragment extends Fragment implements View.OnClickList
                 }, mYear, mMonth, mDay);
         calendarDatePickerDialog.show(getActivity().getSupportFragmentManager(), "DATE_PICKER");
 
-    }
-
-    private void processNotification() {
-        Calendar notificationDate = Calendar.getInstance();
-        notificationDate.setTimeInMillis(System.currentTimeMillis());
-        notificationDate.set(tYear, tMonth, tDay, tHour, tMinute);
-
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-        Intent notificationIntent = new Intent(getActivity(), RemindersReceiver.class);
-        Bundle args = new Bundle();
-        args.putString("KEY_TITLE", title.getText().toString());
-        args.putString("KEY_DESCRIPTION", description.getText().toString());
-        notificationIntent.putExtra("TITLE_DESCRIPTION", args);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (Build.VERSION.SDK_INT < 19) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, notificationDate.getTimeInMillis(), pendingIntent);
-        } else {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationDate.getTimeInMillis(), pendingIntent);
-        }
     }
 }

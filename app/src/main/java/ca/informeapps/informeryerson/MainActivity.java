@@ -117,29 +117,7 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
             dialog.show();
         }
 
-        //check if first app run
-        if (firstRun.getBoolean("firstRun", true)) {
-            final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Allow us to collect anonymous app usage data to help us make the app better")
-                    .setTitle("Anonymous Usage Stats");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    preferences.edit().putBoolean("pref_key_google_analytics", true).commit();
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    preferences.edit().putBoolean("pref_key_google_analytics", false).commit();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
 
-            firstRun.edit().putBoolean("firstRun", false).commit();
-        }
     }
 
     @Override
@@ -197,7 +175,6 @@ public class MainActivity extends FragmentActivity implements AdapterView.OnItem
                     setVisibleFragment(i);*/
                     break;
                 case 2:
-                    isFragment = true;
                     fragment = new EventsFragment();
                     setVisibleFragment(i);
                     break;
