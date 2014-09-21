@@ -5,6 +5,7 @@
 package ca.informeapps.informeryerson.CampusLife.Directory;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -102,6 +103,17 @@ public class DirectoryResultsFragment extends Fragment {
                 TextView location = (TextView) rootview.findViewById(R.id.textview_directory_list_location_5);
                 TextView extension = (TextView) rootview.findViewById(R.id.textview_directory_list_extension_5);
                 TextView email = (TextView) rootview.findViewById(R.id.textview_directory_list_email_5);
+
+                final int pos = i;
+                email.setClickable(true);
+                email.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent emailTextIntent = new Intent(Intent.ACTION_SEND);
+                        emailTextIntent.putExtra(Intent.EXTRA_EMAIL, emails[pos]);
+                        startActivity(emailTextIntent);
+                    }
+                });
 
                 name.setText(names[i]);
                 title.setText(titles[i]);

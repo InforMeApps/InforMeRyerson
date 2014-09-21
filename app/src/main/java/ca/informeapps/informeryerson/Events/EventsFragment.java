@@ -76,7 +76,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         getContacts.execute();
 
-
         return rootView;
     }
 
@@ -120,7 +119,6 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
             ServiceHandler sh = new ServiceHandler();
             String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
-            Log.d("Response: ", ">" + jsonStr);
 
             if (jsonStr != null) {
                 try {
@@ -153,7 +151,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
                         eventList.add(event);
                     }
                     dataFound = true;
-                    Collections.sort(eventList, new dateComparator());
+                    Collections.sort(eventList, new DateComparator());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -186,7 +184,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         }
     }
 
-    public class dateComparator implements Comparator<HashMap<String, String>> {
+    public class DateComparator implements Comparator<HashMap<String, String>> {
 
         @Override
         public int compare(HashMap<String, String> stringStringHashMap, HashMap<String, String> stringStringHashMap2) {
@@ -226,21 +224,27 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
 
-            Log.d("EVENTS", "getView");
-            View listLayoutView = inflater.inflate(R.layout.layout_list_events, null);
+            View listLayoutView = inflater.inflate(R.layout.layout_list_events_small, null);
             String title = list.get(i).get(TAG_NAME);
             String description = list.get(i).get(TAG_DESCRIPTION);
             String date = list.get(i).get(TAG_DATE);
             Date d = new Date(Long.parseLong(date));
             CharSequence dateFormatted = d.toString().subSequence(0, 10);
 
-            TextView name = (TextView) listLayoutView.findViewById(R.id.name);
-            TextView desc = (TextView) listLayoutView.findViewById(R.id.email);
-            TextView orga = (TextView) listLayoutView.findViewById(R.id.mobile);
+            TextView name = (TextView) listLayoutView.findViewById(R.id.textview_events_list_small_title);
+            TextView desc = (TextView) listLayoutView.findViewById(R.id.textview_events_list_small_description);
+            TextView orga;
+            if (i % 2 == 0) {
+                orga = (TextView) listLayoutView.findViewById(R.id.textview_events_list_small_date_left);
+                orga.setVisibility(View.VISIBLE);
+            } else {
+                orga = (TextView) listLayoutView.findViewById(R.id.textview_events_list_small_date_right);
+                orga.setVisibility(View.VISIBLE);
+            }
 
             name.setText(title);
             desc.setText(description);
-            orga.setText(dateFormatted);
+            //orga.setText(dateFormatted);
 
             return listLayoutView;
         }

@@ -27,6 +27,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="8943663667c54cece67f154ec8fcec1d50d14cc6" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -127,9 +131,6 @@
         </activity>
 
         <receiver android:name=".CampusLife.Reminders.RemindersReceiver" />
-        <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="8943663667c54cece67f154ec8fcec1d50d14cc6" />
 
     </application>
 

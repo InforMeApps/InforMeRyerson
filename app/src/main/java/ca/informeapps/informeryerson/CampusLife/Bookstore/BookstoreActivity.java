@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
@@ -116,8 +117,48 @@ public class BookstoreActivity extends FragmentActivity {
         return ResID;
     }
 
+    public String getStaticMapUrl(int position) {
+        String[][] coords = {
+                {"43.6574429", "-79.3803463"},
+                {"43.6550156", "-79.378763"},
+                {"43.6579802", "-79.3784305"}
+        };
+
+        String url = "http://maps.googleapis.com/maps/api/staticmap?center=" +
+                coords[position][0] + "," + coords[position][1] + "&zoom=18&size=400x400&maptype=roadmap" +
+                "&markers=color:blue%7Clabel:%7C" + coords[position][0] + "," + coords[position][1];
+
+        return url;
+    }
+
     class ListAdapter extends ArrayAdapter<String> {
 
+        final String[][] HourDay = {
+                {"Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm",
+                        "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm",
+                        "Friday   9:00 am – 4:30 pm", "Saturday   Closed"},
+                {"Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm",
+                        "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm",
+                        "Friday   10:00 am – 5:00 pm", "Saturday   10:00 am – 4:00 pm"},
+                {"Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm",
+                        "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm",
+                        "Friday   10:00 am – 6:00 pm", "Saturday   Closed"}
+        };
+
+        final String[] mapsUri = {
+                "https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
+                "https://www.google.ca/maps/place/Canadian+Campus+Bookstore/@43.6550156,-79.378763,18z/data=!4m2!3m1!1s0x89d4cb34d91b90db:0x5c40e77c86b0e682?hl=en",
+                "https://www.google.ca/maps/place/Ryerson+Students'+Union/@43.6579802,-79.3784305,19z/data=!4m2!3m1!1s0x89d4cb35645cd477:0x75bedc0285369c1d?hl=en"
+        };
+
+        final String[] Address = {
+                "17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116",
+                "215 Victoria St #101\n" + "Toronto, ON M5B 1T8\n" + "Phone: (416) 369 1488",
+                "Basement of Student Center\n55 Gould St.\n" + "Toronto, ON M5B 1E9" + "\nPhone: (416) 979 5263"
+        };
+
+
+        final int[] images = {R.drawable.ryerson_campus_store, R.drawable.discount_textbooks, R.drawable.ryerson_students_union};
 
         public ListAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
@@ -135,28 +176,18 @@ public class BookstoreActivity extends FragmentActivity {
             TextView BookstoreHours = (TextView) convertView.findViewById(R.id.textview_bookstore_hours);
             TextView bookstoreAddress = (TextView) convertView.findViewById(R.id.textview_bookstore_address);
 
-            final String[][] HourDay = {{"Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm", "Saturday   Closed"},
-                    {"Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm", "Saturday   10:00 am – 4:00 pm"},
-                    {"Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm", "Saturday   Closed"}};
-
-            final String[] mapsUri =
-                    {"https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
-                            "https://www.google.ca/maps/place/Canadian+Campus+Bookstore/@43.6550156,-79.378763,18z/data=!4m2!3m1!1s0x89d4cb34d91b90db:0x5c40e77c86b0e682?hl=en",
-                            "https://www.google.ca/maps/place/Ryerson+Students'+Union/@43.6579802,-79.3784305,19z/data=!4m2!3m1!1s0x89d4cb35645cd477:0x75bedc0285369c1d?hl=en"};
-
-            final String[] Address = {"17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116",
-                    "215 Victoria St #101\n" + "Toronto, ON M5B 1T8\n" + "Phone: (416) 369 1488"
-                    , "Basement of Student Center\n55 Gould St.\n" + "Toronto, ON M5B 1E9" + "\nPhone: (416) 979 5263"};
-
-            final int[] images = {R.drawable.ryerson_campus_store, R.drawable.discount_textbooks, R.drawable.ryerson_students_union};
-
             BookStoreName.setText(getItem(position));
-            BookStoreMap.setImageResource(ResourceID(getItem(position), true));
-            //Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
             BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1]);
             bookstoreAddress.setText(Address[position]);
-            BookStorePicture.setImageResource(images[position]);
-            //Picasso.with(this.getContext()).load(images[position]).into(BookStorePicture);
+
+            Picasso.with(this.getContext())
+                    .load(getStaticMapUrl(position))
+                    .error(R.drawable.nointernet)
+                    .into(BookStoreMap);
+
+            Picasso.with(this.getContext())
+                    .load(images[position])
+                    .into(BookStorePicture);
 
             BookStoreMap.setOnClickListener(new View.OnClickListener() {
                 @Override

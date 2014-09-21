@@ -54,8 +54,10 @@
             android:id="@+id/textview_directory_list_email_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:text="Email: s2he@ryerson.ca"
-            android:textColor="#888888" />
+            android:textColor="@android:color/holo_blue_dark"
+            android:textIsSelectable="true" />
     </LinearLayout>
 
     <LinearLayout
