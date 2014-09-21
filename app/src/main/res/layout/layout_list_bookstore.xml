@@ -85,14 +85,14 @@
                 android:text="Address Line 1\nCity/Province\nPostal Code\nPhone Number"
                 android:textColor="#454545" />
 
-                <ImageView
+               <!-- <ImageView
                     android:id="@+id/mapButton"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="80"
                     android:background="@drawable/image_button_grey_selector"
                     android:src="@drawable/ic_arrow_drop_down"
-                    android:focusable="false"/>
+                    android:focusable="false"/>-->
 
             </LinearLayout>
 

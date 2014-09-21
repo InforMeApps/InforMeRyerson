@@ -61,7 +61,7 @@ public class RemindersReceiver extends BroadcastReceiver{
         int randomNum = rand.nextInt((1000000 - 0) + 1) + 0;
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(randomNum, mBuilder.build());
+        notificationManager.notify(1, mBuilder.build());
 
     }
 }
