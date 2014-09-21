@@ -182,14 +182,14 @@ public class BookstoreActivity extends FragmentActivity {
                     dialog.show();
                 }
             });
-            holder.imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Uri intentUri = Uri.parse(mapsUri[position]);
-                    Intent mapsIntent = new Intent(Intent.ACTION_VIEW, intentUri);
-                    startActivity(mapsIntent);
-                }
-            });
+           // holder.imageButton.setOnClickListener(new View.OnClickListener() {
+           //     @Override
+           //     public void onClick(View view) {
+           //         Uri intentUri = Uri.parse(mapsUri[position]);
+           //         Intent mapsIntent = new Intent(Intent.ACTION_VIEW, intentUri);
+           //         startActivity(mapsIntent);
+           //     }
+           // });
 
             View ExpandLayout = convertView.findViewById(R.id.BookStoreExpandedInfo);
             ((LinearLayout.LayoutParams) ExpandLayout.getLayoutParams()).bottomMargin = -500;
@@ -201,7 +201,7 @@ public class BookstoreActivity extends FragmentActivity {
 
     public class ViewHolder {
 
-        private ImageView BookStorePicture,imageButton;;
+        private ImageView BookStorePicture;//imageButton;;
         private TextView BookstoreHours,BookStoreName,bookstoreAddress;
 
 
@@ -211,7 +211,7 @@ public class BookstoreActivity extends FragmentActivity {
             BookStorePicture= (ImageView) convertView.findViewById(R.id.imageview_bookstore_list_image);
             BookstoreHours=(TextView) convertView.findViewById(R.id.textview_bookstore_hours);
             bookstoreAddress= (TextView) convertView.findViewById(R.id.textview_bookstore_address);
-            imageButton=(ImageView)convertView.findViewById(R.id.mapButton);
+            //imageButton=(ImageView)convertView.findViewById(R.id.mapButton);
         }
     }
 

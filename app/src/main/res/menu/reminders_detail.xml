@@ -6,14 +6,15 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
+    <!--<item
         android:id="@+id/action_reminders_edit"
         android:showAsAction="always"
-        android:title="Edit" />
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Edit" />-->
 
     <item
         android:id="@+id/action_reminders_delete"
-        android:icon="@drawable/ic_action_delete"
+        android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="always"
         android:title="Delete" />
 

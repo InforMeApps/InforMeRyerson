@@ -22,7 +22,7 @@
             android:summary="Remind me %s before"
             android:entries="@array/updateInterval"
             android:entryValues="@array/updateIntervalValues"
-           android:defaultValue="0"/>
+           android:defaultValue="1"/>
 
     </PreferenceCategory>
     <PreferenceCategory

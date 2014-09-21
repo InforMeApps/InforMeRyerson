@@ -57,11 +57,11 @@ public class RemindersReceiver extends BroadcastReceiver{
             pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             mBuilder.setContentIntent(pendingIntent);
         }
-        Random rand = new Random();
-        int randomNum = rand.nextInt((1000000 - 0) + 1) + 0;
+        //Random rand = new Random();
+        //int randomNum = rand.nextInt((1000000 - 0) + 1) + 0;
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(randomNum, mBuilder.build());
+        notificationManager.notify(1, mBuilder.build());
 
     }
 }

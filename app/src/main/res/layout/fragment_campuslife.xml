@@ -31,7 +31,7 @@
             android:background="@drawable/imagebutton_selector"
             android:clickable="true"
             android:padding="16dp"
-            android:text="We are looking for iOS devs!\nClick for more info"
+            android:text="We are looking for iOS devs!\nClick here to send us an email!"
             android:textColor="#ffffff" />
 
         <ImageButton
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/imagebutton_selector"
             android:padding="8dp"
-            android:src="@drawable/ic_close" />
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
     </LinearLayout>
 

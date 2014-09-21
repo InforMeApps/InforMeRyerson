@@ -6,6 +6,7 @@ package ca.informeapps.informeryerson.CampusLife;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -54,24 +55,7 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         rootView = inflater.inflate(R.layout.fragment_campuslife, container, false);
         View header = inflater.inflate(R.layout.layout_campuslife_list_header, mListView, false);
 
-        //IOS RECRUIT STUFF
-        final LinearLayout recruitLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_campuslife_recruit);
-        ImageButton closeRecruit = (ImageButton) rootView.findViewById(R.id.imagebutton_campuslife_recruit);
-        closeRecruit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Animation slideDown = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down_exit);
-                recruitLayout.setAnimation(slideDown);
-                recruitLayout.setVisibility(View.GONE);
-            }
-        });
-        TextView moreInfo = (TextView) rootView.findViewById(R.id.textview_campuslife_recruit);
-        moreInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
         mListView = (ListView) rootView.findViewById(R.id.listview_campuslife);
         adapter = new CampusLifeListAdapter(getActivity().getLayoutInflater());
@@ -90,6 +74,43 @@ public class CampusLifeFragment extends Fragment implements AdapterView.OnItemCl
         t.setScreenName("Campus Life");
         return rootView;
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //ios recruiting things
+        final LinearLayout recruitLayout = (LinearLayout) rootView.findViewById(R.id.linearlayout_campuslife_recruit);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if(!prefs.getBoolean("IOSClose", false)) {
+            ImageButton closeRecruit = (ImageButton) rootView.findViewById(R.id.imagebutton_campuslife_recruit);
+            closeRecruit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Animation slideDown = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down_exit);
+                    recruitLayout.setAnimation(slideDown);
+                    recruitLayout.setVisibility(View.GONE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("IOSClose", true).commit();
+                }
+            });
+            TextView moreInfo = (TextView) rootView.findViewById(R.id.textview_campuslife_recruit);
+            moreInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto", "informeapplications@gmail.com", null));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "iOS Developer");
+                    intent.putExtra(Intent.EXTRA_TEXT,"(Attach a resume or put some facts about yourself here! Don't forget to put your contact information)");
+                    startActivity(Intent.createChooser(intent, "Send Email"));
+                }
+            });
+
+        }
+        else {
+            recruitLayout.setVisibility(View.GONE);
+        }
 
     }
 
