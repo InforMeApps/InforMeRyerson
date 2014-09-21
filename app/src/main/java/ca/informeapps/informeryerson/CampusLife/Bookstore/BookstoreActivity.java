@@ -45,10 +45,11 @@ public class BookstoreActivity extends FragmentActivity {
         getActionBar().setHomeButtonEnabled(true);
         setTitle("Bookstores");
 
-        final ArrayAdapter<String> BookStoreListAdapter = new ListAdapter(this, R.layout.layout_list_explore);
+        final ArrayAdapter<String> BookStoreListAdapter = new ListAdapter(this, R.layout.layout_list_bookstore);
         BookStoreListAdapter.add("Ryerson Campus Store");
-        BookStoreListAdapter.add("Canadian Campus Bookstore");
         BookStoreListAdapter.add("Ryerson Students Union");
+        BookStoreListAdapter.add("Canadian Campus Bookstore");
+
         final ListView BookStorelistView = (ListView) findViewById(R.id.listview_bookstore);
 
         BookStorelistView.setAdapter(BookStoreListAdapter);
@@ -72,7 +73,6 @@ public class BookstoreActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Crashlytics.start(this);
     }
 
     @Override
@@ -117,48 +117,8 @@ public class BookstoreActivity extends FragmentActivity {
         return ResID;
     }
 
-    public String getStaticMapUrl(int position) {
-        String[][] coords = {
-                {"43.6574429", "-79.3803463"},
-                {"43.6550156", "-79.378763"},
-                {"43.6579802", "-79.3784305"}
-        };
-
-        String url = "http://maps.googleapis.com/maps/api/staticmap?center=" +
-                coords[position][0] + "," + coords[position][1] + "&zoom=18&size=400x400&maptype=roadmap" +
-                "&markers=color:blue%7Clabel:%7C" + coords[position][0] + "," + coords[position][1];
-
-        return url;
-    }
-
     class ListAdapter extends ArrayAdapter<String> {
 
-        final String[][] HourDay = {
-                {"Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm",
-                        "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm",
-                        "Friday   9:00 am – 4:30 pm", "Saturday   Closed"},
-                {"Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm",
-                        "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm",
-                        "Friday   10:00 am – 5:00 pm", "Saturday   10:00 am – 4:00 pm"},
-                {"Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm",
-                        "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm",
-                        "Friday   10:00 am – 6:00 pm", "Saturday   Closed"}
-        };
-
-        final String[] mapsUri = {
-                "https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
-                "https://www.google.ca/maps/place/Canadian+Campus+Bookstore/@43.6550156,-79.378763,18z/data=!4m2!3m1!1s0x89d4cb34d91b90db:0x5c40e77c86b0e682?hl=en",
-                "https://www.google.ca/maps/place/Ryerson+Students'+Union/@43.6579802,-79.3784305,19z/data=!4m2!3m1!1s0x89d4cb35645cd477:0x75bedc0285369c1d?hl=en"
-        };
-
-        final String[] Address = {
-                "17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116",
-                "215 Victoria St #101\n" + "Toronto, ON M5B 1T8\n" + "Phone: (416) 369 1488",
-                "Basement of Student Center\n55 Gould St.\n" + "Toronto, ON M5B 1E9" + "\nPhone: (416) 979 5263"
-        };
-
-
-        final int[] images = {R.drawable.ryerson_campus_store, R.drawable.discount_textbooks, R.drawable.ryerson_students_union};
 
         public ListAdapter(Context context, int textViewResourceId) {
             super(context, textViewResourceId);
@@ -167,38 +127,42 @@ public class BookstoreActivity extends FragmentActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
 
+            ViewHolder holder;
+
+
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.layout_list_bookstore, null);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
             }
-            TextView BookStoreName = (TextView) convertView.findViewById(R.id.campuslife_BookstoreName);
-            ImageView BookStorePicture = (ImageView) convertView.findViewById(R.id.imageview_bookstore_list_image);
-            ImageButton BookStoreMap = (ImageButton) convertView.findViewById(R.id.imagebutton_bookstore_list_map);
-            TextView BookstoreHours = (TextView) convertView.findViewById(R.id.textview_bookstore_hours);
-            TextView bookstoreAddress = (TextView) convertView.findViewById(R.id.textview_bookstore_address);
+            else {
+                holder = (ViewHolder) convertView.getTag();
+            }
 
-            BookStoreName.setText(getItem(position));
-            BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1]);
-            bookstoreAddress.setText(Address[position]);
+            final String[][] HourDay = {{"Sunday   Closed", "Monday   9:00 am – 6:30 pm", "Tuesday   9:00 am – 6:30 pm", "Wednesday   9:00 am – 6:30 pm", "Thursday   9:00 am – 6:30 pm", "Friday   9:00 am – 4:30 pm", "Saturday   Closed"},
+                    {"Sunday   Closed", "Monday   10:00 am – 5:00 pm", "Tuesday   10:00 am – 5:00 pm", "Wednesday   10:00 am – 5:00 pm", "Thursday   10:00 am – 5:00 pm", "Friday   10:00 am – 5:00 pm", "Saturday   Closed"},
+                    {"Sunday   Closed", "Monday   10:00 am – 6:00 pm", "Tuesday   10:00 am – 6:00 pm", "Wednesday   10:00 am – 6:00 pm", "Thursday   10:00 am – 6:00 pm", "Friday   10:00 am – 6:00 pm","Saturday   10:00 am – 4:00 pm" }};
 
-            Picasso.with(this.getContext())
-                    .load(getStaticMapUrl(position))
-                    .error(R.drawable.nointernet)
-                    .into(BookStoreMap);
+            final String[] mapsUri =
+                    {"https://www.google.ca/maps/place/Ryerson+University+Campus+Store/@43.6574429,-79.3803463,19z/data=!4m2!3m1!1s0x0:0x7125fe6088745d2f?hl=en",
+                            "https://www.google.ca/maps/place/Ryerson+Students'+Union/@43.6579802,-79.3784305,19z/data=!4m2!3m1!1s0x89d4cb35645cd477:0x75bedc0285369c1d?hl=en",
+            "https://www.google.ca/maps/place/Canadian+Campus+Bookstore/@43.6550156,-79.378763,18z/data=!4m2!3m1!1s0x89d4cb34d91b90db:0x5c40e77c86b0e682?hl=en"};
 
-            Picasso.with(this.getContext())
-                    .load(images[position])
-                    .into(BookStorePicture);
+            final String[] Address = {"17 Gould St\n" + "Toronto, ON M5B\n" + "Phone: (416) 979 5116",
+                    "Basement of Student Center\n55 Gould St.\n" + "Toronto, ON M5B 1E9" + "\nPhone: (416) 979 5263"
+                    ,"215 Victoria St #101\n" + "Toronto, ON M5B 1T8\n" + "Phone: (416) 369 1488"};
 
-            BookStoreMap.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Uri intentUri = Uri.parse(mapsUri[position]);
-                    Intent mapsIntent = new Intent(Intent.ACTION_VIEW, intentUri);
-                    startActivity(mapsIntent);
-                }
-            });
+            final int[] images = {R.drawable.ryerson_campus_store, R.drawable.ryerson_students_union,R.drawable.discount_textbooks};
 
-            BookstoreHours.setOnClickListener(new View.OnClickListener() {
+            holder.BookStoreName.setText(getItem(position));
+            //Picasso.with(this.getContext()).load(ResourceID(getItem(position), true)).into(BookStoreMap);
+            holder.BookstoreHours.setText(HourDay[position][Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1]);
+            holder.bookstoreAddress.setText(Address[position]);
+            Picasso.with(this.getContext()).load(images[position]).into(holder.BookStorePicture);
+
+
+
+            holder.BookstoreHours.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -218,12 +182,36 @@ public class BookstoreActivity extends FragmentActivity {
                     dialog.show();
                 }
             });
+            holder.imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Uri intentUri = Uri.parse(mapsUri[position]);
+                    Intent mapsIntent = new Intent(Intent.ACTION_VIEW, intentUri);
+                    startActivity(mapsIntent);
+                }
+            });
 
             View ExpandLayout = convertView.findViewById(R.id.BookStoreExpandedInfo);
             ((LinearLayout.LayoutParams) ExpandLayout.getLayoutParams()).bottomMargin = -500;
             ExpandLayout.setVisibility(View.GONE);
 
             return convertView;
+        }
+    }
+
+    public class ViewHolder {
+
+        private ImageView BookStorePicture,imageButton;;
+        private TextView BookstoreHours,BookStoreName,bookstoreAddress;
+
+
+        public ViewHolder(View convertView)
+        {
+            BookStoreName= (TextView) convertView.findViewById(R.id.campuslife_BookstoreName);
+            BookStorePicture= (ImageView) convertView.findViewById(R.id.imageview_bookstore_list_image);
+            BookstoreHours=(TextView) convertView.findViewById(R.id.textview_bookstore_hours);
+            bookstoreAddress= (TextView) convertView.findViewById(R.id.textview_bookstore_address);
+            imageButton=(ImageView)convertView.findViewById(R.id.mapButton);
         }
     }
 

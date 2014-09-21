@@ -49,14 +49,14 @@
             android:textColor="#e91e63"
             android:textSize="20sp" />
 
-        <!--<ImageView
+        <ImageView
             android:id="@+id/imageview_delete_reminder_notification"
             android:layout_width="60dp"
             android:layout_marginTop="5dp"
             android:layout_height="30dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_add_alarm"
-            android:layout_gravity="right" />-->
+            android:layout_gravity="right" />
 
 
 
